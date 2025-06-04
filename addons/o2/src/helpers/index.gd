@@ -1,0 +1,6 @@
+const BitMasks := preload("BitMasks.gd")
+const Arrays := preload("Arrays.gd")
+const Nodes := preload("Nodes.gd")
+const PropertyInfo := preload("PropertyInfo.gd")
+const Signals := preload("Signals.gd")
+const Vectors := preload("Vectors.gd")
