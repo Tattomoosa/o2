@@ -2,12 +2,9 @@
 class_name Vector2Resource
 extends VariantResource
 
-@export_custom(PROPERTY_HINT_NONE, "expose_value")
-var value : Vector2:
+@export var value : Vector2:
 	get: return _value
-	set(v):
-		_value = v
-		emit_changed()
+	set(v): _set_value(v)
 
 func _init() -> void:
 	_type = TYPE_VECTOR2

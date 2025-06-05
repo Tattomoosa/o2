@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="BoolResource" load_steps=2 format=3 uid="uid://cagybburfydlx"]
-
-[ext_resource type="Script" uid="uid://bnucnuycbrx4b" path="res://addons/o2/addons/primitive_resources/src/BoolResource.gd" id="1_6b1cc"]
-
-[resource]
-script = ExtResource("1_6b1cc")
-value = true
-type = 1
-metadata/_custom_type_script = "uid://bnucnuycbrx4b"

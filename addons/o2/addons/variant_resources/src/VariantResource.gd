@@ -15,7 +15,6 @@ var _type : Variant.Type = TYPE_NIL
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "type":
 		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
-		#if (get_script() as Script).resource_path.get_file() != "VariantResource.gd":
 		if O2.Helpers.Scripts.get_script_name(self)  != "VariantResource":
 			property.usage |= PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR
 	if property.name == "value":
@@ -23,7 +22,6 @@ func _validate_property(property: Dictionary) -> void:
 
 func _get_property_list() -> Array[Dictionary]:
 	var props : Array[Dictionary] = []
-	# if (get_script() as Script).resource_path.get_file() != "VariantResource.gd":
 	if O2.Helpers.Scripts.get_script_name(self)  != "VariantResource":
 		return props
 	if type != TYPE_NIL:
@@ -39,11 +37,19 @@ func _get(property: StringName) -> Variant:
 	return null
 
 func _set(property: StringName, v: Variant) -> bool:
-	if property == "value" and typeof(v) == type:
-		_value = v
-		emit_changed()
+	print("SET in VariantResource")
+	if property == "value":
+		_set_value(v)
 		return true
 	return false
 
 func get_type() -> Variant.Type:
 	return _type
+
+func _value_should_update(p_value: Variant) -> bool:
+	return typeof(p_value) == type and p_value != _value
+
+func _set_value(v: Variant) -> void:
+	if _value_should_update(v):
+		_value = v
+		emit_changed()

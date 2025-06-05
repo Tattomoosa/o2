@@ -1,7 +1,9 @@
+@tool
 class_name TestScript
 extends Node
 
 func _ready() -> void:
-	var c_name := O2.Helpers.Scripts.get_class_name(self)
-	print(c_name)
-	pass
+	var sw := O2.Helpers.Timers.Stopwatch.new()
+	var frames := O2.Helpers.Timers.FrameCounter.new()
+	await O2.Helpers.Timers.wait(1.0)
+	prints(sw.get_elapsed_seconds(), frames.get_frames())

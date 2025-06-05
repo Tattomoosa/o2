@@ -2,12 +2,9 @@
 class_name FloatResource
 extends VariantResource
 
-@export_custom(PROPERTY_HINT_NONE, "expose_value")
-var value : float:
+@export var value : float:
 	get: return _value
-	set(v):
-		_value = v
-		emit_changed()
+	set(v): _set_value(v)
 
 func _init() -> void:
 	_type = TYPE_FLOAT

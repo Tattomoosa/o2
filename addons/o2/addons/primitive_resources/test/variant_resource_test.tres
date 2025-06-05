@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="VariantResource" load_steps=2 format=3 uid="uid://bc4rn73gy7sre"]
-
-[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/primitive_resources/src/VariantResource.gd" id="1_p7jpa"]
-
-[resource]
-script = ExtResource("1_p7jpa")
-type = 0
-metadata/_custom_type_script = "uid://lnwnu0o7gwtk"

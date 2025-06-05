@@ -7,14 +7,14 @@ func _enable_plugin() -> void:
 	var path := (get_script() as Script).resource_path.get_base_dir()
 	var o2_path := path.path_join(O2_PATH)
 	add_autoload_singleton("O2", o2_path)
-	EditorInterface.set_plugin_enabled("o2/addons/primitive_resources", true)
+	EditorInterface.set_plugin_enabled("o2/addons/variant_resources", true)
 	# EditorInterface.set_plugin_enabled("o2/addons/exposed_resource_properties", true)
 	_add_commands()
 
 
 func _disable_plugin() -> void:
 	remove_autoload_singleton("O2")
-	EditorInterface.set_plugin_enabled("o2/addons/primitive_resources", false)
+	EditorInterface.set_plugin_enabled("o2/addons/variant_resources", false)
 	# EditorInterface.set_plugin_enabled("o2/addons/exposed_resource_properties", false)
 	_remove_commands()
 
