@@ -6,3 +6,5 @@ static func with_bit_at(mask: int, bit_index: int) -> int:
 
 static func without_bit_at(mask: int, bit_index: int) -> int:
 	return mask & ~(1 << bit_index)
+
+func _init() -> void: assert(false, "Class can't be instantiated")

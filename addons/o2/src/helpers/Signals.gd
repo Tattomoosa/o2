@@ -1,7 +1,4 @@
-func _init() -> void:
-	push_error("This is a static class and can't be instantiated")
-
-static func swap(from: Object, to: Object, signal_name: StringName, callable: Callable) -> void:
+static func swap(from: Object, to: Object, signal_name: StringName, callable: Callable, flags: int = 0) -> void:
 	if from:
 		var signal_a : Signal = from.get(signal_name)
 		if signal_a.is_connected(callable):
@@ -9,5 +6,8 @@ static func swap(from: Object, to: Object, signal_name: StringName, callable: Ca
 	if to:
 		var signal_b : Signal = to.get(signal_name)
 		if !signal_b.is_connected(callable):
-			signal_b.connect(callable)
+			var result := signal_b.connect(callable, flags)
+			if result != OK:
+				push_warning(error_string(result))
 		
+func _init() -> void: assert(false, "Class can't be instantiated")

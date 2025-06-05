@@ -1,8 +1,5 @@
 static var scene_root : Node = null
 
-func _init() -> void:
-	assert("This is a static class and can't be instantiated")
-
 static func get_first_child_with_type(node: Node, type: Variant, include_internal := false) -> Node:
 	for child in node.get_children(include_internal):
 		if is_instance_of(child, type):
@@ -62,3 +59,5 @@ static func get_child_count_recursive(node: Node) -> int:
 	for child in node.get_children():
 		count += get_child_count_recursive(child)
 	return count
+
+func _init() -> void: assert(false, "Class can't be instantiated")

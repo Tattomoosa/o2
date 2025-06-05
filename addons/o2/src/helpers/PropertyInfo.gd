@@ -203,19 +203,12 @@ static func instantiate_property_editor(object: Object, name: String) -> EditorP
 	var property := get_property(object, name)
 	if property.is_empty():
 		return null
-	return EditorInterface.get_inspector().instantiate_property_editor(
-		object,
-		property.type,
-		name,
-		property.hint,
-		property.hint_string,
-		property.usage
-	)
+	return instantiate_custom_property_editor(object, property)
 
 static func instantiate_custom_property_editor(object: Object, property: Dictionary) -> EditorProperty:
 	if !Engine.is_editor_hint():
 		return
-	return EditorInterface.get_inspector().instantiate_property_editor(
+	return EditorInspector.instantiate_property_editor(
 		object,
 		property.type,
 		property.name,
@@ -223,3 +216,5 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 		property.hint_string,
 		property.usage
 	)
+
+func _init() -> void: assert(false, "Class can't be instantiated")

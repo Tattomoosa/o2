@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StringResource" load_steps=2 format=3 uid="uid://c1752xughdvun"]
+
+[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/primitive_resources/src/StringResource.gd" id="1_fuqmm"]
+
+[resource]
+script = ExtResource("1_fuqmm")
+value = "Somethin!"
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"

@@ -11,3 +11,5 @@ static func shuffled(array: Array) -> Array:
 static func find_and_retrieve(array: Array, callable: Callable) -> Variant:
 	var index := array.find_custom(callable)
 	return array[index] if index >= 0 else null
+
+func _init() -> void: assert(false, "Class can't be instantiated")

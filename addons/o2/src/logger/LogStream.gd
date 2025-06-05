@@ -78,4 +78,5 @@ func add_substream(stream_level: LogLevel, stream_name: String) -> Self:
 	stream.logged_warning.connect(warn)
 	stream.logged_error.connect(error)
 	substreams[stream_name] = stream
+	substream_added.emit(stream)
 	return stream

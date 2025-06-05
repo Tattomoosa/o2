@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://ct2ow2h6k3ltm"]
+
+[ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
+[ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/primitive_resources/src/ColorResource.gd" id="1_m5cd5"]
+[ext_resource type="Script" uid="uid://djc34crjmra77" path="res://addons/o2/addons/primitive_resources/src/applicator_node/SyncPropertyToVariantResource.gd" id="2_lr5j1"]
+[ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/primitive_resources/src/FloatResource.gd" id="3_gaudv"]
+[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/primitive_resources/src/StringResource.gd" id="4_hldr7"]
+
+[sub_resource type="Resource" id="Resource_lr5j1"]
+script = ExtResource("1_m5cd5")
+value = Color(0.9175026, 0.123866074, 0.123866074, 1)
+type = 20
+metadata/_custom_type_script = "uid://c7cjsjtruf4y5"
+
+[sub_resource type="Gradient" id="Gradient_lr5j1"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_56kpk"]
+gradient = SubResource("Gradient_lr5j1")
+
+[sub_resource type="Resource" id="Resource_xdggk"]
+script = ExtResource("3_gaudv")
+value = 200.0
+type = 3
+metadata/_custom_type_script = "uid://c0mgsavsenfjd"
+
+[sub_resource type="Resource" id="Resource_mwmxg"]
+script = ExtResource("4_hldr7")
+value = "something cool!"
+type = 4
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+
+[node name="TestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hldr7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9175026, 0.123866074, 0.123866074, 1)
+metadata/_edit_lock_ = true
+
+[node name="SetColorToColorResource" type="Node" parent="ColorRect"]
+script = ExtResource("2_lr5j1")
+resource = SubResource("Resource_lr5j1")
+property_name = &"color"
+metadata/_custom_type_script = "uid://djc34crjmra77"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_as_relative = false
+rotation = 200.0
+scale = Vector2(4, 4)
+texture = SubResource("GradientTexture2D_56kpk")
+centered = false
+
+[node name="SetRotationToFloatResource" type="Node" parent="Sprite2D"]
+script = ExtResource("2_lr5j1")
+resource = SubResource("Resource_xdggk")
+property_name = &"rotation"
+metadata/_custom_type_script = "uid://djc34crjmra77"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "something cool!"
+
+[node name="SyncTextToStringResourceValue" type="Node" parent="Label"]
+script = ExtResource("2_lr5j1")
+resource = SubResource("Resource_mwmxg")
+property_name = &"text"
+metadata/_custom_type_script = "uid://djc34crjmra77"

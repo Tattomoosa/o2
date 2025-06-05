@@ -34,9 +34,9 @@ class V3:
 
 class V3i:
 	static func from_int(from: int) -> Vector3i: return Vector3i(from, from, from)
-	static func with_x(from: Vector3i, x: float) -> Vector3i: return Vector3i(x, from.y, from.z)
-	static func with_y(from: Vector3i, y: float) -> Vector3i: return Vector3i(from.x, y, from.z)
-	static func with_z(from: Vector3i, z: float) -> Vector3i: return Vector3i(from.x, from.y, z)
+	static func with_x(from: Vector3i, x: int) -> Vector3i: return Vector3i(x, from.y, from.z)
+	static func with_y(from: Vector3i, y: int) -> Vector3i: return Vector3i(from.x, y, from.z)
+	static func with_z(from: Vector3i, z: int) -> Vector3i: return Vector3i(from.x, from.y, z)
 
 class V4:
 	static func from_float(from: float) -> Vector4: return Vector4(from, from, from, from)
@@ -47,7 +47,7 @@ class V4:
 
 class V4i:
 	static func from_int(from: int) -> Vector4i: return Vector4i(from, from, from, from)
-	static func with_x(from: Vector4i, x: float) -> Vector4i: return Vector4i(x, from.y, from.z, from.w)
-	static func with_y(from: Vector4i, y: float) -> Vector4i: return Vector4i(from.x, y, from.z, from.w)
-	static func with_z(from: Vector4i, z: float) -> Vector4i: return Vector4i(from.x, from.y, z, from.w)
-	static func with_w(from: Vector4i, w: float) -> Vector4i: return Vector4i(from.x, from.y, from.z, w)
+	static func with_x(from: Vector4i, x: int) -> Vector4i: return Vector4i(x, from.y, from.z, from.w)
+	static func with_y(from: Vector4i, y: int) -> Vector4i: return Vector4i(from.x, y, from.z, from.w)
+	static func with_z(from: Vector4i, z: int) -> Vector4i: return Vector4i(from.x, from.y, z, from.w)
+	static func with_w(from: Vector4i, w: int) -> Vector4i: return Vector4i(from.x, from.y, from.z, w)
