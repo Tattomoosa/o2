@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Rect2i.svg")
 class_name Rect2iResource
 extends VariantResource
 

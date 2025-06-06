@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/NodePath.svg")
 class_name NodePathResource
 extends VariantResource
 

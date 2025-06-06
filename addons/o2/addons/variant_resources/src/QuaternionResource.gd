@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Quaternion.svg")
 class_name QuaternionResource
 extends VariantResource
 

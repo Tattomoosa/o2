@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/PackedVector2Array.svg")
 class_name PackedVector2ArrayResource
 extends VariantResource
 

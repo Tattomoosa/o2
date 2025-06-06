@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/AABB.svg")
 class_name AABBResource
 extends VariantResource
 

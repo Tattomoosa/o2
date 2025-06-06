@@ -1,35 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=5 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
-[ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/FloatResource.gd" id="3_gaudv"]
-[ext_resource type="Script" uid="uid://0svcbakobqb4" path="res://addons/o2/addons/variant_resources/src/extended/RangeResource.gd" id="5_hldr7"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="6_xdggk"]
 [ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/VariantResource.gd" id="7_fkvod"]
 
-[sub_resource type="Gradient" id="Gradient_lr5j1"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_56kpk"]
-gradient = SubResource("Gradient_lr5j1")
-
-[sub_resource type="BoxMesh" id="BoxMesh_xdggk"]
-
-[sub_resource type="Resource" id="Resource_xdggk"]
-script = ExtResource("3_gaudv")
-value = 1.0
-type = 3
-
-[sub_resource type="Resource" id="Resource_mwmxg"]
-script = ExtResource("3_gaudv")
-value = 0.0
-type = 3
-
-[sub_resource type="Resource" id="Resource_fkvod"]
-script = ExtResource("5_hldr7")
-max_value = SubResource("Resource_xdggk")
-min_value = SubResource("Resource_mwmxg")
-value = 1.0
-type = 3
-metadata/_custom_type_script = "uid://0svcbakobqb4"
+[sub_resource type="BoxMesh" id="BoxMesh_hldr7"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -40,44 +16,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hldr7")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.7953067, 0.5414879, 0.5414879, 1)
-metadata/_edit_lock_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-light_mask = 0
-z_as_relative = false
-scale = Vector2(10, 10)
-texture = SubResource("GradientTexture2D_56kpk")
-centered = false
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 153.0
-offset_bottom = 23.0
-text = "something! about a thing!"
-uppercase = true
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-light_mask = 261
-visibility_layer = 0
-collision_layer = 0
-collision_mask = 261
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3, 2)
-mesh = SubResource("BoxMesh_xdggk")
+max_value = 1.0
+value = 0.56
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("6_xdggk")
 synced_properties_count = 1
 _synced_properties_paths = Array[NodePath]([NodePath("")])
-_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_fkvod")])
+_synced_properties_resources = Array[ExtResource("7_fkvod")]([null])
 _synced_properties_names = Array[StringName]([&""])
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+flip_faces = true
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057911992, 0, 0.116615295)
+mesh = SubResource("BoxMesh_hldr7")

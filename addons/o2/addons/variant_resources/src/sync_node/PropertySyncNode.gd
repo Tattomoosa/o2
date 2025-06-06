@@ -37,7 +37,8 @@ func _ready() -> void:
 	editor_array_helper.array_changed.connect(_on_array_changed)
 	editor_array_helper.array_about_to_change.connect(_on_array_about_to_change)
 	for i in _synced_properties_resources.size():
-		_synced_properties_resources[i].changed.connect(_update.bind(i))
+		var r := _get_resource(i)
+		if r: r.value_changed.connect(_update.bind(i))
 		_update(i)
 
 func _on_array_about_to_change(key: String, index: int) -> void:

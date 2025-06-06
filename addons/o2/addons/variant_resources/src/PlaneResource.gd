@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Plane.svg")
 class_name PlaneResource
 extends VariantResource
 

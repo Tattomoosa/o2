@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/float.svg")
 class_name FloatResource
 extends VariantResource
 

@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Vector4.svg")
 class_name Vector4Resource
 extends VariantResource
 

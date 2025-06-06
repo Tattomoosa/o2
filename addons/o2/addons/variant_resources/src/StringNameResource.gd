@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/StringName.svg")
 class_name StringNameResource
 extends VariantResource
 

@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Array.svg")
 class_name ArrayResource
 extends VariantResource
 

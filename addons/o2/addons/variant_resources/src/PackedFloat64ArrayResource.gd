@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/PackedFloat64Array.svg")
 class_name PackedFloat64ArrayResource
 extends VariantResource
 

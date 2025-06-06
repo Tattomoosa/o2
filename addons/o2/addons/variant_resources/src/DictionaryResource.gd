@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Dictionary.svg")
 class_name DictionaryResource
 extends VariantResource
 

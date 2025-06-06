@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/bool.svg")
 class_name BoolResource
 extends VariantResource
 

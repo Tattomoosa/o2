@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Projection.svg")
 class_name ProjectionResource
 extends VariantResource
 

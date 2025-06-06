@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/PackedColorArray.svg")
 class_name PackedColorArrayResource
 extends VariantResource
 

@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/int.svg")
 class_name IntResource
 extends VariantResource
 

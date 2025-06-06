@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Transform3D.svg")
 class_name Transform3DResource
 extends VariantResource
 

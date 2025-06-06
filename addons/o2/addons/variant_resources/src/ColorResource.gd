@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/Color.svg")
 class_name ColorResource
 extends VariantResource
 
