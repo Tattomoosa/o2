@@ -1,4 +1,5 @@
 @tool
+@icon("../assets/icons/o2.svg")
 extends Node
 
 const Helpers := preload("helpers/index.gd")
