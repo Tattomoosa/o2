@@ -2,6 +2,7 @@
 class_name BoolResource
 extends VariantResource
 
+## Boolean value
 @export var value : bool:
 	get: return _value
 	set(v): _set_value(v)

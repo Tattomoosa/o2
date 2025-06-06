@@ -1,33 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=6 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
-[ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/variant_resources/src/ColorResource.gd" id="1_m5cd5"]
-[ext_resource type="Script" uid="uid://djc34crjmra77" path="res://addons/o2/addons/variant_resources/src/applicator_node/SyncPropertyToVariantResource.gd" id="2_lr5j1"]
-[ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/FloatResource.gd" id="3_gaudv"]
-[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/StringResource.gd" id="5_hldr7"]
-
-[sub_resource type="Resource" id="Resource_lr5j1"]
-script = ExtResource("1_m5cd5")
-value = Color(0.40495878, 0.19182652, 0.19182652, 1)
-type = 20
-metadata/_custom_type_script = "uid://c7cjsjtruf4y5"
+[ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="6_xdggk"]
 
 [sub_resource type="Gradient" id="Gradient_lr5j1"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_56kpk"]
 gradient = SubResource("Gradient_lr5j1")
 
-[sub_resource type="Resource" id="Resource_xdggk"]
-script = ExtResource("3_gaudv")
-value = 198.69199999999546
-type = 3
-metadata/_custom_type_script = "uid://c0mgsavsenfjd"
-
-[sub_resource type="Resource" id="Resource_mwmxg"]
-script = ExtResource("5_hldr7")
-value = "v cool"
-type = 4
-metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+[sub_resource type="BoxMesh" id="BoxMesh_xdggk"]
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -45,40 +26,33 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.40495878, 0.19182652, 0.19182652, 1)
+color = Color(0.7953067, 0.5414879, 0.5414879, 1)
 metadata/_edit_lock_ = true
 
-[node name="SyncColorToColorResource" type="Node" parent="ColorRect"]
-script = ExtResource("2_lr5j1")
-resource = SubResource("Resource_lr5j1")
-property_name = &"color"
-metadata/_custom_type_script = "uid://djc34crjmra77"
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
 z_as_relative = false
-rotation = 198.692
-scale = Vector2(4, 4)
+scale = Vector2(10, 10)
 texture = SubResource("GradientTexture2D_56kpk")
 centered = false
 
-[node name="SyncRotationToFloatResource" type="Node" parent="Sprite2D"]
-script = ExtResource("2_lr5j1")
-resource = SubResource("Resource_xdggk")
-property_name = &"rotation"
-metadata/_custom_type_script = "uid://djc34crjmra77"
-
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
+offset_right = 153.0
 offset_bottom = 23.0
-text = "v cool"
+text = "something! about a thing!"
+uppercase = true
 
-[node name="SyncTextToStringResource" type="Node" parent="Label"]
-script = ExtResource("2_lr5j1")
-resource = SubResource("Resource_mwmxg")
-property_name = &"text"
-metadata/_custom_type_script = "uid://djc34crjmra77"
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+light_mask = 261
+visibility_layer = 0
+collision_layer = 0
+collision_mask = 261
 
-[node name="SyncPropertyToVariantResource" type="Node" parent="."]
-script = ExtResource("2_lr5j1")
-metadata/_custom_type_script = "uid://djc34crjmra77"
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3, 2)
+mesh = SubResource("BoxMesh_xdggk")
+
+[node name="PropertySyncNode" type="Node" parent="."]
+script = ExtResource("6_xdggk")
+metadata/_custom_type_script = "uid://cd4joj4o4emeh"

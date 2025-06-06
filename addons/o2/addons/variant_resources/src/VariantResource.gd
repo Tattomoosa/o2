@@ -6,8 +6,8 @@ extends Resource
 	get: return _type
 	set(value):
 		_type = value
-		notify_property_list_changed()
 		emit_changed()
+		notify_property_list_changed()
 
 var _value : Variant = null
 var _type : Variant.Type = TYPE_NIL
@@ -15,14 +15,12 @@ var _type : Variant.Type = TYPE_NIL
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "type":
 		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
-		if O2.Helpers.Scripts.get_script_name(self)  != "VariantResource":
+		if not is_variant():
 			property.usage |= PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR
-	if property.name == "value":
-		property.hint_string = "expose_value"
 
 func _get_property_list() -> Array[Dictionary]:
 	var props : Array[Dictionary] = []
-	if O2.Helpers.Scripts.get_script_name(self)  != "VariantResource":
+	if not is_variant():
 		return props
 	if type != TYPE_NIL:
 		props.append({
@@ -32,16 +30,22 @@ func _get_property_list() -> Array[Dictionary]:
 	return props
 
 func _get(property: StringName) -> Variant:
-	if property == "value" and typeof(_value) == type:
-		return _value
+	if property == "value":
+		if typeof(_value) == type:
+			return _value
+		else:
+			_value = type_convert(_value, type)
+			return _value
 	return null
 
 func _set(property: StringName, v: Variant) -> bool:
-	print("SET in VariantResource")
 	if property == "value":
 		_set_value(v)
 		return true
 	return false
+
+func is_variant() -> bool:
+	return O2.Helpers.Scripts.get_object_class_name(self) == "VariantResource"
 
 func get_type() -> Variant.Type:
 	return _type

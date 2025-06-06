@@ -1,3 +1,4 @@
+@tool
 const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	# special
 	0: &"PROPERTY_USAGE_NONE",
@@ -146,6 +147,7 @@ static func get_type_name(type: int) -> StringName:
 	return TYPE_STRINGS[type]
 
 static func get_property_hint_name(property_hint: int) -> StringName:
+	print("property_hint: ", property_hint)
 	return PROPERTY_HINT_STRINGS[property_hint]
 
 static func prettify(property: Dictionary) -> String:
@@ -160,7 +162,14 @@ static func prettify(property: Dictionary) -> String:
 			PROPERTY_HINT_STRINGS[property.hint]
 		]
 	if "hint_string" in property:
-		prop_str += "hint_string: %s\n" % property.hint_string
+		prop_str += "hint_string: "
+		if property.hint == PROPERTY_HINT_TYPE_STRING:
+			prop_str += "%s (\"%s\")\n" % [
+				parse_hint_type_string(property.hint_string),
+				property.hint_string,
+			]
+		else:
+			prop_str += "%s\n" % property.hint_string
 	if "usage" in property:
 		prop_str += "usage: %s (%s)" % [
 			property.usage,
@@ -168,7 +177,64 @@ static func prettify(property: Dictionary) -> String:
 		]
 	return prop_str
 
+# TODO this isn't right!
+static func parse_hint_type_string(t_string: String) -> String:
+	var print_str := ""
+	var regex := RegEx.new()
+	regex.compile(r"^((?:\d+\d*[\/]*\d*:;?)+)(\S*)$")
+	var result := regex.search(t_string)
+	if result:
+		# last one is hint string
+		var count := result.get_group_count()
+		if count != 2:
+			print("huh", result)
+		print(result.get_string(1))
+		var section0 := result.get_string(1)
+		var type_data := (
+			Array(section0.split(":"))
+				.filter(func(x): return !x.is_empty())
+		)
+		print(type_data)
+		if ";" in section0:
+			print_str += "{ "
+		for t in type_data:
+			print(t)
+			if "/" not in t:
+				print_str += get_type_name(t.to_int())
+				print_str += " : "
+				continue
+			else:
+				t = t.split("/")
+				print_str += get_type_name(t[0].to_int())
+				print_str += "/"
+				print_str += get_property_hint_name(t[1].to_int())
+				if ";" in t[0]:
+					print_str += " } : "
+				else:
+					print_str += " : "
+		var hint_string := result.get_string(2)
+		print_str += "'%s'" % hint_string
+		return print_str
+	return "???"
+			
+static func construct_array_hint_type_string(
+	types: Array[Variant.Type],
+	usages: Array,
+	hint_string : String
+) -> String:
+	var hint_str := ""
+	for i in types.size():
+		hint_str += str(types[i])
+		if usages[i] > 0:
+			hint_str += "/%d" % usages[i]
+		hint_str += ":"
+	hint_str += hint_string
+	return hint_str
+		
+
 static func get_property(object: Object, name: StringName) -> Dictionary:
+	if !object:
+		push_error("object is null")
 	var props := object.get_property_list()
 	for p in props:
 		if p.name == name:
@@ -216,5 +282,114 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 		property.hint_string,
 		property.usage
 	)
+
+static func property_is_bitflags(property: Dictionary) -> bool:
+		return (
+			(
+				"usage" in property
+				and O2.Helpers.BitMasks.get_bit_value(
+					property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD
+				)
+			)
+			or property.hint in [
+				PROPERTY_HINT_FLAGS,
+				PROPERTY_HINT_LAYERS_2D_RENDER,
+				PROPERTY_HINT_LAYERS_2D_PHYSICS,
+				PROPERTY_HINT_LAYERS_2D_NAVIGATION,
+				PROPERTY_HINT_LAYERS_3D_RENDER,
+				PROPERTY_HINT_LAYERS_3D_PHYSICS,
+				PROPERTY_HINT_LAYERS_3D_NAVIGATION,
+				PROPERTY_HINT_LAYERS_AVOIDANCE,
+			]
+		)
+
+class EditorArrayHelper extends RefCounted:
+	var object: Object
+	var count_property_name : StringName
+	var display_name : String
+	var add_button_text : String
+	var prefix : String
+	var typed_data_arrays : Dictionary[String, Array]
+
+	signal array_about_to_change(key: String, index: int)
+	signal array_changed(key: String, index: int)
+
+	func _init(
+		p_object: Object,
+		p_display_name: String,
+		p_add_button_text: String,
+		p_count_property_name: StringName,
+		p_prefix: String,
+		p_typed_data_arrays: Dictionary[String, Array],
+	) -> void:
+		object = p_object
+		display_name = p_display_name
+		count_property_name = p_count_property_name
+		prefix = p_prefix
+		typed_data_arrays = p_typed_data_arrays
+		add_button_text = p_add_button_text
+		for array in typed_data_arrays.values():
+			assert(array.is_typed(), "Arrays must have a defined type")
+
+	func validate_property_helper(property: Dictionary) -> void:
+		if property.name == count_property_name:
+			property.class_name = ",".join([
+				display_name,
+				prefix,
+				"unfoldable",
+				"page_size=999",
+				"add_button_text=" + add_button_text
+			])
+			property.usage = PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ARRAY
+
+	func get_property_list_helper() -> Array[Dictionary]:
+		var props : Array[Dictionary] = []
+		for key in typed_data_arrays:
+			var array := typed_data_arrays[key]
+			var prop := {}
+			prop.type = array.get_typed_builtin()
+			prop.usage = PROPERTY_USAGE_EDITOR
+			if prop.type == TYPE_OBJECT:
+				var c_name := array.get_typed_class_name()
+				# TODO probably a bunch of these that need to be covered
+				if c_name == "Resource":
+					prop.hint = PROPERTY_HINT_RESOURCE_TYPE
+				var script : Script = array.get_typed_script()
+				var script_class_name := script.get_global_name()
+				if script_class_name:
+					prop.hint_string = script_class_name
+			for i in object.get(count_property_name):
+				var p := prop.duplicate()
+				p.name = prefix + str(i) + "/" + key
+				props.push_back(p)
+		return props
+	
+	func get_helper(property: StringName) -> Variant:
+		if property.begins_with(prefix):
+			var i := property.to_int()
+			for key in typed_data_arrays:
+				if property.ends_with(key):
+					var arr := typed_data_arrays[key]
+					if arr.size() <= i:
+						arr.resize(i + 1)
+					return typed_data_arrays[key][i]
+		return null
+	
+	func set_helper(property: StringName, value: Variant) -> bool:
+		if property.begins_with(prefix):
+			var i := property.to_int()
+			for key in typed_data_arrays:
+				if property.ends_with(key):
+					if "is_node_ready" in object:
+						if !object.is_node_ready():
+							return true
+					var arr := typed_data_arrays[key]
+					arr.resize(object.get(count_property_name))
+					array_about_to_change.emit(key, i)
+					typed_data_arrays[key][i] = value
+					array_changed.emit(key, i)
+					object.notify_property_list_changed()
+					return true
+		return false
 
 func _init() -> void: assert(false, "Class can't be instantiated")

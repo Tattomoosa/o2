@@ -2,6 +2,7 @@
 class_name IntResource
 extends VariantResource
 
+## Int value
 @export var value : int:
 	get: return _value
 	set(v): _set_value(v)
