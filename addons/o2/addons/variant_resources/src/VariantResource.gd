@@ -2,6 +2,8 @@
 class_name VariantResource
 extends Resource
 
+signal value_changed
+
 @export var type : Variant.Type = TYPE_NIL:
 	get: return _type
 	set(value):
@@ -54,6 +56,7 @@ func _value_should_update(p_value: Variant) -> bool:
 	return typeof(p_value) == type and p_value != _value
 
 func _set_value(v: Variant) -> void:
-	if _value_should_update(v):
-		_value = v
-		emit_changed()
+	if !_value_should_update(v):
+		return
+	_value = v
+	value_changed.emit()

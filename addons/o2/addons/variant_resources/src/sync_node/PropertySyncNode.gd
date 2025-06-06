@@ -44,15 +44,15 @@ func _on_array_about_to_change(key: String, index: int) -> void:
 	if key == RESOURCE_SUFFIX:
 		var r : VariantResource = _synced_properties_resources[index]
 		if !r: return
-		if r.changed.is_connected(_update):
-			r.changed.disconnect(_update)
+		if r.value_changed.is_connected(_update):
+			r.value_changed.disconnect(_update)
 
 func _on_array_changed(key: String, index: int) -> void:
 	if key == RESOURCE_SUFFIX:
 		var r : VariantResource = _synced_properties_resources[index]
 		if !r: return
-		if !r.changed.is_connected(_update):
-			r.changed.connect(_update.bind(index))
+		if !r.value_changed.is_connected(_update):
+			r.value_changed.connect(_update.bind(index))
 			var node = _get_node(index)
 			if !node or !_can_sync_to_property(
 					r,

@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=12 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
+[ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/FloatResource.gd" id="3_gaudv"]
+[ext_resource type="Script" uid="uid://0svcbakobqb4" path="res://addons/o2/addons/variant_resources/src/extended/RangeResource.gd" id="5_hldr7"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="6_xdggk"]
+[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/VariantResource.gd" id="7_fkvod"]
 
 [sub_resource type="Gradient" id="Gradient_lr5j1"]
 
@@ -9,6 +12,24 @@
 gradient = SubResource("Gradient_lr5j1")
 
 [sub_resource type="BoxMesh" id="BoxMesh_xdggk"]
+
+[sub_resource type="Resource" id="Resource_xdggk"]
+script = ExtResource("3_gaudv")
+value = 1.0
+type = 3
+
+[sub_resource type="Resource" id="Resource_mwmxg"]
+script = ExtResource("3_gaudv")
+value = 0.0
+type = 3
+
+[sub_resource type="Resource" id="Resource_fkvod"]
+script = ExtResource("5_hldr7")
+max_value = SubResource("Resource_xdggk")
+min_value = SubResource("Resource_mwmxg")
+value = 1.0
+type = 3
+metadata/_custom_type_script = "uid://0svcbakobqb4"
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -55,4 +76,8 @@ mesh = SubResource("BoxMesh_xdggk")
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("6_xdggk")
+synced_properties_count = 1
+_synced_properties_paths = Array[NodePath]([NodePath("")])
+_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_fkvod")])
+_synced_properties_names = Array[StringName]([&""])
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"

@@ -7,6 +7,6 @@ extends VariantResource
 	get: return _value
 	set(v): _set_value(v)
 
-func _init() -> void:
+func _init(p_value = 0.0) -> void:
 	_type = TYPE_FLOAT
-	_value = 0.0
+	_value = p_value
