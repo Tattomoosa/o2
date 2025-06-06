@@ -1,7 +1,7 @@
 <div align="center">
 	<br/>
 	<br/>
-	<!-- <img src="https://raw.githubusercontent.com/Tattomoosa/gd-submodules/refs/heads/main/addons/gd-submodules/icons/GitPlugin.svg" width="100"/> -->
+	<img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" width="100"/>
 	<br/>
 	<h1>
 		o2
