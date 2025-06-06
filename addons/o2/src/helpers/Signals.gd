@@ -1,3 +1,11 @@
+## The most useful function for dealing with resource properties, ever!
+##
+## ``` gdscript
+## @export var resource : SomeResource:
+## 	 set(v):
+##		 O2.Helpers.Signals.swap(resource, v, "changed", _on_changed)
+##     resource = v
+## ```
 static func swap(from: Object, to: Object, signal_name: StringName, callable: Callable, flags: int = 0) -> void:
 	if from:
 		var signal_a : Signal = from.get(signal_name)

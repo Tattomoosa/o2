@@ -1,5 +1,7 @@
 extends RefCounted
 
+## LogStreams have a 
+
 const Self := preload("LogStream.gd")
 
 signal logged_debug(msg: String)
@@ -8,12 +10,14 @@ signal logged_warn(msg: String)
 signal logged_error(msg: String)
 signal substream_added(stream: Self)
 
+## Logs less than the LogLevel will not be logged by the stream
 enum LogLevel { DEBUG, INFO, WARN, ERROR }
 
 var name := ""
 var level := LogLevel.INFO
 var substreams : Dictionary[String, Self]
 
+## Logs at LogLevel.DEBUG
 func debug(
 	arg0: Variant="", arg1: Variant="", arg2: Variant="", arg3: Variant="", arg4: Variant="", arg5: Variant="", arg6: Variant="", arg7: Variant="", arg8: Variant="", arg9: Variant=""
 ) -> void:
@@ -23,6 +27,7 @@ func debug(
 	msg = dim(msg)
 	logged_debug.emit(msg)
 
+## Logs at LogLevel.INFO
 func info(
 	arg0: Variant="", arg1: Variant="", arg2: Variant="", arg3: Variant="", arg4: Variant="", arg5: Variant="", arg6: Variant="", arg7: Variant="", arg8: Variant="", arg9: Variant=""
 ) -> void:
@@ -31,6 +36,7 @@ func info(
 	var msg := "".join([str(arg0), str(arg1), str(arg2), str(arg3), str(arg4), str(arg5), str(arg6), str(arg7), str(arg8), str(arg9)])
 	logged_info.emit(msg)
 
+## Logs at LogLevel.WARN
 func warn(
 	arg0: Variant="", arg1: Variant="", arg2: Variant="", arg3: Variant="", arg4: Variant="", arg5: Variant="", arg6: Variant="", arg7: Variant="", arg8: Variant="", arg9: Variant=""
 ) -> void:
@@ -39,6 +45,7 @@ func warn(
 	var msg := "".join([str(arg0), str(arg1), str(arg2), str(arg3), str(arg4), str(arg5), str(arg6), str(arg7), str(arg8), str(arg9)])
 	logged_warn.emit(msg)
 
+## Logs at LogLevel.ERROR
 func error(
 	arg0: Variant="", arg1: Variant="", arg2: Variant="", arg3: Variant="", arg4: Variant="", arg5: Variant="", arg6: Variant="", arg7: Variant="", arg8: Variant="", arg9: Variant=""
 ) -> void:

@@ -1,4 +1,7 @@
+@tool
 extends RichTextLabel
+
+## Logs a LogStream into a RichTextLabel, in-game or in-editor
 
 const LogStream := preload("LogStream.gd")
 

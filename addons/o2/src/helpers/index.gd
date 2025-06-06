@@ -11,4 +11,5 @@ const Tweens := preload("Tweens.gd")
 const Variants := preload("Variants.gd")
 const Vectors := preload("Vectors.gd")
 
+## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

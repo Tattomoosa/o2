@@ -1,4 +1,7 @@
 @tool
+
+## Converts from a usage flag bit to the corresponding string
+## Note that PROPERTY_USAGE_DEFAULT is just PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR
 const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	# special
 	0: &"PROPERTY_USAGE_NONE",
@@ -34,6 +37,8 @@ const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	268435456: &"PROPERTY_USAGE_READ_ONLY",
 	536870912: &"PROPERTY_USAGE_SECRET",
 }
+
+## To convert from a Variant.Type enum to the corresponding string -- NOT the same as type_string()
 const TYPE_STRINGS : Array[String] = [
 	&"TYPE_NIL",
 	&"TYPE_BOOL",
@@ -77,6 +82,7 @@ const TYPE_STRINGS : Array[String] = [
 	&"TYPE_MAX",
 ]
 
+## To convert from a Variant.Type enum to the corresponding string -- NOT the same as type_string()
 const PROPERTY_HINT_STRINGS : Array[StringName] = [
 	&"PROPERTY_HINT_NONE",
 	&"PROPERTY_HINT_RANGE",
@@ -124,32 +130,30 @@ const PROPERTY_HINT_STRINGS : Array[StringName] = [
 	&"PROPERTY_HINT_MAX",
 ]
 
+## Takes a property.usage bitflag int and prints all the flags
 static func get_usage_flag_names(usage: int) -> Array[StringName]:
 	var used_flag_strings : Array[StringName] = []
 	if usage in USAGE_FLAG_STRINGS.keys():
 		used_flag_strings.append(USAGE_FLAG_STRINGS[usage])
 	else:
 		for flag in USAGE_FLAG_STRINGS.keys():
-			if has_flag(usage, flag):
+			if _has_flag(usage, flag):
 				used_flag_strings.append(USAGE_FLAG_STRINGS[flag])
 	return used_flag_strings
 
-static func has_flag(bits: int, flag: int) -> bool:
+static func _has_flag(bits: int, flag: int) -> bool:
 	return bits & flag != 0
 
-static func set_flag(bits: int, flag: int) -> int:
-	return bits | flag
-
-static func unset_flag(bits: int, flag: int) -> int:
-	return bits & ~flag
-
+## Gets a Variant.Type constant name -- not the "human readable" name from type_string()!
 static func get_type_name(type: int) -> StringName:
 	return TYPE_STRINGS[type]
 
+## Gets a property hint enum name
 static func get_property_hint_name(property_hint: int) -> StringName:
 	print("property_hint: ", property_hint)
 	return PROPERTY_HINT_STRINGS[property_hint]
 
+## Pretty prints an object property (Dictionary definition returns from get_property_list())
 static func prettify(property: Dictionary) -> String:
 	var prop_str := "[ %s ]\n" % property.name
 	if "class_name" in property:
@@ -177,7 +181,9 @@ static func prettify(property: Dictionary) -> String:
 		]
 	return prop_str
 
-# TODO this isn't right!
+## PROPERTY_HINT_TYPE_STRING is especially hairy, this tells you what it's doing and is... 
+## probably mostly correct?
+# TODO Needs a lot of testing I haven't done
 static func parse_hint_type_string(t_string: String) -> String:
 	var print_str := ""
 	var regex := RegEx.new()
@@ -216,7 +222,8 @@ static func parse_hint_type_string(t_string: String) -> String:
 		print_str += "'%s'" % hint_string
 		return print_str
 	return "???"
-			
+
+## PROPERTY_HINT_TYPE_STRING is especially hairy, this helps you construct it
 static func construct_array_hint_type_string(
 	types: Array[Variant.Type],
 	usages: Array,
@@ -231,7 +238,7 @@ static func construct_array_hint_type_string(
 	hint_str += hint_string
 	return hint_str
 		
-
+## Gets a property definition, like those returned from get_property_list(), but just one by name
 static func get_property(object: Object, name: StringName) -> Dictionary:
 	if !object:
 		push_error("object is null")
@@ -241,6 +248,7 @@ static func get_property(object: Object, name: StringName) -> Dictionary:
 			return p
 	return {}
 
+## Generic way to just get a human-readable name from an object
 static func get_object_name(object: Object) -> String:
 	if "name" in object:
 		return object.name
@@ -248,13 +256,12 @@ static func get_object_name(object: Object) -> String:
 		return object.resource_name
 	return "Object"
 
-static func get_object_class(object: Object) -> String:
-	return object.get_class()
-
+# TODO this is useless now that PropertyInfo can do it better itself
+# @deprecated
 static func get_instantiate_property_editor_string(object: Object, name: StringName) -> String:
 	var prop := get_property(object, name)
 	return "\n".join([
-		"EditorInterface.get_inspector().instantiate_property_editor(",
+		"EditorInspector.instantiate_property_editor(",
 			"\t%s," % "get_edited_object()",
 			"\t%s," % TYPE_STRINGS[prop.type],
 			'\t"%s",' % name,
@@ -283,6 +290,7 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 		property.usage
 	)
 
+## Whether or not a given int property is bitflags
 static func property_is_bitflags(property: Dictionary) -> bool:
 		return (
 			(
@@ -303,6 +311,13 @@ static func property_is_bitflags(property: Dictionary) -> bool:
 			]
 		)
 
+## Helper to make an "EditorArray" - or something that shows up in the inspector like a single
+## group of properties in a list, but is actually backed by multiple data arrays holding associated
+## data in each index. Useful when you don't want to make a Resource and deal with local_to_scene
+## just to make a nice inspector, plus it's a little easier to use than an Array[Resource]
+##
+## Unfortunately, given the limitations, it is a bit hairy to setup. See PropertySyncNode for 
+## an example. Real documentation someday... maybe.
 class EditorArrayHelper extends RefCounted:
 	var object: Object
 	var count_property_name : StringName

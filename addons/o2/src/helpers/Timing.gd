@@ -1,11 +1,12 @@
+## Was much more useful when this was a global TimeUtil class than calling it under O2.Helpers.Timing.wait lol
+## Still useful to start a timer when you're somewhere outside of the tree.
 static func wait(duration: float) -> void:
 	await O2.get_tree().create_timer(duration).timeout
 
-static func fps() -> float:
-	return Engine.get_frames_per_second()
-
+## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")
 
+## Counts time, very accurately, from when it's instanced.
 class Stopwatch extends RefCounted:
 	var start_time : int
 	var _use_usecs := false
@@ -38,6 +39,7 @@ class Stopwatch extends RefCounted:
 		else:
 			return elapsed / 1_000.0
 
+## Counts frames from whenever it's instanced, either process (drawing) or physics
 class FrameCounter extends RefCounted:
 	var start_frame: int
 	var _use_physics := false

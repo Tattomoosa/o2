@@ -5,6 +5,7 @@ class V2:
 	static func with_x(from: Vector2, x: float) -> Vector2: return Vector2(x, from.y)
 	static func with_y(from: Vector2, y: float) -> Vector2: return Vector2(from.x, y)
 
+	## Extrapolates a moving Vector2 value, useful for software mouse cursors.
 	class Extrapolator extends RefCounted:
 		var _previous : Vector2
 		var extrapolation_factor : float
