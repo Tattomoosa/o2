@@ -22,4 +22,8 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg")
+enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg", "res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg")
+
+[o2]
+
+tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]

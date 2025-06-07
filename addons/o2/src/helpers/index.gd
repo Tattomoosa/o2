@@ -1,5 +1,6 @@
 const Arrays := preload("Arrays.gd")
 const BitMasks := preload("BitMasks.gd")
+const Files := preload("Files.gd")
 const Nodes := preload("Nodes.gd")
 const PropertyInfo := preload("PropertyInfo.gd")
 const Scripts := preload("Scripts.gd")

@@ -7,17 +7,20 @@ const PATH_SUFFIX := "node_path"
 const PROPERTY_NAME_SUFFIX := "property_name"
 const RESOURCE_SUFFIX := "resource"
 
+# TODO see if I can also move handling this into the EditorArrayHelper
 @export var synced_properties_count := 0:
 	set(v):
 		synced_properties_count = v
 		if is_node_ready() and synced_properties_count == 0:
 			_synced_properties_names.clear()
-			_synced_properties_resources.clear()
 			_synced_properties_paths.clear()
+			_synced_properties_resources.clear()
 		notify_property_list_changed()
 @export_storage var _synced_properties_paths : Array[NodePath]
-@export_storage var _synced_properties_resources : Array[VariantResource]
 @export_storage var _synced_properties_names : Array[StringName]
+@export_storage var _synced_properties_resources : Array[VariantResource]
+
+var _synced_properties_callables : Array[Callable]
 
 var editor_array_helper : O2.Helpers.PropertyInfo.EditorArrayHelper
 
@@ -30,30 +33,32 @@ func _ready() -> void:
 		ARRAY_PREFIX,
 		{
 			PATH_SUFFIX: _synced_properties_paths,
+			PROPERTY_NAME_SUFFIX: _synced_properties_names,
 			RESOURCE_SUFFIX: _synced_properties_resources,
-			PROPERTY_NAME_SUFFIX: _synced_properties_names
 		}
 	)
 	editor_array_helper.array_changed.connect(_on_array_changed)
 	editor_array_helper.array_about_to_change.connect(_on_array_about_to_change)
 	for i in _synced_properties_resources.size():
 		var r := _get_resource(i)
-		if r: r.value_changed.connect(_update.bind(i))
+		if r: r.value_changed.connect(_get_callable(i))
 		_update(i)
 
 func _on_array_about_to_change(key: String, index: int) -> void:
 	if key == RESOURCE_SUFFIX:
 		var r : VariantResource = _synced_properties_resources[index]
 		if !r: return
-		if r.value_changed.is_connected(_update):
-			r.value_changed.disconnect(_update)
+		var callable := _get_callable(index)
+		if r.value_changed.is_connected(callable):
+			r.value_changed.disconnect(callable)
 
 func _on_array_changed(key: String, index: int) -> void:
 	if key == RESOURCE_SUFFIX:
 		var r : VariantResource = _synced_properties_resources[index]
 		if !r: return
-		if !r.value_changed.is_connected(_update):
-			r.value_changed.connect(_update.bind(index))
+		var callable := _get_callable(index)
+		if !r.value_changed.is_connected(callable):
+			r.value_changed.connect(callable)
 			var node = _get_node(index)
 			if !node or !_can_sync_to_property(
 					r,
@@ -81,6 +86,14 @@ func _get_resource(index: int) -> VariantResource:
 		return _synced_properties_resources[index]
 	return null
 
+# Need to use/store anonymous functions so we can connect/disconnect from the same signal multiple times
+# Maybe possible with CONNECT_REFERENCE_COUNTED, but this seems less error-prone since we can check
+# connections and don't need to know what other indexes are doing or if the resource has changed or
+# anything
+func _get_callable(index: int) -> Callable:
+	for i in range(_synced_properties_callables.size(), index + 1):
+		_synced_properties_callables.push_back(func(): _update(i))
+	return _synced_properties_callables[index]
 
 func _validate_property(property: Dictionary) -> void:
 	editor_array_helper.validate_property_helper(property)
@@ -112,7 +125,9 @@ func _can_sync_to_property(resource: VariantResource, property: Dictionary) -> b
 	return property.type == resource.get_type()
 
 func _get(property: StringName) -> Variant:
-	return editor_array_helper.get_helper(property)
+	if is_node_ready():
+		return editor_array_helper.get_helper(property)
+	return null
 
 func _set(property: StringName, value: Variant) -> bool:
 	if editor_array_helper:

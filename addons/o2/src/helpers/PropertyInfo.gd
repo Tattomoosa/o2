@@ -150,7 +150,7 @@ static func get_type_name(type: int) -> StringName:
 
 ## Gets a property hint enum name
 static func get_property_hint_name(property_hint: int) -> StringName:
-	print("property_hint: ", property_hint)
+	# print("property_hint: ", property_hint)
 	return PROPERTY_HINT_STRINGS[property_hint]
 
 ## Pretty prints an object property (Dictionary definition returns from get_property_list())
@@ -185,7 +185,7 @@ static func prettify(property: Dictionary) -> String:
 ## probably mostly correct?
 # TODO Needs a lot of testing I haven't done
 static func parse_hint_type_string(t_string: String) -> String:
-	var print_str := ""
+	var parsed_str := ""
 	var regex := RegEx.new()
 	regex.compile(r"^((?:\d+\d*[\/]*\d*:;?)+)(\S*)$")
 	var result := regex.search(t_string)
@@ -193,34 +193,31 @@ static func parse_hint_type_string(t_string: String) -> String:
 		# last one is hint string
 		var count := result.get_group_count()
 		if count != 2:
-			print("huh", result)
-		print(result.get_string(1))
+			print_debug("huh", result)
 		var section0 := result.get_string(1)
 		var type_data := (
 			Array(section0.split(":"))
 				.filter(func(x): return !x.is_empty())
 		)
-		print(type_data)
 		if ";" in section0:
-			print_str += "{ "
+			parsed_str += "{ "
 		for t in type_data:
-			print(t)
 			if "/" not in t:
-				print_str += get_type_name(t.to_int())
-				print_str += " : "
+				parsed_str += get_type_name(t.to_int())
+				parsed_str += " : "
 				continue
 			else:
 				t = t.split("/")
-				print_str += get_type_name(t[0].to_int())
-				print_str += "/"
-				print_str += get_property_hint_name(t[1].to_int())
+				parsed_str += get_type_name(t[0].to_int())
+				parsed_str += "/"
+				parsed_str += get_property_hint_name(t[1].to_int())
 				if ";" in t[0]:
-					print_str += " } : "
+					parsed_str += " } : "
 				else:
-					print_str += " : "
+					parsed_str += " : "
 		var hint_string := result.get_string(2)
-		print_str += "'%s'" % hint_string
-		return print_str
+		parsed_str += "'%s'" % hint_string
+		return parsed_str
 	return "???"
 
 ## PROPERTY_HINT_TYPE_STRING is especially hairy, this helps you construct it
@@ -359,6 +356,14 @@ class EditorArrayHelper extends RefCounted:
 
 	func get_property_list_helper() -> Array[Dictionary]:
 		var props : Array[Dictionary] = []
+		# TODO figure out how to make each one foldable?
+		# for i in object.get(count_property_name):
+		# 	var prop := {}
+		# 	prop.type = TYPE_NIL
+		# 	prop.usage = PROPERTY_USAGE_GROUP
+		# 	prop.hint_string = prefix
+		# 	prop.name = "%s %d" % [display_name, i]
+		# 	props.push_back(prop)
 		for key in typed_data_arrays:
 			var array := typed_data_arrays[key]
 			var prop := {}

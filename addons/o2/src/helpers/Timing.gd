@@ -1,10 +1,22 @@
-## Was much more useful when this was a global TimeUtil class than calling it under O2.Helpers.Timing.wait lol
-## Still useful to start a timer when you're somewhere outside of the tree.
+@tool
+## Waits for a duration to elapse
 static func wait(duration: float) -> void:
 	await O2.get_tree().create_timer(duration).timeout
 
+## Waits a frame
+static func wait_frame() -> void:
+	await O2.get_tree().process_frame
+
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")
+
+# TODO await any/all signals/callables
+# class Awaiter extends RefCounted:
+# 	signal finished
+
+# 	func await_all(awaitables: Array) -> void:
+# 		for awaitable in awaitables:
+	
 
 ## Counts time, very accurately, from when it's instanced.
 class Stopwatch extends RefCounted:

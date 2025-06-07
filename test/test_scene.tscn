@@ -1,11 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=15 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
+[ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/variant_resources/FloatResource.gd" id="4_hldr7"]
+[ext_resource type="Script" uid="uid://0svcbakobqb4" path="res://addons/o2/addons/variant_resources/src/extended_resources/RangeResource.gd" id="5_xdggk"]
+[ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="6_mwmxg"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="6_xdggk"]
-[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/VariantResource.gd" id="7_fkvod"]
+[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="7_fkvod"]
+[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="7_k8f1l"]
+[ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="8_fkvod"]
+
+[sub_resource type="Resource" id="Resource_hldr7"]
+script = ExtResource("4_hldr7")
+value = 1.0
+type = 3
+
+[sub_resource type="Resource" id="Resource_xdggk"]
+script = ExtResource("4_hldr7")
+value = 0.0
+type = 3
+
+[sub_resource type="Resource" id="Resource_mwmxg"]
+script = ExtResource("5_xdggk")
+max_value = SubResource("Resource_hldr7")
+min_value = SubResource("Resource_xdggk")
+allow_greater = false
+allow_lesser = false
+value = 1.0
+type = 3
+metadata/_custom_type_script = "uid://0svcbakobqb4"
 
 [sub_resource type="BoxMesh" id="BoxMesh_hldr7"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Resource" id="Resource_i3afb"]
+script = ExtResource("7_k8f1l")
+value = "ok ok ok "
+type = 4
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+
+[sub_resource type="Resource" id="Resource_k8f1l"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_i3afb")
+property_name = &"text"
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -24,20 +61,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
-value = 0.56
+value = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+rotation = 0.768
+skew = 1.0
+polygon = PackedVector2Array(0, 0, 1, 1, 0, -1)
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("6_xdggk")
-synced_properties_count = 1
-_synced_properties_paths = Array[NodePath]([NodePath("")])
-_synced_properties_resources = Array[ExtResource("7_fkvod")]([null])
-_synced_properties_names = Array[StringName]([&""])
+synced_properties_count = 4
+_synced_properties_paths = Array[NodePath]([NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("")])
+_synced_properties_names = Array[StringName]([&"value", &"max_value", &"min_value", &""])
+_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_mwmxg"), SubResource("Resource_hldr7"), SubResource("Resource_xdggk"), null])
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057911992, 0, 0.116615295)
+mesh = SubResource("BoxMesh_hldr7")
+skeleton = NodePath("../CSGBox3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057911992, 0, -0.4756822)
+mesh = SubResource("BoxMesh_hldr7")
+skeleton = NodePath("../CSGBox3D")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 flip_faces = true
 metadata/_edit_lock_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057911992, 0, 0.116615295)
-mesh = SubResource("BoxMesh_hldr7")
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "ok ok ok "
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_k8f1l")])

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SyncVariantResourceToPropertyMetadataScript" load_steps=3 format=3 uid="uid://dbw8a7h00novw"]
+
+[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="1_dlj16"]
+[ext_resource type="Script" uid="uid://dnun44yga5qss" path="res://addons/o2/addons/variant_resources/src/sync_metadata/SyncVariantResourceToPropertyMetadataScript.gd" id="2_ttcfr"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_ttcfr")
+synced_properties_count = 4
+_synced_properties_names = Array[StringName]([&"", &"", &"", &""])
+_synced_properties_resources = Array[ExtResource("1_dlj16")]([null, null, null, null])
+metadata/_custom_type_script = "uid://dnun44yga5qss"

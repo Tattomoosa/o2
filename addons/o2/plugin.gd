@@ -3,44 +3,54 @@ extends EditorPlugin
 
 const O2_PATH := "src/O2.gd"
 
+const PLUGINS : PackedStringArray = [
+	"metadata_scripts",
+	"variant_resources",
+]
+
+var scene_change_notifier : EditorSceneRootChangeNotifier
+
 func _enable_plugin() -> void:
+	print("O2: ENABLED")
 	var path := (get_script() as Script).resource_path.get_base_dir()
 	var o2_path := path.path_join(O2_PATH)
 	add_autoload_singleton("O2", o2_path)
-	EditorInterface.set_plugin_enabled("o2/addons/variant_resources", true)
-	# EditorInterface.set_plugin_enabled("o2/addons/exposed_resource_properties", true)
-	_add_commands()
-
+	for plugin in PLUGINS:
+		EditorInterface.set_plugin_enabled("o2/addons/" + plugin, true)
 
 func _disable_plugin() -> void:
+	print("O2: DISABLED")
+	for plugin in PLUGINS:
+		EditorInterface.set_plugin_enabled("o2/addons/" + plugin, false)
 	remove_autoload_singleton("O2")
-	EditorInterface.set_plugin_enabled("o2/addons/variant_resources", false)
-	# EditorInterface.set_plugin_enabled("o2/addons/exposed_resource_properties", false)
-	_remove_commands()
+
+
+func _on_scene_changed(scene_root: Node) -> void:
+	if !scene_root:
+		return
+	for autoload in get_tree().root.get_children():
+		if autoload.name == "O2":
+			autoload.tree_watcher = autoload.TreeWatcher.new(scene_root)
 
 
 func _enter_tree() -> void:
-	# Initialization of the plugin goes here.
-	pass
+	print("O2: ENTER TREE")
+	scene_change_notifier = EditorSceneRootChangeNotifier.new()
+	scene_change_notifier.scene_root_changed.connect(_on_scene_changed)
 
 
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	pass
+	print("O2: EXIT TREE")
+
+# https://github.com/godotengine/godot/issues/97427
+class EditorSceneRootChangeNotifier extends RefCounted:
+	signal scene_root_changed(node: Node)
+
+	func _init() -> void:
+		var viewport_2d := EditorInterface.get_editor_viewport_2d()
+		viewport_2d.child_entered_tree.connect(scene_root_changed.emit)
+		viewport_2d.child_exiting_tree.connect(scene_root_changed.emit.bind(null).unbind(1))
+		
 
 
-func _add_commands() -> void:
-	var cmd_palette := EditorInterface.get_command_palette()
-	cmd_palette.add_command(
-		"Refresh O2 Addons",
-		"refresh_o2_addons",
-		_refresh
-	)
-
-func _refresh() -> void:
-	EditorInterface.set_plugin_enabled("o2", false)
-	EditorInterface.set_plugin_enabled("o2", true)
-
-func _remove_commands() -> void:
-	var cmd_palette := EditorInterface.get_command_palette()
-	cmd_palette.remove_command("refresh_o2_addons")
+	

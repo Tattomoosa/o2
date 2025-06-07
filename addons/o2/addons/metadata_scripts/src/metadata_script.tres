@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://chjijs77blb1f"]
+
+[ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_htvno"]
+
+[resource]
+script = ExtResource("1_htvno")
