@@ -1,5 +1,6 @@
 @tool
 @icon("../assets/icons/o2.svg")
+class_name O2
 extends Node
 
 const Helpers := preload("helpers/index.gd")

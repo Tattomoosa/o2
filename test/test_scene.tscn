@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=17 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
 [ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/variant_resources/FloatResource.gd" id="4_hldr7"]
@@ -8,10 +8,11 @@
 [ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="7_fkvod"]
 [ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="7_k8f1l"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="8_fkvod"]
+[ext_resource type="Script" uid="uid://dlbfpgvtclufx" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript_IfHasFeatureTag.gd" id="8_i3afb"]
 
 [sub_resource type="Resource" id="Resource_i3afb"]
 script = ExtResource("7_k8f1l")
-value = "what do you think about this?"
+value = "ooooo ok whatever"
 type = 4
 metadata/_custom_type_script = "uid://djdxn6wi2t33k"
 
@@ -37,6 +38,12 @@ metadata/_custom_type_script = "uid://0svcbakobqb4"
 
 [sub_resource type="BoxMesh" id="BoxMesh_hldr7"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Resource" id="Resource_lke18"]
+resource_name = "IfHasFeatureTag"
+script = ExtResource("8_i3afb")
+feature = ""
+invert = false
 
 [sub_resource type="Resource" id="Resource_k8f1l"]
 resource_name = "SyncVariantResource"
@@ -71,10 +78,10 @@ polygon = PackedVector2Array(0, 0, 1, 1, 0, -1)
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("6_xdggk")
-synced_properties_count = 4
-_synced_properties_paths = Array[NodePath]([NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("")])
-_synced_properties_names = Array[StringName]([&"value", &"max_value", &"min_value", &""])
-_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_mwmxg"), SubResource("Resource_hldr7"), SubResource("Resource_xdggk"), null])
+synced_properties_count = 3
+_synced_properties_paths = Array[NodePath]([NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("../ProgressBar")])
+_synced_properties_names = Array[StringName]([&"value", &"max_value", &"min_value"])
+_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_mwmxg"), SubResource("Resource_hldr7"), SubResource("Resource_xdggk")])
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -90,10 +97,11 @@ skeleton = NodePath("../CSGBox3D")
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 flip_faces = true
 metadata/_edit_lock_ = true
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_lke18")])
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "what do you think about this?"
+text = "ooooo ok whatever"
 metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_k8f1l")])

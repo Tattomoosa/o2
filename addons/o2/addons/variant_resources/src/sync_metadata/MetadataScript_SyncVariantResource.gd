@@ -2,9 +2,14 @@
 class_name MetadataScript_SyncVariantResource
 extends MetadataScript
 
+## Requires MetadataScript plugin
+
+const _PropertyInfo := O2.Helpers.PropertyInfo
+const _BitMasks := O2.Helpers.BitMasks
+
 @export var resource : VariantResource:
 	set(v):
-		O2.Helpers.Signals.swap(resource, v, "value_changed", _update)
+		_Signals.swap(resource, v, "value_changed", _update)
 		resource = v
 		if Engine.is_editor_hint() and node:
 			_patch_property_name_into_valid_property_enum()
@@ -52,8 +57,8 @@ func _patch_property_name_into_valid_property_enum() -> void:
 func _can_sync_to_property(property: Dictionary) -> bool:
 	if !property:
 		return false
-	if !O2.Helpers.BitMasks.get_bit_value(property.usage, PROPERTY_USAGE_NO_EDITOR):
+	if !_BitMasks.get_bit_value(property.usage, PROPERTY_USAGE_NO_EDITOR):
 		return false
 	if resource is FlagsResource:
-		return O2.Helpers.PropertyInfo.property_is_bitflags(property)
+		return _PropertyInfo.property_is_bitflags(property)
 	return property.type == resource.get_type()

@@ -40,7 +40,9 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 		for class_data in ProjectSettings.get_global_class_list():
 			if class_data.base == "MetadataScript":
 				if !class_data.is_abstract:
-					metadata_script_class_data.append(class_data)
+					var metadata_script_class : GDScript = load(class_data.path)
+					if metadata_script_class.can_attach_to(object):
+						metadata_script_class_data.append(class_data)
 		
 		var vbox := VBoxContainer.new()
 		var center := CenterContainer.new()
@@ -70,7 +72,9 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 	
 	func _popup_id_pressed(id: int, object: Object) -> void:
 		var class_data := metadata_script_class_data[id]
-		var metadata_script : MetadataScript = load(class_data.path).new()
+		# var metadata_script : MetadataScript = load(class_data.path).new()
+		var metadata_script_class : GDScript = load(class_data.path)
+		var metadata_script : MetadataScript = metadata_script_class.new()
 		if object.has_meta(METADATA_SCRIPTS_PROPERTY):
 			var scripts : Array[MetadataScript] = object.get_meta(METADATA_SCRIPTS_PROPERTY)
 			scripts.append(metadata_script)

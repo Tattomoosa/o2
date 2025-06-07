@@ -1,8 +1,10 @@
 @tool
 extends RefCounted
 
-const TreeWatcherPlugin := preload("uid://jdhkmwip1txo")
+const _Settings := O2.Helpers.Settings
+const _Nodes := O2.Helpers.Nodes
 
+const TreeWatcherPlugin := preload("uid://jdhkmwip1txo")
 const TREE_WATCHER_PLUGINS_SETTING := "o2/tree_watcher/tree_watcher_plugins"
 
 var plugins : Array[TreeWatcherPlugin] = []
@@ -13,7 +15,7 @@ func _init(root: Node) -> void:
 	_load_plugins()
 	_node_entered(root)
 	if Engine.is_editor_hint():
-		for child in O2.Helpers.Nodes.get_descendents(root):
+		for child in _Nodes.get_descendents(root):
 			_node_entered(child)
 
 func _node_entered(node: Node) -> void:
@@ -33,7 +35,7 @@ func _node_exiting(node: Node) -> void:
 		plugin.node_exiting(node)
 
 static func register_plugin(plugin: TreeWatcherPlugin) -> void:
-	var plugin_paths : Array = O2.Helpers.Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
+	var plugin_paths : Array = _Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
 	var plugin_uid := ResourceLoader.get_resource_uid((plugin.get_script() as Script).resource_path)
 	var plugin_uid_path := ResourceUID.id_to_text(plugin_uid)
 	if plugin_uid_path not in plugin_paths:
@@ -47,7 +49,7 @@ static func register_plugin(plugin: TreeWatcherPlugin) -> void:
 	})
 
 static func unregister_plugin(plugin: TreeWatcherPlugin) -> void:
-	var plugin_paths : Array = O2.Helpers.Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
+	var plugin_paths : Array = _Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
 	var plugin_uid := ResourceLoader.get_resource_uid((plugin.get_script() as Script).resource_path)
 	var plugin_uid_path := ResourceUID.id_to_text(plugin_uid)
 	if plugin_uid in plugin_paths:
@@ -55,7 +57,7 @@ static func unregister_plugin(plugin: TreeWatcherPlugin) -> void:
 	ProjectSettings.set_setting(TREE_WATCHER_PLUGINS_SETTING, plugin_paths)
 
 func _load_plugins() -> void:
-	var plugin_paths : Array = O2.Helpers.Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
+	var plugin_paths : Array = _Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
 	for path in plugin_paths:
 		var plugin_script : Script = load(path)
 		if !plugin_script:

@@ -1,5 +1,7 @@
 @tool
 
+const _BitMasks := O2.Helpers.BitMasks
+
 ## Converts from a usage flag bit to the corresponding string
 ## Note that PROPERTY_USAGE_DEFAULT is just PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR
 const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
@@ -292,7 +294,7 @@ static func property_is_bitflags(property: Dictionary) -> bool:
 		return (
 			(
 				"usage" in property
-				and O2.Helpers.BitMasks.get_bit_value(
+				and _BitMasks.get_bit_value(
 					property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD
 				)
 			)

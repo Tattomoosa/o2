@@ -4,6 +4,8 @@ extends Resource
 
 var node : Node
 
+const _Signals := O2.Helpers.Signals
+
 func _init() -> void:
 	if Engine.is_editor_hint():
 		var display_name := (get_script() as Script).get_global_name()
@@ -23,9 +25,12 @@ func ready() -> void:
 
 func tree_entered(p_node: Node) -> void:
 	node = p_node
-	O2.Helpers.Signals.connect_if_not_connected(node.ready, ready)
+	_Signals.connect_if_not_connected(node.ready, ready)
 	_enter_tree()
 
 func tree_exiting() -> void:
-	O2.Helpers.Signals.disconnect_if_connected(node.ready, ready)
+	_Signals.disconnect_if_connected(node.ready, ready)
 	_exit_tree()
+
+static func can_attach_to(p_node: Node) -> bool:
+	return p_node != null

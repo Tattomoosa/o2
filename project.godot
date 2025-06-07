@@ -14,7 +14,7 @@ config/features=PackedStringArray("4.5")
 
 [autoload]
 
-O2="*res://addons/o2/src/O2.gd"
+o2="*res://addons/o2/src/O2.gd"
 
 [debug]
 

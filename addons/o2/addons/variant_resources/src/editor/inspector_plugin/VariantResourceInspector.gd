@@ -40,19 +40,16 @@ func _create_resource_editor(resource_type: String, property_name: String, objec
 	
 	return resource_editor
 
-func _on_resource_changed(resource: Resource, editor_property: EditorProperty) -> void:
+func _on_resource_changed(_resource: Resource, _editor_property: EditorProperty) -> void:
 	pass
-	# print("resource changed")
 
 func _populate_exposed_resource_properties(
 	resource: Resource,
 	vbox: VBoxContainer,
 	resource_button: Button,
 ) -> void:
-	# print("running populate exposed resource properties")
 	for child in vbox.get_children(true):
 		if child != resource_button:
-			# print("found child!")
 			child.queue_free()
 	if !resource:
 		return
@@ -75,12 +72,6 @@ func _populate_exposed_resource_properties(
 					resource.set(property_name, value)
 					property_editor.update_property()
 			)
-			# if resource.changed.is_connected(_populate_exposed_resource_properties):
-				# resource.changed.disconnect(_populate_exposed_resource_properties)
-				# resource.changed.connect(_populate_exposed_resource_properties.bind(resource, vbox, resource_button))
-			# if !resource.property_list_changed.is_connected(_populate_exposed_resource_properties):
-				# resource.property_list_changed.disconnect(_populate_exposed_resource_properties)
-				# resource.property_list_changed.connect(_populate_exposed_resource_properties.bind(resource, vbox, resource_button))
 			resource.value_changed.connect(property_editor.update_property)
 			property_editor.update_property()
 			vbox.add_child(property_editor)

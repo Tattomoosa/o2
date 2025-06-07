@@ -1,6 +1,7 @@
 @tool
 extends EditorPlugin
 
+const O2_INSTANCE := "o2"
 const O2_PATH := "src/O2.gd"
 
 const PLUGINS : PackedStringArray = [
@@ -14,7 +15,7 @@ func _enable_plugin() -> void:
 	print("O2: ENABLED")
 	var path := (get_script() as Script).resource_path.get_base_dir()
 	var o2_path := path.path_join(O2_PATH)
-	add_autoload_singleton("O2", o2_path)
+	add_autoload_singleton(O2_INSTANCE, o2_path)
 	for plugin in PLUGINS:
 		EditorInterface.set_plugin_enabled("o2/addons/" + plugin, true)
 
@@ -22,14 +23,14 @@ func _disable_plugin() -> void:
 	print("O2: DISABLED")
 	for plugin in PLUGINS:
 		EditorInterface.set_plugin_enabled("o2/addons/" + plugin, false)
-	remove_autoload_singleton("O2")
+	remove_autoload_singleton(O2_INSTANCE)
 
 
 func _on_scene_changed(scene_root: Node) -> void:
 	if !scene_root:
 		return
 	for autoload in get_tree().root.get_children():
-		if autoload.name == "O2":
+		if autoload.name == O2_INSTANCE:
 			autoload.tree_watcher = autoload.TreeWatcher.new(scene_root)
 
 

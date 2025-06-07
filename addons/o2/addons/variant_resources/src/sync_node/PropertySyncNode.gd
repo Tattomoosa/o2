@@ -2,6 +2,8 @@
 class_name PropertySyncNode
 extends Node
 
+const _PropertyInfo := O2.Helpers.PropertyInfo
+
 const ARRAY_PREFIX := "synced_properties_"
 const PATH_SUFFIX := "node_path"
 const PROPERTY_NAME_SUFFIX := "property_name"
@@ -22,10 +24,10 @@ const RESOURCE_SUFFIX := "resource"
 
 var _synced_properties_callables : Array[Callable]
 
-var editor_array_helper : O2.Helpers.PropertyInfo.EditorArrayHelper
+var editor_array_helper : _PropertyInfo.EditorArrayHelper
 
 func _ready() -> void:
-	editor_array_helper = O2.Helpers.PropertyInfo.EditorArrayHelper.new(
+	editor_array_helper = _PropertyInfo.EditorArrayHelper.new(
 		self,
 		"Synced Properties",
 		"Add Synced Property",
@@ -60,12 +62,8 @@ func _on_array_changed(key: String, index: int) -> void:
 		if !r.value_changed.is_connected(callable):
 			r.value_changed.connect(callable)
 			var node = _get_node(index)
-			if !node or !_can_sync_to_property(
-					r,
-					O2.Helpers.PropertyInfo.get_property(
-						node,
-						_synced_properties_names[index]
-					)):
+			var property_name := _synced_properties_names[index]
+			if !node or !_can_sync_to_property(r, _PropertyInfo.get_property(node, property_name)):
 				_synced_properties_names[index] = ""
 	_update(index)
 

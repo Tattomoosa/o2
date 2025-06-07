@@ -3,6 +3,8 @@
 class_name ArrayResource
 extends VariantResource
 
+const _PropertyInfo := O2.Helpers.PropertyInfo
+
 # not sure this one is useful lol
 enum TestEnum {
 	ONE,
@@ -42,7 +44,7 @@ func _validate_property(property: Dictionary) -> void:
 				property.hint_string = type_string(type_restrict_to_type)
 			else:
 				property.hint = PROPERTY_HINT_TYPE_STRING
-				property.hint_string = O2.Helpers.PropertyInfo.construct_array_hint_type_string(
+				property.hint_string = _PropertyInfo.construct_array_hint_type_string(
 					[type_restrict_to_type],
 					(
 						[0] if !type_restrict_to_resource else [PROPERTY_HINT_RESOURCE_TYPE]

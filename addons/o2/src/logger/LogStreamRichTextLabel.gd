@@ -8,7 +8,7 @@ const LogStream := preload("LogStream.gd")
 func _init() -> void:
 	bbcode_enabled = true
 	scroll_following = true
-	_subscribe(O2.Log)
+	_subscribe(o2.Log)
 
 func _log(msg: String, stream_name: String = "") -> void:
 	append_text(

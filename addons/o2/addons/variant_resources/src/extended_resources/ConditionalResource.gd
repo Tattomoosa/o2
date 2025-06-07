@@ -2,6 +2,8 @@
 class_name ConditionalResource
 extends BoolResource
 
+const _Signals := O2.Helpers.Signals
+
 enum Condition {
 	IS_TRUE,
 	IS_FALSE,
@@ -17,7 +19,7 @@ enum Condition {
 
 @export var resource_a : VariantResource:
 	set(v):
-		O2.Helpers.Signals.swap(resource_a, v, "value_changed", _check_conditional)
+		_Signals.swap(resource_a, v, "value_changed", _check_conditional)
 		resource_a = v
 		_check_conditional()
 @export var condition : Condition:
@@ -26,7 +28,7 @@ enum Condition {
 		_check_conditional()
 @export var resource_b : VariantResource:
 	set(v):
-		O2.Helpers.Signals.swap(resource_b, v, "value_changed", _check_conditional)
+		_Signals.swap(resource_b, v, "value_changed", _check_conditional)
 		resource_b = v
 		_check_conditional()
 

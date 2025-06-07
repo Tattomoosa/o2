@@ -2,14 +2,16 @@
 class_name RangeResource
 extends FloatResource
 
+const _Signals := O2.Helpers.Signals
+
 @export var max_value: FloatResource = FloatResource.new(1.0):
 	set(v):
-		O2.Helpers.Signals.swap(v, max_value, "value_changed", _changed)
+		_Signals.swap(v, max_value, "value_changed", _changed)
 		max_value = v
 		_changed()
 @export var min_value: FloatResource = FloatResource.new(0.0):
 	set(v):
-		O2.Helpers.Signals.swap(v, min_value, "value_changed", _changed)
+		_Signals.swap(v, min_value, "value_changed", _changed)
 		min_value = v
 		_changed()
 @export var allow_greater := false:

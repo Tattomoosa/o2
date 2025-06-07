@@ -3,7 +3,7 @@
 ## ``` gdscript
 ## @export var resource : SomeResource:
 ## 	 set(v):
-##		 O2.Helpers.Signals.swap(resource, v, "changed", _on_changed)
+##		 Signals.swap(resource, v, "changed", _on_changed)
 ##     resource = v
 ## ```
 static func swap(from: Object, to: Object, signal_name: StringName, callable: Callable, flags: int = 0) -> void:
