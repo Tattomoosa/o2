@@ -9,6 +9,12 @@
 [ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="7_k8f1l"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="8_fkvod"]
 
+[sub_resource type="Resource" id="Resource_i3afb"]
+script = ExtResource("7_k8f1l")
+value = "what do you think about this?"
+type = 4
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+
 [sub_resource type="Resource" id="Resource_hldr7"]
 script = ExtResource("4_hldr7")
 value = 1.0
@@ -32,12 +38,6 @@ metadata/_custom_type_script = "uid://0svcbakobqb4"
 [sub_resource type="BoxMesh" id="BoxMesh_hldr7"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[sub_resource type="Resource" id="Resource_i3afb"]
-script = ExtResource("7_k8f1l")
-value = "ok ok ok "
-type = 4
-metadata/_custom_type_script = "uid://djdxn6wi2t33k"
-
 [sub_resource type="Resource" id="Resource_k8f1l"]
 resource_name = "SyncVariantResource"
 script = ExtResource("8_fkvod")
@@ -52,6 +52,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hldr7")
+resource = SubResource("Resource_i3afb")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 1
@@ -94,5 +95,5 @@ metadata/_edit_lock_ = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "ok ok ok "
+text = "what do you think about this?"
 metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_k8f1l")])

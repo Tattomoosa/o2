@@ -2,9 +2,7 @@
 class_name TestScript
 extends Node
 
-signal arg_signal(one, two, three, four)
-
-@export_file var file : Array[String]
+@export var resource : VariantResource
 
 func _init() -> void:
 	pass
