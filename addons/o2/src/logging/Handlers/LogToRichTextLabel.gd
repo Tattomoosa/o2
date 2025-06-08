@@ -3,7 +3,7 @@ extends RichTextLabel
 
 ## Logs a LogStream into a RichTextLabel, in-game or in-editor
 
-const LogStream := preload("LogStream.gd")
+const LogStream := preload("uid://kj2lij0iyp3h")
 
 func _init() -> void:
 	bbcode_enabled = true

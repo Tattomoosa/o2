@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c8um61f6jh5ku"]
+[gd_scene load_steps=22 format=3 uid="uid://c8um61f6jh5ku"]
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_7d2n1"]
 [ext_resource type="Texture2D" uid="uid://b5258mnsr6qim" path="res://addons/o2/assets/icons/o2.svg" id="2_mxeog"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://c2mtg5lj5dbtd" path="res://addons/o2/addons/variant_resources/src/extended_resources/FlagsResource.gd" id="7_hbqsc"]
 [ext_resource type="Script" uid="uid://trvh1785sr8p" path="res://addons/o2/addons/variant_resources/src/variant_resources/IntResource.gd" id="8_d5deg"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="8_o8nsk"]
+[ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="9_d5deg"]
 
 [sub_resource type="Resource" id="Resource_376k1"]
 script = ExtResource("4_5ybcm")
@@ -171,4 +172,7 @@ metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("8_o8nsk")
+synced_properties_count = 1
+_synced_properties_paths = Array[NodePath]([NodePath("../Label")])
+_synced_properties_resources = Array[ExtResource("9_d5deg")]([null])
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"

@@ -1,2 +1,2 @@
 const LogStream := preload("LogStream.gd")
-const LogStreamRichTextLabel := preload("LogStreamRichTextLabel.gd")
+const Handlers := preload("Handlers/_index.gd")
