@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_NODE_PATH
 	_value = NodePath()
+
+func get_type() -> Variant.Type:
+	return TYPE_NODE_PATH

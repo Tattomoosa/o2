@@ -45,11 +45,13 @@ static func get_metadata_scripts(object: Object) -> Array[MetadataScript]:
 		return []
 	return object.get_meta(METADATA_SCRIPTS_PROPERTY)
 
-func add_to_object(object: Object) -> void:
-	assert(object and is_instance_valid(Object), "Invalid object!")
-	assert(object is Node, "Object is not a node!")
-	var md_scripts : Array[MetadataScript] = []\
-			if !has_metadata_scripts(object)\
-			else get_metadata_scripts(object)
+func add_to_node(p_node: Node) -> void:
+	assert(p_node and is_instance_valid(p_node), "Invalid node!")
+	assert(p_node is Node, "node is not a node!")
+	if !has_metadata_scripts(p_node):
+		p_node.set_meta(METADATA_SCRIPTS_PROPERTY, [] as Array[MetadataScript])
+	var md_scripts := get_metadata_scripts(p_node)
 	md_scripts.push_back(self)
+	if p_node.is_inside_tree():
+		tree_entered(p_node)
 

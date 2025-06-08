@@ -5,12 +5,6 @@ extends VariantResource
 
 const _PropertyInfo := O2.Helpers.PropertyInfo
 
-# not sure this one is useful lol
-enum TestEnum {
-	ONE,
-	TWO
-}
-
 @export var value : Array:
 	get: return _value
 	set(v): _set_value(v)
@@ -25,6 +19,9 @@ func _init() -> void:
 	_type = TYPE_ARRAY
 	_value = []
 
+func get_type() -> Variant.Type:
+	return TYPE_ARRAY
+
 func _validate_property(property: Dictionary) -> void:
 	super(property)
 
@@ -37,7 +34,7 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name == "type_restrict_hint_string":
 		property.usage |= PROPERTY_USAGE_READ_ONLY
 
-	if property.name == "value" and !_override_property_hint:
+	if property.name == "value":
 		if type_restrict_enabled:
 			if type_restrict_to_type != TYPE_OBJECT:
 				property.hint = PROPERTY_HINT_ARRAY_TYPE
@@ -52,3 +49,4 @@ func _validate_property(property: Dictionary) -> void:
 					type_restrict_to_resource
 				)
 			type_restrict_hint_string = property.hint_string
+	super(property)

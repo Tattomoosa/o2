@@ -5,8 +5,9 @@ extends Resource
 
 signal value_changed
 
+## The type of the object. Note that while you can change _type in subclasses, 
 @export var type : Variant.Type = TYPE_NIL:
-	get: return _type
+	get: return get_type()
 	set(value):
 		_type = value
 		emit_changed()
@@ -14,13 +15,17 @@ signal value_changed
 
 var _value : Variant = null
 var _type : Variant.Type = TYPE_NIL
-var _override_property_hint : Dictionary = {}
+@export_storage var _override_property_info : Dictionary = {}
+
+func set_override_property_info(property_info: Dictionary) -> void:
+	_override_property_info = property_info.duplicate()
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "value" and _override_property_hint:
-		for key in _override_property_hint:
-			property[key] = _override_property_hint[key]
-	if property.name == "type":
+	if property.name == "value" and _override_property_info:
+		for key in _override_property_info:
+			if key == "name": continue
+			property[key] = _override_property_info[key]
+	elif property.name == "type":
 		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 		if not is_variant():
 			property.usage |= PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR

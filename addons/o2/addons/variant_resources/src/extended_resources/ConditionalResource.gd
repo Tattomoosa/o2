@@ -113,6 +113,10 @@ func _get_conditional_label() -> String:
 			return ">="
 	return "?"
 
+# Ignore overrides
+func set_override_property_info(_property_info: Dictionary) -> void:
+	return
+
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "value":
 		property.usage |= PROPERTY_USAGE_READ_ONLY

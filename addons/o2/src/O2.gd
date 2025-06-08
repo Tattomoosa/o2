@@ -3,7 +3,7 @@
 class_name O2
 extends Node
 
-const Helpers := preload("helpers/index.gd")
+const Helpers := preload("uid://qle0x0d234xi")
 const LogStream := preload("logger/LogStream.gd")
 const TreeWatcher := preload("uid://c5n7icddagd25")
 

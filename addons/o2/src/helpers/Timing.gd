@@ -56,13 +56,15 @@ class FrameCounter extends RefCounted:
 	var start_frame: int
 	var _use_physics := false
 
-	func _init(use_physics := false) -> void:
+	enum StartFrame { CURRENT_FRAME = -1, START_FRAME = 0 }
+
+	func _init(use_physics := false, starting_frame := StartFrame.CURRENT_FRAME ) -> void:
 		_use_physics = use_physics
-		start_frame = (
-			Engine.get_physics_frames()
-				if _use_physics
-				else Engine.get_process_frames()
-		)
+		match starting_frame:
+			StartFrame.CURRENT_FRAME:
+				start_frame = Engine.get_physics_frames() if _use_physics else Engine.get_process_frames()
+			StartFrame.START_FRAME:
+				start_frame = 0
 	
 	func get_frames() -> int:
 		var frame := Engine.get_physics_frames() if _use_physics else Engine.get_process_frames()

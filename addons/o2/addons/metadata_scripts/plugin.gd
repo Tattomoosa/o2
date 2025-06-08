@@ -53,6 +53,7 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 		O2.Helpers.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
 		btn.icon = load("uid://cm3wwdg8y3x7m")
 		btn.text = "Add Metadata Script"
+		btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		btn.flat = false
 		var popup := btn.get_popup()
 		popup.allow_search = true

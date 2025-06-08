@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_PACKED_FLOAT64_ARRAY
 	_value = PackedFloat64Array([])
+
+func get_type() -> Variant.Type:
+	return TYPE_PACKED_FLOAT64_ARRAY

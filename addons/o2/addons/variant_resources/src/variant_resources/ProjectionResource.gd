@@ -8,5 +8,8 @@ extends VariantResource
 	set(v): _set_value(v)
 
 func _init() -> void:
-	_type = TYPE_PLANE
+	_type = TYPE_PROJECTION
 	_value = Projection()
+
+func get_type() -> Variant.Type:
+	return TYPE_PROJECTION

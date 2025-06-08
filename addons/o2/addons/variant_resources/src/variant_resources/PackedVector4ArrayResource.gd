@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_PACKED_VECTOR4_ARRAY
 	_value = PackedVector4Array([])
+
+func get_type() -> Variant.Type:
+	return TYPE_PACKED_VECTOR4_ARRAY

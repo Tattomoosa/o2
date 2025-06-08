@@ -23,6 +23,27 @@ static func connect_if_not_connected(p_signal: Signal, callable: Callable, flags
 static func disconnect_if_connected(p_signal: Signal, callable: Callable) -> void:
 	if p_signal.is_connected(callable):
 		p_signal.disconnect(callable)
+
+class Debouncer extends RefCounted:
+	signal ready
+	var dirty := false
+	var _NO_ARG := RefCounted.new()
+	var args : Array = []
+
+	func _init() -> void:
+		args.resize(10)
+
+	func on_signal(
+		arg0: Variant=_NO_ARG, arg1: Variant=_NO_ARG, arg2: Variant=_NO_ARG, arg3: Variant=_NO_ARG, arg4: Variant=_NO_ARG, arg5: Variant=_NO_ARG, arg6: Variant=_NO_ARG, arg7: Variant=_NO_ARG, arg8: Variant=_NO_ARG, arg9: Variant=_NO_ARG
+	) -> void:
+		args[0] = arg0; args[1] = arg1; args[2] = arg2; args[3] = arg3; args[4] = arg4; args[5] = arg5; args[6] = arg6; args[7] = arg7; args[8] = arg8; args[9] = arg9
+		if !dirty:
+			_set_clean.call_deferred()
+		dirty = true
 	
+	func _set_clean() -> void:
+		dirty = false
+		var real_args := args.filter(func(x): return x is not RefCounted or x != _NO_ARG)
+		ready.emit.callv(real_args)
 		
 func _init() -> void: assert(false, "Class can't be instantiated")

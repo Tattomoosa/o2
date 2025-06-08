@@ -1,7 +1,7 @@
 @tool
 extends EditorInspectorPlugin
 
-const _PropertyInfo := O2.Helpers.PropertyInfo
+const PropertyInfo := O2.Helpers.PropertyInfo
 static var _FAKE_RESOURCE := _FakeResource.new()
 
 func _parse_property(
@@ -13,10 +13,12 @@ func _parse_property(
 	usage_flags: int,
 	wide: bool
 ) -> bool:
+	# Needed to always be able to generate a default property editor
 	if object is _FakeResource:
 		return false
 	return _parse_extended_property(object, type, name, hint_type, hint_string, usage_flags, wide)
 
+## Extending classes should override this method instead of _parse_property
 func _parse_extended_property(
 	_object: Object,
 	_type: Variant.Type,
@@ -29,17 +31,24 @@ func _parse_extended_property(
 	return false
 
 static func instantiate_default_property_editor(object: Object, name: String) -> EditorProperty:
-	var property := _PropertyInfo.get_property(object, name)
-	return instantiate_property_editor(object, property)
+	var property := PropertyInfo.get_property(object, name)
+	return instantiate_property_editor(object, property, true)
 
-static func instantiate_property_editor(object: Object, property: Dictionary) -> EditorProperty:
+static func instantiate_property_editor(object: Object, property: Dictionary, init_with_fake_resource := false) -> EditorProperty:
+	if !object:
+		push_error("Object is null")
+		return null
+	# TODO is this true?
+	if "name" not in property:
+		push_error("Cannot make property editor for anonymous property")
+		return null
 	var pe := EditorInspector.instantiate_property_editor(
-		_FAKE_RESOURCE,
-		property.type if "type" in property else "",
-		property.name if "name" in property else "",
-		property.hint,
-		property.hint_string if property.hint_string else "",
-		property.usage
+		object if !init_with_fake_resource else _FAKE_RESOURCE,
+		property.type if "type" in property else 0,
+		property.name,
+		property.hint if "hint" in property else 0,
+		property.hint_string if "hint_string" in property else "",
+		property.usage if "hint" in property else 0
 	)
 	pe.set_object_and_property(object, property.name)
 	pe.ready.connect(pe.update_property)
@@ -55,14 +64,18 @@ static func instantiate_property_editor(object: Object, property: Dictionary) ->
 	)
 	return pe
 
+## Creates a property editor and attaches a script to it
 static func instantiate_patched_property_editor(
 	object: Object,
 	property: Dictionary,
 	patch_script: Script
 ) -> EditorProperty:
-	var property_editor := instantiate_property_editor(object, property)
+	var property_editor := instantiate_property_editor(object, property, true)
+	assert(
+		property_editor.get_script() == null,
+		"EditorProperty for %s.%s already has script attached" % [object, property.name]
+	)
 	property_editor.set_script(patch_script)
-	# property_editor.set_object_and_property(object, property.name)
 	return property_editor
 
 static func style_inspector_button(button: Button, icon_name: String = "") -> void:

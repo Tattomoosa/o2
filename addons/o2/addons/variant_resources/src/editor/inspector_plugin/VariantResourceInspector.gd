@@ -3,7 +3,6 @@ extends O2.Helpers.Editor.InspectorPlugin
 
 const ES := O2.Helpers.Editor.Settings
 const InspectorPlugin := preload("VariantResourceInspector.gd")
-const PropertyInfo := O2.Helpers.PropertyInfo
 const Controls := O2.Helpers.Controls
 const H := O2.Helpers
 const RESOURCE_ICON := preload("uid://b3hbc21pvf0fs")
@@ -49,10 +48,13 @@ const TYPE_MAP : Dictionary[Variant.Type, String] = {
 
 const IGNORE_USAGE : Array[int] = [ PROPERTY_USAGE_INTERNAL ]
 
-func _can_handle(object: Object) -> bool:
-	return object is not VariantResource
+func _can_handle(_object: Object) -> bool:
+	return true
+	# return object is not VariantResource
 
 func _parse_extended_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags: int, _wide: bool) -> bool:
+	if !name:
+		return false
 	if type == TYPE_OBJECT and hint_type == PROPERTY_HINT_RESOURCE_TYPE:
 		if !O2.Helpers.Scripts.is_class_name(hint_string):
 			return false
@@ -60,42 +62,69 @@ func _parse_extended_property(object: Object, type: Variant.Type, name: String, 
 			return false
 		add_property_editor(name, _create_resource_editor(object, name))
 		return true
-	elif type not in [TYPE_NIL, TYPE_OBJECT, TYPE_RID, TYPE_CALLABLE, TYPE_SIGNAL]:
+	elif object is Node and type in TYPE_MAP:
 		var overridden_property_editor := _get_override_resource_editor(object, name)
 		if overridden_property_editor:
 			add_property_editor(name, overridden_property_editor)
 			return true
 		else:
 			if O2.Helpers.BitMasks.has_any(usage_flags, IGNORE_USAGE):
-				print("Ignoring...")
-				print(PropertyInfo.prettify(PropertyInfo.get_property(object, name)))
-				print()
 				return false
 
 			var variant_editor = _create_variant_editor(object, name)
+			if !variant_editor:
+				print(PropertyInfo.prettify(PropertyInfo.get_property(object, name)))
+				return false
+
 			add_property_editor(name, variant_editor)
-			variant_editor.label = "    " + variant_editor.label
-			var button := Button.new()
-			button.icon = RESOURCE_ICON
-			button.flat = true
-			button.add_theme_color_override("icon_normal_color", Color(Color.WHITE, 0.2))
-			button.tooltip_text = "Add VariantResource Override"
-			button.expand_icon = true
-			button.custom_minimum_size = ES.scale_vector2(Vector2(25, 28))
-			var control := Control.new()
-			control.add_child(button)
-			control.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			variant_editor.add_child(control)
-			variant_editor.property_can_revert_changed.connect(
-				_position_resource_override_button.bindv([variant_editor, button])
-			)
-			button.position.y = ES.scale_int(2)
-			button.position.x = -ES.scale_int(25)
-			button.pressed.connect(_add_resource_override.bindv([object, name]))
+			# _patch_variant_editor_property(variant_editor, object, name)
+			# variant_editor.ready.connect(_on_variant_editor_ready.bind(variant_editor))
+
+			variant_editor.ready.connect(_patch_variant_editor_property.bindv([variant_editor, object, name]).call_deferred)
 			return true
 	return false
 
+func _patch_variant_editor_property(variant_editor: EditorProperty, object: Object, name: String) -> void:
+	var hbox := HBoxContainer.new()
+	var parent := variant_editor.get_parent()
+	var index := variant_editor.get_index()
+	variant_editor.reparent(hbox)
+	variant_editor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(hbox)
+	parent.move_child(hbox, index)
+
+	var button := Button.new()
+	button.flat = true
+	button.icon = RESOURCE_ICON
+	button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+	button.add_theme_color_override("icon_normal_color", Color(Color.WHITE, 0.2))
+	button.tooltip_text = "Add VariantResource Override"
+
+	button.expand_icon = false
+	hbox.add_child(button)
+	button.pressed.connect(_add_resource_override.bindv([object, name]))
+
 func _add_resource_override(object: Object, property_name: String) -> void:
+	if object is not Node:
+		push_error("%s is not a Node!" % object)
+
+	if object is Range and property_name in ["value", "min_value", "max_value"]:
+		var range_node := object as Range
+		var rr := RangeResource.new()
+		rr.value = range_node.value
+		rr.min_value.value = range_node.min_value
+		rr.max_value.value = range_node.max_value
+		for p_name in ["value", "min_value", "max_value"]:
+			var script := MetadataScript_SyncVariantResource.new()
+			script.property_name = p_name
+			if p_name == "value":
+				script.resource = rr
+			else:
+				script.resource = rr.get(p_name)
+			script.add_to_node(range_node)
+		range_node.notify_property_list_changed()
+		return
+
 	var value : Variant = object.get(property_name)
 	var type := typeof(value)
 	var variant_resource_class_name := TYPE_MAP[type]
@@ -103,7 +132,7 @@ func _add_resource_override(object: Object, property_name: String) -> void:
 	var md_script := MetadataScript_SyncVariantResource.new()
 	md_script.resource = vr
 	md_script.property_name = property_name
-	md_script.add_to_object(object)
+	md_script.add_to_node(object)
 	object.notify_property_list_changed()
 
 func _position_resource_override_button(_property_name: String, can_revert: bool, _variant_editor: EditorProperty, button: Button) -> void:
@@ -120,7 +149,7 @@ func _create_variant_editor(object: Object, property_name: String) -> EditorProp
 	return variant_editor
 
 func _create_resource_editor(object: Object, property_name: String) -> EditorProperty:
-	var property := _PropertyInfo.get_property(object, property_name)
+	var property := PropertyInfo.get_property(object, property_name)
 	var resource_editor : VariantResourceEditorProperty = instantiate_patched_property_editor(
 		object,
 		property,
@@ -128,7 +157,7 @@ func _create_resource_editor(object: Object, property_name: String) -> EditorPro
 	)
 	var resource : VariantResource = object.get(property_name)
 	if resource:
-		resource_editor.property_definition = _PropertyInfo.get_property(resource, "value")
+		resource_editor.property_definition = PropertyInfo.get_property(resource, "value")
 	else:
 		resource_editor.property_definition = property
 	return resource_editor
@@ -136,7 +165,7 @@ func _create_resource_editor(object: Object, property_name: String) -> EditorPro
 func _get_override_resource_editor(object: Object, property_name: String) -> EditorProperty:
 	if !object.has_meta("metadata_scripts"):
 		return null
-	var object_property := _PropertyInfo.get_property(object, property_name)
+	var object_property := PropertyInfo.get_property(object, property_name)
 	var metadata_scripts : Array = object.get_meta("metadata_scripts")
 	for md_script in metadata_scripts:
 		if md_script is MetadataScript_SyncVariantResource:
@@ -145,7 +174,7 @@ func _get_override_resource_editor(object: Object, property_name: String) -> Edi
 				continue
 			if !md_script.resource:
 				return null
-			var property := _PropertyInfo.get_property(s, "resource")
+			var property := PropertyInfo.get_property(s, "resource")
 			property.hint_string = TYPE_MAP[object_property.type]
 			var resource_editor := instantiate_patched_property_editor(s, property, VariantResourceOverrideEditorProperty)
 			var vr_editor := resource_editor as VariantResourceOverrideEditorProperty
@@ -178,6 +207,8 @@ class VariantResourceEditorProperty extends EditorProperty:
 	var use_bottom_editor := false
 	var resource_name_label : Label
 	var property_definition : Dictionary
+	var resource_class_name : String
+
 	signal using_bottom_editor(node: Node)
 
 	func _ready() -> void:
@@ -198,21 +229,28 @@ class VariantResourceEditorProperty extends EditorProperty:
 
 		var heading := Control.new()
 		if resource:
+			resource_class_name = O2.Helpers.Scripts.get_object_class_name(resource)
 			if !use_bottom_editor:
-				heading.custom_minimum_size.y = 25
+				heading.custom_minimum_size.y = ES.scale * 12
 				resource_name_label = Label.new()
-				resource_name_label.add_theme_font_size_override("font_size", 20)
+				resource_name_label.add_theme_font_size_override("font_size", ES.scale * 10)
 				resource_name_label.set_anchors_preset(PRESET_TOP_WIDE)
 				resource_name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-				resource_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-				resource_name_label.position.y -= 10
+				resource_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+				resource_name_label.position.y -= ES.scale * 6
+				# resource_name_label.position.x += ES.scale * 12
+				resource_name_label.z_index = 1
 				_update_resource_name_label_text()
 				heading.add_child(resource_name_label)
 				value_editor_parent.add_child(heading, Control.INTERNAL_MODE_FRONT)
 
 			value_editor = create_value_editor()
+			resource.changed.connect(_replace_value_editor)
+			var margin_container := Controls.margin_container(ES.scale * 2)
+			value_editor_parent.add_child(margin_container)
+			margin_container.add_child(value_editor)
+			# value_editor_parent.add_child(value_editor)
 
-			value_editor_parent.add_child(value_editor)
 			if use_bottom_editor:
 				var bottom_panel := PanelContainer.new()
 				bottom_panel.add_theme_stylebox_override(
@@ -222,7 +260,7 @@ class VariantResourceEditorProperty extends EditorProperty:
 				bottom_panel.add_child(value_editor_parent)
 				value_editor_parent = bottom_panel
 
-			resource.property_list_changed.connect(_replace_value_editor)
+			# resource.property_list_changed.connect(_replace_value_editor)
 		else:
 			vbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
@@ -249,24 +287,36 @@ class VariantResourceEditorProperty extends EditorProperty:
 				}],
 			}],
 		})
+
 		self.child_entered_tree.connect(_subinspector_entering)
 		self.child_exiting_tree.connect(_subinspector_exiting)
+
+		picker.resource_changed.connect(_on_resource_changed)
 	
 	func _set_bottom_editor(node: Node) -> void:
 		set_bottom_editor(node)
 		using_bottom_editor.emit(node)
 	
+	func _on_resource_changed(_resource: VariantResource) -> void:
+		get_edited_object().notify_property_list_changed()
+
 	func _get_resource() -> VariantResource:
 		return get_edited_object().get(get_edited_property())
 	
 	func _replace_value_editor() -> void:
-		print("REPLACING VALUE EDITOR")
+		if !value_editor.is_visible_in_tree():
+			if !value_editor.visibility_changed.is_connected(_replace_value_editor):
+				value_editor.visibility_changed.connect(_replace_value_editor, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+			return
+		print("replacing value editor")
+		_update_resource_name_label_text()
 		var new_value_editor := create_value_editor()
 		var parent := value_editor.get_parent()
 		parent.add_child(new_value_editor)
 		parent.remove_child(value_editor)
 		value_editor.free()
 		value_editor = new_value_editor
+		_update_resource_name_label_text()
 
 	func _create_value_editor() -> EditorProperty:
 		return InspectorPlugin.instantiate_default_property_editor(
@@ -299,13 +349,15 @@ class VariantResourceEditorProperty extends EditorProperty:
 		value_editor.update_property()
 	
 	func _update_resource_name_label_text() -> void:
+		if use_bottom_editor:
+			return
 		var resource := _get_resource()
-		var resource_class_name := O2.Helpers.Scripts.get_object_class_name(resource)
-		resource_name_label.text = (
-			"%s (%s)" % [resource.resource_name, resource_class_name]
-			if resource.resource_name
-			else resource_class_name
-		)
+		if resource.resource_name:
+			resource_name_label.text = resource.resource_name
+			resource_name_label.modulate = Color.WHITE
+		else:
+			resource_name_label.text = resource_class_name
+			resource_name_label.modulate = Color(Color.WHITE, 0.4)
 	
 	func _property_can_revert(_property: StringName) -> bool:
 		return false
@@ -333,9 +385,25 @@ class VariantResourceEditorProperty extends EditorProperty:
 				PROPERTY_HINT_TYPE_STRING:
 					return true
 		var resource := _get_resource()
-		if resource is QuaternionResource:
-			return true
-		if resource is ArrayResource:
+		if (
+			resource is Vector3Resource
+			or resource is Vector3iResource
+			or resource is Vector4Resource
+			or resource is Vector4iResource
+			or resource is PackedByteArrayResource
+			or resource is PackedInt32ArrayResource
+			or resource is PackedInt64ArrayResource
+			or resource is PackedFloat32ArrayResource
+			or resource is PackedFloat64ArrayResource
+			or resource is PackedStringArrayResource
+			or resource is PackedVector2ArrayResource
+			or resource is PackedVector3ArrayResource
+			or resource is PackedColorArrayResource
+			or resource is PackedVector4ArrayResource
+			or resource is ArrayResource
+			or resource is DictionaryResource
+			or resource is QuaternionResource
+		):
 			return true
 		return false
 
@@ -350,8 +418,6 @@ class VariantResourceOverrideEditorProperty extends VariantResourceEditorPropert
 		property_can_revert_changed.emit(property_definition.name, false)
 
 		EditorInterface.get_inspector().property_selected.connect(_on_property_selected)
-
-		picker.resource_changed.connect(_on_resource_changed)
 	
 	# TODO needs to swap out for a new resource
 	func _on_resource_changed(resource: VariantResource) -> void:
@@ -360,9 +426,7 @@ class VariantResourceOverrideEditorProperty extends VariantResourceEditorPropert
 		_replace_value_editor()
 	
 	func _update_property() -> void:
-		print("resource editor : updating property")
 		var value : Variant = original_object.get(property_definition.name)
-		print(value)
 		_get_resource().value = value
 		value_editor.update_property()
 
@@ -373,11 +437,13 @@ class VariantResourceOverrideEditorProperty extends VariantResourceEditorPropert
 			deselect()
 
 	func _create_value_editor() -> EditorProperty:
-		var props := property_definition.duplicate()
-		props.name = "value"
+		var resource := _get_resource()
+		resource.set_override_property_info(property_definition)
+		var resource_property_info := PropertyInfo.get_property(resource, "value")
+
 		return InspectorPlugin.instantiate_property_editor(
 			_get_resource(),
-			props
+			resource_property_info
 		)
 
 	func remove_override() -> void:
@@ -388,7 +454,6 @@ class VariantResourceOverrideEditorProperty extends VariantResourceEditorPropert
 				continue
 			var svr := script as MetadataScript_SyncVariantResource
 			if svr.property_name == property_name:
-				print("Erasing overriden property '%s'" % property_name)
 				scripts.erase(svr)
 				original_object.notify_property_list_changed()
 				break
@@ -399,6 +464,7 @@ class OverriddenEditorProperty extends EditorProperty:
 	func _ready() -> void:
 		deletable = true
 		add_child(resource_editor)
+		name_split_ratio = 0.5
 		resource_editor.name_split_ratio = 0
 		resource_editor.label = ""
 		resource_editor.picker.reparent(self)
@@ -408,7 +474,6 @@ class OverriddenEditorProperty extends EditorProperty:
 		else:
 			resource_editor.using_bottom_editor.connect(_set_bottom_editor)
 		
-		# resource_editor.picker.custom_minimum_size.y = resource_editor.picker.size.y
 		EditorInterface.get_inspector().property_deleted.connect(_on_deleted)
 
 	func _update_property() -> void:

@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_VECTOR4I
 	_value = Vector4i.ZERO
+
+func get_type() -> Variant.Type:
+	return TYPE_VECTOR4I

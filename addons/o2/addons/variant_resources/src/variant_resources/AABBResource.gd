@@ -11,3 +11,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_AABB
 	_value = AABB()
+
+func get_type() -> Variant.Type:
+	return TYPE_AABB

@@ -32,20 +32,7 @@ static func add_children(parent: Control, controls: Array[Control], internal := 
 			node.get_parent().remove_child(node)
 		parent.add_child(node, false, internal)
 
-"""
-{
-	control: Control,
-	children: [
-		Control,
-		Control,
-		{
-		  control: Control,
-			children: [Control]
-		}
-	]
-}
-"""
-
+# ehhh
 static func layout(controls: Dictionary) -> Control:
 	var parent : Control = controls.control
 	var children : Array = controls.children

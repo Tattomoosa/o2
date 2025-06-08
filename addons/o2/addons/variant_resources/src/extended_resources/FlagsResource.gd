@@ -25,7 +25,7 @@ enum FlagType {
 @export var flag_count : int = 4
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "value" and !_override_property_hint:
+	if property.name == "value" and !_override_property_info:
 		property.usage |= PROPERTY_USAGE_CLASS_IS_BITFIELD
 		match flag_type:
 			FlagType.RENDER_2D:

@@ -11,3 +11,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_COLOR
 	_value = Color.BLACK
+
+func get_type() -> Variant.Type:
+	return TYPE_COLOR

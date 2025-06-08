@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_TRANSFORM2D
 	_value = Transform2D()
+
+func get_type() -> Variant.Type:
+	return TYPE_TRANSFORM2D

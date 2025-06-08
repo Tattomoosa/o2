@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_PLANE
 	_value = Plane()
+
+func get_type() -> Variant.Type:
+	return TYPE_PLANE

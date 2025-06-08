@@ -1,34 +1,51 @@
-[gd_scene load_steps=24 format=3 uid="uid://c8um61f6jh5ku"]
+[gd_scene load_steps=21 format=3 uid="uid://c8um61f6jh5ku"]
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_7d2n1"]
 [ext_resource type="Texture2D" uid="uid://b5258mnsr6qim" path="res://addons/o2/assets/icons/o2.svg" id="2_mxeog"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="3_2tmcw"]
 [ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/variant_resources/src/variant_resources/ColorResource.gd" id="4_5ybcm"]
+[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="5_o8nsk"]
 [ext_resource type="Script" uid="uid://c2mtg5lj5dbtd" path="res://addons/o2/addons/variant_resources/src/extended_resources/FlagsResource.gd" id="7_hbqsc"]
-[ext_resource type="Script" uid="uid://bnucnuycbrx4b" path="res://addons/o2/addons/variant_resources/src/variant_resources/BoolResource.gd" id="7_o8nsk"]
 [ext_resource type="Script" uid="uid://trvh1785sr8p" path="res://addons/o2/addons/variant_resources/src/variant_resources/IntResource.gd" id="8_d5deg"]
+[ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="8_o8nsk"]
 
-[sub_resource type="Resource" id="Resource_qdu6j"]
+[sub_resource type="Resource" id="Resource_376k1"]
 script = ExtResource("4_5ybcm")
-value = Color(0.6900825, 0.2520053, 0.2520053, 1)
+value = Color(0.9310799, 0.5022795, 0.5022795, 1)
 type = 20
+_override_property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "color",
+"type": 20,
+"usage": 6
+}
 
-[sub_resource type="Resource" id="Resource_kvkwk"]
+[sub_resource type="Resource" id="Resource_px1ul"]
 resource_name = "SyncVariantResource"
 script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_qdu6j")
+resource = SubResource("Resource_376k1")
 property_name = &"color"
 
-[sub_resource type="Resource" id="Resource_6vhem"]
-script = ExtResource("8_d5deg")
-value = 0
-type = 2
+[sub_resource type="Resource" id="Resource_kvkwk"]
+script = ExtResource("5_o8nsk")
+value = "something cool and fun!"
+type = 4
+_override_property_info = {
+"class_name": &"",
+"hint": 18,
+"hint_string": "",
+"name": "text",
+"type": 4,
+"usage": 6
+}
 
-[sub_resource type="Resource" id="Resource_pqtua"]
+[sub_resource type="Resource" id="Resource_d6re0"]
 resource_name = "SyncVariantResource"
 script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_6vhem")
-property_name = &"layout_direction"
+resource = SubResource("Resource_kvkwk")
+property_name = &"text"
 
 [sub_resource type="Resource" id="Resource_8dkrl"]
 script = ExtResource("7_hbqsc")
@@ -36,6 +53,14 @@ flag_type = 0
 flag_count = 4
 value = 4194304
 type = 2
+_override_property_info = {
+"class_name": &"",
+"hint": 8,
+"hint_string": "",
+"name": "collision_layer",
+"type": 2,
+"usage": 6
+}
 metadata/_custom_type_script = "uid://c2mtg5lj5dbtd"
 
 [sub_resource type="Resource" id="Resource_cqitt"]
@@ -44,43 +69,18 @@ script = ExtResource("3_2tmcw")
 resource = SubResource("Resource_8dkrl")
 property_name = &"collision_layer"
 
-[sub_resource type="Resource" id="Resource_d6re0"]
-script = ExtResource("7_o8nsk")
-value = true
-type = 1
-
-[sub_resource type="Resource" id="Resource_d6m4d"]
-resource_name = "SyncVariantResource"
-script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_d6re0")
-property_name = &"monitoring"
-
-[sub_resource type="Resource" id="Resource_6wak4"]
-script = ExtResource("7_o8nsk")
-value = true
-type = 1
-
-[sub_resource type="Resource" id="Resource_uqgg2"]
-resource_name = "SyncVariantResource"
-script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_6wak4")
-property_name = &"monitorable"
-
-[sub_resource type="Resource" id="Resource_ykg2i"]
-script = ExtResource("8_d5deg")
-value = 0
-type = 2
-
-[sub_resource type="Resource" id="Resource_580nm"]
-resource_name = "SyncVariantResource"
-script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_ykg2i")
-property_name = &"priority"
-
 [sub_resource type="Resource" id="Resource_y1no8"]
 script = ExtResource("8_d5deg")
 value = 0
 type = 2
+_override_property_info = {
+"class_name": &"",
+"hint": 2,
+"hint_string": "Disabled,Combine,Combine-Replace,Replace,Replace-Combine",
+"name": "gravity_space_override",
+"type": 2,
+"usage": 16390
+}
 
 [sub_resource type="Resource" id="Resource_7u2t2"]
 resource_name = "SyncVariantResource"
@@ -92,6 +92,14 @@ property_name = &"gravity_space_override"
 script = ExtResource("8_d5deg")
 value = 0
 type = 2
+_override_property_info = {
+"class_name": &"",
+"hint": 2,
+"hint_string": "Disabled,Combine,Combine-Replace,Replace,Replace-Combine",
+"name": "linear_damp_space_override",
+"type": 2,
+"usage": 16390
+}
 
 [sub_resource type="Resource" id="Resource_lkmnf"]
 resource_name = "SyncVariantResource"
@@ -99,31 +107,58 @@ script = ExtResource("3_2tmcw")
 resource = SubResource("Resource_hkdos")
 property_name = &"linear_damp_space_override"
 
+[sub_resource type="Resource" id="Resource_hbqsc"]
+script = ExtResource("4_5ybcm")
+value = Color(0.6255902, 0.1708551, 0.1708551, 1)
+type = 20
+_override_property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "color",
+"type": 20,
+"usage": 6
+}
+metadata/_custom_type_script = "uid://c7cjsjtruf4y5"
+
+[sub_resource type="Resource" id="Resource_o8nsk"]
+resource_name = "SyncVariantResource"
+script = ExtResource("3_2tmcw")
+resource = SubResource("Resource_hbqsc")
+property_name = &"color"
+
 [node name="BasicOverrideScene" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.6900825, 0.2520053, 0.2520053, 1)
-metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_kvkwk"), SubResource("Resource_pqtua")])
+color = Color(0.9310799, 0.5022795, 0.5022795, 1)
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_px1ul")])
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 139.0
+offset_bottom = 35.0
+text = "something cool and fun!"
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_d6re0")])
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 15.0
+offset_top = 52.0
+offset_right = 94.0
+offset_bottom = 83.0
+text = "HELLO"
 icon = ExtResource("2_mxeog")
-
-[node name="Label" type="Label" parent="Button"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "something cool!"
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([])
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4194304
-metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_cqitt"), SubResource("Resource_d6m4d"), SubResource("Resource_uqgg2"), SubResource("Resource_580nm"), SubResource("Resource_7u2t2"), SubResource("Resource_lkmnf")])
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_cqitt"), SubResource("Resource_7u2t2"), SubResource("Resource_lkmnf")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -131,4 +166,9 @@ offset_left = 478.0
 offset_top = 115.0
 offset_right = 994.0
 offset_bottom = 507.0
-color = Color(0, 0, 0, 1)
+color = Color(0.6255902, 0.1708551, 0.1708551, 1)
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_o8nsk")])
+
+[node name="PropertySyncNode" type="Node" parent="."]
+script = ExtResource("8_o8nsk")
+metadata/_custom_type_script = "uid://cd4joj4o4emeh"

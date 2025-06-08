@@ -10,3 +10,6 @@ extends VariantResource
 func _init() -> void:
 	_type = TYPE_RECT2
 	_value = Rect2()
+
+func get_type() -> Variant.Type:
+	return TYPE_RECT2

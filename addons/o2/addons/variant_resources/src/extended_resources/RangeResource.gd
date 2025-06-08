@@ -6,12 +6,12 @@ const _Signals := O2.Helpers.Signals
 
 @export var max_value: FloatResource = FloatResource.new(1.0):
 	set(v):
-		_Signals.swap(v, max_value, "value_changed", _changed)
+		_Signals.swap(max_value, v, "value_changed", _changed)
 		max_value = v
 		_changed()
 @export var min_value: FloatResource = FloatResource.new(0.0):
 	set(v):
-		_Signals.swap(v, min_value, "value_changed", _changed)
+		_Signals.swap(min_value, v, "value_changed", _changed)
 		min_value = v
 		_changed()
 @export var allow_greater := false:
@@ -23,18 +23,26 @@ const _Signals := O2.Helpers.Signals
 		allow_lesser = v
 		_changed()
 
+# Ignore overrides
+func set_override_property_info(_property_info: Dictionary) -> void:
+	return
+
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "value" and !_override_property_hint:
+	if property.name == "value":
 		property.hint = PROPERTY_HINT_RANGE
 		property.hint_string = "%f,%f" % [min_value.value, max_value.value]
 		if allow_greater:
 			property.hint_string += ",or_greater"
 		if allow_lesser:
 			property.hint_string += ",or_less"
+	elif property.name in ["min_value", "max_value"]:
+		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 
 func _changed() -> void:
 	_set_value(value)
+	print("emitting range change")
 	emit_changed()
+	notify_property_list_changed()
 
 func _set_value(v: Variant) -> void:
 	if v >= max_value.value:
