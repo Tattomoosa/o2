@@ -108,12 +108,15 @@ func _patch_property_name_field_into_valid_property_enum(p: Dictionary) -> void:
 	var node := _get_node(i)
 	var resource := _get_resource(i)
 	if node and resource:
+		p.usage = PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE
 		p.hint = PROPERTY_HINT_ENUM_SUGGESTION
 		var hint_strings : Array[String] = []
 		for property in node.get_property_list():
 			if _can_sync_to_property(resource, property):
 				hint_strings.append(property.name)
 		p.hint_string = ",".join(hint_strings)
+	else:
+		p.usage = PROPERTY_USAGE_NONE
 
 func _can_sync_to_property(resource: VariantResource, property: Dictionary) -> bool:
 	if !property:

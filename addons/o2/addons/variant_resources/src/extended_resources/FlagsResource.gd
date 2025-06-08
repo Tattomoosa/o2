@@ -14,7 +14,10 @@ enum FlagType {
 }
 
 @export_group("Flag settings", "flag_")
-@export var flag_type : FlagType
+@export var flag_type : FlagType:
+	set(v):
+		flag_type = v
+		notify_property_list_changed()
 @export var flag_names : PackedStringArrayResource:
 	set(v):
 		flag_names = v
@@ -22,7 +25,7 @@ enum FlagType {
 @export var flag_count : int = 4
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "value":
+	if property.name == "value" and !_override_property_hint:
 		property.usage |= PROPERTY_USAGE_CLASS_IS_BITFIELD
 		match flag_type:
 			FlagType.RENDER_2D:

@@ -37,7 +37,7 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name == "type_restrict_hint_string":
 		property.usage |= PROPERTY_USAGE_READ_ONLY
 
-	if property.name == "value":
+	if property.name == "value" and !_override_property_hint:
 		if type_restrict_enabled:
 			if type_restrict_to_type != TYPE_OBJECT:
 				property.hint = PROPERTY_HINT_ARRAY_TYPE

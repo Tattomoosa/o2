@@ -2,7 +2,7 @@
 class_name TestScript
 extends Node
 
-@export var resource : VariantResource
+@export var resource : StringResource
 
 func _init() -> void:
 	pass

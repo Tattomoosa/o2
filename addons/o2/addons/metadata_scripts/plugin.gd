@@ -1,6 +1,8 @@
 @tool
 extends EditorPlugin
 
+const _Scripts := O2.Helpers.Scripts
+const TreeWatcher := O2.TreeWatcher
 const METADATA_SCRIPTS_PROPERTY := "metadata_scripts"
 const MetadataScriptTreeWatcherPlugin := preload("uid://segrgfetays3")
 
@@ -19,13 +21,13 @@ func _disable_plugin() -> void:
 
 func _enter_tree() -> void:
 	print("enter_tree metadata_scripts")
-	O2.TreeWatcher.register_plugin(MetadataScriptTreeWatcherPlugin.new())
+	TreeWatcher.register_plugin(MetadataScriptTreeWatcherPlugin.new())
 	add_inspector_plugin(editor_inspector_plugin)
 
 
 func _exit_tree() -> void:
 	print("exit_tree metadata_scripts")
-	O2.TreeWatcher.unregister_plugin(MetadataScriptTreeWatcherPlugin.new())
+	TreeWatcher.unregister_plugin(MetadataScriptTreeWatcherPlugin.new())
 	remove_inspector_plugin(editor_inspector_plugin)
 
 
@@ -48,8 +50,10 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 		var center := CenterContainer.new()
 		var btn := MenuButton.new()
 
-		btn.theme_type_variation = "AddButton"
+		O2.Helpers.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
+		btn.icon = load("uid://cm3wwdg8y3x7m")
 		btn.text = "Add Metadata Script"
+		btn.flat = false
 		var popup := btn.get_popup()
 		popup.allow_search = true
 		popup.id_pressed.connect(_popup_id_pressed.bind(object))
@@ -58,8 +62,9 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 			var display_name : String = class_data.class
 			if display_name.begins_with("MetadataScript_"):
 				display_name = display_name.replace("MetadataScript_", "")
-			if class_data.icon:
-				popup.add_icon_item(class_data.icon, display_name, i)
+			var icon := _Scripts.get_icon(class_data.class)
+			if icon:
+				popup.add_icon_item(icon, display_name, i)
 			else:
 				popup.add_item(display_name, i)
 		center.add_child(btn)
@@ -72,7 +77,6 @@ class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 	
 	func _popup_id_pressed(id: int, object: Object) -> void:
 		var class_data := metadata_script_class_data[id]
-		# var metadata_script : MetadataScript = load(class_data.path).new()
 		var metadata_script_class : GDScript = load(class_data.path)
 		var metadata_script : MetadataScript = metadata_script_class.new()
 		if object.has_meta(METADATA_SCRIPTS_PROPERTY):

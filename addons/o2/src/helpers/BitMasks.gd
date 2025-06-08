@@ -10,5 +10,14 @@ static func with_bit_at(mask: int, bit_index: int) -> int:
 static func without_bit_at(mask: int, bit_index: int) -> int:
 	return mask & ~(1 << bit_index)
 
+static func has_flag(mask: int, flag: int) -> bool:
+	return mask & flag != 0
+
+static func has_any(mask: int, bits: Array[int]) -> bool:
+	for bit in bits:
+		if has_flag(mask, bit):
+			return true
+	return false
+
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

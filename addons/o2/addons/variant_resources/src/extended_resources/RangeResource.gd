@@ -24,7 +24,7 @@ const _Signals := O2.Helpers.Signals
 		_changed()
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "value":
+	if property.name == "value" and !_override_property_hint:
 		property.hint = PROPERTY_HINT_RANGE
 		property.hint_string = "%f,%f" % [min_value.value, max_value.value]
 		if allow_greater:

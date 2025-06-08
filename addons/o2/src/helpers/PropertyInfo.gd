@@ -139,11 +139,11 @@ static func get_usage_flag_names(usage: int) -> Array[StringName]:
 		used_flag_strings.append(USAGE_FLAG_STRINGS[usage])
 	else:
 		for flag in USAGE_FLAG_STRINGS.keys():
-			if _has_flag(usage, flag):
+			if has_flag(usage, flag):
 				used_flag_strings.append(USAGE_FLAG_STRINGS[flag])
 	return used_flag_strings
 
-static func _has_flag(bits: int, flag: int) -> bool:
+static func has_flag(bits: int, flag: int) -> bool:
 	return bits & flag != 0
 
 ## Gets a Variant.Type constant name -- not the "human readable" name from type_string()!
@@ -157,7 +157,7 @@ static func get_property_hint_name(property_hint: int) -> StringName:
 
 ## Pretty prints an object property (Dictionary definition returns from get_property_list())
 static func prettify(property: Dictionary) -> String:
-	var prop_str := "[ %s ]\n" % property.name
+	var prop_str := "[ Property Info: '%s' ]\n" % property.name
 	if "class_name" in property:
 		prop_str += 'class_name: &"%s"\n' % property.class_name
 	if "type" in property:

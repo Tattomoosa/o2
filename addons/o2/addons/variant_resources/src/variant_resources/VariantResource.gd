@@ -14,8 +14,12 @@ signal value_changed
 
 var _value : Variant = null
 var _type : Variant.Type = TYPE_NIL
+var _override_property_hint : Dictionary = {}
 
 func _validate_property(property: Dictionary) -> void:
+	if property.name == "value" and _override_property_hint:
+		for key in _override_property_hint:
+			property[key] = _override_property_hint[key]
 	if property.name == "type":
 		property.usage |= PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 		if not is_variant():

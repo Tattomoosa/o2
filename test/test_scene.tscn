@@ -1,40 +1,76 @@
-[gd_scene load_steps=17 format=3 uid="uid://ct2ow2h6k3ltm"]
+[gd_scene load_steps=32 format=3 uid="uid://ct2ow2h6k3ltm"]
 
 [ext_resource type="Script" uid="uid://dj17fxhuti5ie" path="res://test/TestScript.gd" id="1_hldr7"]
 [ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/variant_resources/FloatResource.gd" id="4_hldr7"]
-[ext_resource type="Script" uid="uid://0svcbakobqb4" path="res://addons/o2/addons/variant_resources/src/extended_resources/RangeResource.gd" id="5_xdggk"]
+[ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/variant_resources/src/variant_resources/ColorResource.gd" id="4_k8f1l"]
+[ext_resource type="Script" uid="uid://dmxk8u8loyc43" path="res://addons/o2/addons/variant_resources/src/variant_resources/Vector2Resource.gd" id="6_lke18"]
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="6_mwmxg"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="6_xdggk"]
 [ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="7_fkvod"]
 [ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="7_k8f1l"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="8_fkvod"]
 [ext_resource type="Script" uid="uid://dlbfpgvtclufx" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript_IfHasFeatureTag.gd" id="8_i3afb"]
+[ext_resource type="Script" uid="uid://bnucnuycbrx4b" path="res://addons/o2/addons/variant_resources/src/variant_resources/BoolResource.gd" id="8_t48as"]
+[ext_resource type="Script" uid="uid://c2mtg5lj5dbtd" path="res://addons/o2/addons/variant_resources/src/extended_resources/FlagsResource.gd" id="10_k8f1l"]
 
 [sub_resource type="Resource" id="Resource_i3afb"]
 script = ExtResource("7_k8f1l")
-value = "ooooo ok whatever"
+value = "string value!"
 type = 4
 metadata/_custom_type_script = "uid://djdxn6wi2t33k"
 
-[sub_resource type="Resource" id="Resource_hldr7"]
-script = ExtResource("4_hldr7")
-value = 1.0
-type = 3
-
-[sub_resource type="Resource" id="Resource_xdggk"]
+[sub_resource type="Resource" id="Resource_w8trh"]
 script = ExtResource("4_hldr7")
 value = 0.0
 type = 3
+metadata/_custom_type_script = "uid://c0mgsavsenfjd"
 
-[sub_resource type="Resource" id="Resource_mwmxg"]
-script = ExtResource("5_xdggk")
-max_value = SubResource("Resource_hldr7")
-min_value = SubResource("Resource_xdggk")
-allow_greater = false
-allow_lesser = false
-value = 1.0
-type = 3
-metadata/_custom_type_script = "uid://0svcbakobqb4"
+[sub_resource type="Resource" id="Resource_ggvja"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_w8trh")
+property_name = &"value"
+
+[sub_resource type="Resource" id="Resource_ohw67"]
+script = ExtResource("4_k8f1l")
+value = Color(0, 0, 0, 1)
+type = 20
+metadata/_custom_type_script = "uid://c7cjsjtruf4y5"
+
+[sub_resource type="Resource" id="Resource_45kef"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_ohw67")
+property_name = &"color"
+
+[sub_resource type="Resource" id="Resource_1r4rl"]
+script = ExtResource("6_lke18")
+value = Vector2(0, 0)
+type = 5
+metadata/_custom_type_script = "uid://dmxk8u8loyc43"
+
+[sub_resource type="Resource" id="Resource_qrbnt"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_1r4rl")
+property_name = &"position"
+
+[sub_resource type="Resource" id="Resource_mfucm"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+property_name = &"rotation"
+
+[sub_resource type="Resource" id="Resource_wk5yx"]
+script = ExtResource("8_t48as")
+value = false
+type = 1
+metadata/_custom_type_script = "uid://bnucnuycbrx4b"
+
+[sub_resource type="Resource" id="Resource_vb1hb"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_wk5yx")
+property_name = &"invert_enabled"
 
 [sub_resource type="BoxMesh" id="BoxMesh_hldr7"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -45,11 +81,49 @@ script = ExtResource("8_i3afb")
 feature = ""
 invert = false
 
-[sub_resource type="Resource" id="Resource_k8f1l"]
+[sub_resource type="Resource" id="Resource_t48as"]
+script = ExtResource("7_k8f1l")
+value = "EAS"
+type = 4
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+
+[sub_resource type="Resource" id="Resource_8knnt"]
 resource_name = "SyncVariantResource"
 script = ExtResource("8_fkvod")
-resource = SubResource("Resource_i3afb")
+resource = SubResource("Resource_t48as")
 property_name = &"text"
+
+[sub_resource type="Resource" id="Resource_q1upb"]
+script = ExtResource("7_k8f1l")
+value = "OH yeea"
+type = 4
+metadata/_custom_type_script = "uid://djdxn6wi2t33k"
+
+[sub_resource type="Resource" id="Resource_tdvek"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_q1upb")
+property_name = &"text"
+
+[sub_resource type="Resource" id="Resource_gv7py"]
+script = ExtResource("10_k8f1l")
+flag_type = 0
+flag_count = 4
+value = 0
+type = 2
+metadata/_custom_type_script = "uid://c2mtg5lj5dbtd"
+
+[sub_resource type="Resource" id="Resource_k03os"]
+resource_name = "SyncVariantResource"
+script = ExtResource("8_fkvod")
+resource = SubResource("Resource_gv7py")
+property_name = &""
+
+[sub_resource type="Resource" id="Resource_0a4bb"]
+script = ExtResource("7_fkvod")
+type = 2
+value = 1
+metadata/_custom_type_script = "uid://lnwnu0o7gwtk"
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -62,6 +136,7 @@ script = ExtResource("1_hldr7")
 resource = SubResource("Resource_i3afb")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+light_mask = 0
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,20 +144,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
-value = 1.0
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_ggvja")])
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-rotation = 0.768
+rotation = 0.95644045
 skew = 1.0
+color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 0, 1, 1, 0, -1)
-
-[node name="PropertySyncNode" type="Node" parent="."]
-script = ExtResource("6_xdggk")
-synced_properties_count = 3
-_synced_properties_paths = Array[NodePath]([NodePath("../ProgressBar"), NodePath("../ProgressBar"), NodePath("../ProgressBar")])
-_synced_properties_names = Array[StringName]([&"value", &"max_value", &"min_value"])
-_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_mwmxg"), SubResource("Resource_hldr7"), SubResource("Resource_xdggk")])
-metadata/_custom_type_script = "uid://cd4joj4o4emeh"
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_45kef"), SubResource("Resource_qrbnt"), SubResource("Resource_mfucm"), SubResource("Resource_vb1hb")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057911992, 0, 0.116615295)
@@ -101,7 +170,23 @@ metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "ooooo ok whatever"
-metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_k8f1l")])
+offset_right = 227.0
+offset_bottom = 517.0
+text = "EASILY!"
+justification_flags = 0
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_8knnt")])
+
+[node name="Button" type="Button" parent="Label"]
+layout_mode = 0
+offset_right = 106.0
+offset_bottom = 57.0
+text = "OH yeea"
+metadata/metadata_scripts = Array[ExtResource("6_mwmxg")]([SubResource("Resource_tdvek"), SubResource("Resource_k03os")])
+
+[node name="PropertySyncNode" type="Node" parent="."]
+script = ExtResource("6_xdggk")
+synced_properties_count = 1
+_synced_properties_paths = Array[NodePath]([NodePath("")])
+_synced_properties_names = Array[StringName]([&""])
+_synced_properties_resources = Array[ExtResource("7_fkvod")]([SubResource("Resource_0a4bb")])
+metadata/_custom_type_script = "uid://cd4joj4o4emeh"

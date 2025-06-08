@@ -68,7 +68,7 @@ static func get_descendents_with_type(node: Node, type: Variant) -> Array[Node]:
 	return arr
 
 ## Gets children, but reversed
-static func get_children_reversed(node: Node, include_internal := false) -> Array[Node]:
+static func get_children_reversed(node: Node, include_internal := Node.INTERNAL_MODE_DISABLED) -> Array[Node]:
 	var children := node.get_children(include_internal)
 	children.reverse()
 	return children
@@ -79,6 +79,10 @@ static func get_child_count_recursive(node: Node) -> int:
 	for child in node.get_children():
 		count += get_child_count_recursive(child)
 	return count
+
+static func add_children(parent: Node, nodes: Array[Node], internal := Node.INTERNAL_MODE_DISABLED) -> void:
+	for node in nodes:
+		parent.add_child(node, false, internal)
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")
