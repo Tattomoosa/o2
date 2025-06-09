@@ -1,7 +1,7 @@
 <div align="center">
 	<br/>
 	<br/>
-	<!-- <img src="https://raw.githubusercontent.com/Tattomoosa/gd-submodules/refs/heads/main/addons/gd-submodules/icons/GitPlugin.svg" width="100"/> -->
+	<img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/variant_resources/assets/icons/Variant.svg" width="100"/>
 	<br/>
 	<h1>
 		Variant Resources
@@ -9,7 +9,7 @@
 		<br/>
 		<sub>
 		<sub>
-		Resources for Variant types and a utility to sync node properties to them, for <a href="https://godotengine.org/">Godot</a>
+		Resources for Variant types and utilities to sync node properties to them, for <a href="https://godotengine.org/">Godot</a>
 		</sub>
 		</sub>
 		</sub>

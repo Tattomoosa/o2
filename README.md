@@ -8,60 +8,84 @@
 		<br/>
 		<sub>
 		<sub>
-		A collection of assorted goodies, for <a href="https://godotengine.org/">Godot</a>
+		The plugin suite that does the impossible, for <a href="https://godotengine.org/">Godot</a>
 		</sub>
 		</sub>
 		</sub>
-		<br/>
 		<br/>
 		<br/>
 	</h1>
-	<br/>
-	<br/>
+	<!-- <br/> -->
+	<!-- <br/> -->
 	<!-- <img src="https://raw.githubusercontent.com/Tattomoosa/gd-submodules/refs/heads/main/media/image.png" height="400"> -->
 	<!-- <img src="./readme_images/stress_test.png" height="140"> -->
 	<!-- <img src="./readme_images/editor_view.png" height="140"> -->
-	<br/>
-	<br/>
+	<!-- <br/> -->
+	<!-- <br/> -->
 </div>
 
-Collection of utility/helper scripts and addons. Basically whatever I like to use in Godot, am experimenting
-with, and may or may not be in a usable and stable place to release as a standalone addon,
-as well as my collection of utilities.
+## Included Plugins
 
-## Features
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" alt="drawing" width="14"/> Metadata Scripts
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" alt="drawing" width="14"/> MetadataScripts
+Run scripts from metadata. As many as you'd like per node.
+
+Simple uses include freeing or changing the visibility of a node based on feature flags or 
+
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/variant_resources/assets/icons/Variant.svg" alt="drawing" width="14"/> [Variant Resources](addons/o2/addons/variant_resources/README.md)
+
+Override almost every non-Object Variant type with a resource that syncs its value back to the node, either through a  PropertySyncNode in the scene tree or the much easier to use metadata script and its associated editor tooling.
 
 ### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/namespacer/icon/Namespacer.svg" alt="drawing" width="14"/> Namespacer
 
-### [Variant Resources](addons/o2/addons/variant_resources/README.md)
+GDScripts doesn't have namespaces! But it kind of can, actually!
+Mark a directory as a namespace root, Namespacer hooks every file up from that directory to be accessed in a namespace-like way. For one `class_name`, unlimited statically accessible classes.
 
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/quick_settings/assets/icons/ProjectList.svg" alt="drawing" width="14"/> Quick Settings
+
+Toggle plugins and adjust the viewport mode via a little quick menu. Everyone's made the plugin toggle menu, but mine works
+with nested plugins. And I don't think anyone's made a quick viewport mode setter... Maybe I'm weird but I change that setting all the time.
+
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" alt="drawing" width="14"/> O2 Core
+
+##### TreeWatcher
+
+Respond to a node you've never heard of entering or exiting the tree, no matter where or when or what. The "magic" behind metadata scripts and resource overridden properties. Probably capable of other really cool things too! Has its own plugin system, too.
+
+##### Logger
+
+`debug`, `info`, `warn`, `error` levels. Multiple streams which each have their own level. Substreams that log through other streams. All that good stuff.
+
+##### Helpers
+
+Ever-growing list of generic utlity functions. See [the list](addons/o2/src/Helpers).
 
 ## The Future
 
-I have a thought it might evolve into a plugin suite, but I don't have a clear vision for that yet.
-Even though this is, at this point my own little playground, it is in several ways
-built with the idea it could be that.
+Godot, unfortunately, doesn't let plugins define dependencies yet.
+Whenever I go to package my own stuff as a plugin for general
+consumption I find I have to change a lot, strip out my utility
+scripts, anything I built to simplify and extend how easy it
+is to extend the editor.
 
-I might still split things out and make small self-contained plugins, but I also want a project I
-can keep building on, now that I've used Godot for a long time and have gotten a pretty good idea
-of how I like to use it. A codebase I can easily take around from project to project.
-Maybe you like to use it like me and will find some of the same things useful!
+It's not my favorite solution, but a solution is just building
+all my plugins here as a full-featured suite. Individual
+plugins can still be disabled separately, but I can also
+build on what I've done before and do some really cool things.
+
+Also, plugins don't have to pollute the autoload list. If they need tree access, they do it through only the `o2` autoload.
 
 ### Project Goals
 
+* Collect things I like that aren't game-specific
+* Make extending the editor easier and more reliable
+* Facilitate writing plugins that depend on my other plugins
 * Reduce boiler-plate code I find myself writing a lot
 * Reduce code I've written once or twice and always need to look up how to do again
-* Collect things I like that aren't game-specific
 * Keep things modular... ish
-	* Increasingly I want my utilities everywhere I go - that's the O2 autoload
-	* [Variant Resources](addons/o2/addons/variant_resources) seems like a *game-changer*
-		* I want to keep building systems on top of it, it's been soooo useful so far
-* Make extending the editor easier
-	* [PropertyInfoHelper](addons/o2/src/helpers/PropertyInfo.gd) has been a game-changer for this
+	* I want my growing list of utilities everywhere I go though!
 
-## Godot plugins by me
+## Other Godot plugins by me
 
 ### [VisionCone3D](https://github.com/Tattomoosa/VisionCone3D)
 
@@ -78,9 +102,3 @@ Dead simple network images, for Godot
 ### [gd-submodules](https://github.com/Tattomoosa/gd-submodules) (unreleased, experimental)
 
 Dead simple plugin management via git submodule, for Godot
-
-### [o2](https://github.com/Tattomoosa/o2) (unreleased, experimental)
-
-A collection of assorted goodies, for Godot
-
-[metadata_scripts_icon]: https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg

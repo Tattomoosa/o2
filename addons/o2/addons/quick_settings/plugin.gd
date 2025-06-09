@@ -10,10 +10,11 @@ const GDSCRIPT_ICON := preload("uid://dmf2kpb2tkkab")
 const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
 
-const SHOW_WINDOW_BUTTON_SETTING := "window_mode_button/enable"
-const SHOW_WINDOW_BUTTON_TEXT_SETTING := "window_mode_button/show_text"
-const SHOW_PLUGIN_BUTTON_SETTING := "plugin_button_button/enable"
-const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "plugin_button_button/show_text"
+const SHOW_WINDOW_BUTTON_SETTING := "window_mode_menu/enable"
+const SHOW_WINDOW_BUTTON_TEXT_SETTING := "window_mode_menu/show_button_text"
+const SHOW_PLUGIN_BUTTON_SETTING := "plugin_menu/enable"
+const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "plugin_menu/show_button_text"
+const PLUGIN_MENU_DISABLE_QUICK_SETTING := "plugin_menu/disable_quick_settings"
 
 var button_parent : Control
 var dialog : Window
@@ -27,6 +28,7 @@ func _enter_tree() -> void:
 	_get_or_add_setting(SHOW_WINDOW_BUTTON_TEXT_SETTING, true)
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_SETTING, true)
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING, false)
+	_get_or_add_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING, true)
 	ProjectSettings.save()
 	_create_control()
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, button_parent)
@@ -102,10 +104,10 @@ func _create_plugin_popup(plugin_button: MenuButton) -> void:
 	if _get_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
 		plugin_button.text = "Plugins"
 
-	for path in plugin_paths:
-		if path.get_file() == "quick_settings":
-			plugin_paths.erase(path)
-			break
+	# for path in plugin_paths:
+	# 	if path.get_file() == "quick_settings":
+	# 		plugin_paths.erase(path)
+	# 		break
 
 	for i in plugin_paths.size():
 		var plugin_path := plugin_paths[i]

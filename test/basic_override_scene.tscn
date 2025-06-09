@@ -1,14 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://c8um61f6jh5ku"]
+[gd_scene load_steps=27 format=3 uid="uid://c8um61f6jh5ku"]
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_7d2n1"]
 [ext_resource type="Texture2D" uid="uid://b5258mnsr6qim" path="res://addons/o2/assets/icons/o2.svg" id="2_mxeog"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="3_2tmcw"]
 [ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/variant_resources/src/variant_resources/ColorResource.gd" id="4_5ybcm"]
-[ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="5_o8nsk"]
 [ext_resource type="Script" uid="uid://c2mtg5lj5dbtd" path="res://addons/o2/addons/variant_resources/src/extended_resources/FlagsResource.gd" id="7_hbqsc"]
 [ext_resource type="Script" uid="uid://trvh1785sr8p" path="res://addons/o2/addons/variant_resources/src/variant_resources/IntResource.gd" id="8_d5deg"]
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="8_o8nsk"]
+[ext_resource type="Script" uid="uid://bnucnuycbrx4b" path="res://addons/o2/addons/variant_resources/src/variant_resources/BoolResource.gd" id="9_8dkrl"]
 [ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="9_d5deg"]
+[ext_resource type="Script" uid="uid://douvnyfdl645b" path="res://addons/o2/addons/variant_resources/src/variant_resources/NodePathResource.gd" id="10_cqitt"]
+[ext_resource type="Script" uid="uid://c2gvyqjw2dds1" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringNameResource.gd" id="11_376k1"]
 
 [sub_resource type="Resource" id="Resource_d5deg"]
 script = ExtResource("4_5ybcm")
@@ -28,25 +30,6 @@ resource_name = "SyncVariantResource"
 script = ExtResource("3_2tmcw")
 resource = SubResource("Resource_d5deg")
 property_name = &"color"
-
-[sub_resource type="Resource" id="Resource_kvkwk"]
-script = ExtResource("5_o8nsk")
-value = "something cool and fun!"
-type = 4
-_override_property_info = {
-"class_name": &"",
-"hint": 18,
-"hint_string": "",
-"name": "text",
-"type": 4,
-"usage": 6
-}
-
-[sub_resource type="Resource" id="Resource_d6re0"]
-resource_name = "SyncVariantResource"
-script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_kvkwk")
-property_name = &"text"
 
 [sub_resource type="Resource" id="Resource_8dkrl"]
 script = ExtResource("7_hbqsc")
@@ -128,6 +111,50 @@ script = ExtResource("3_2tmcw")
 resource = SubResource("Resource_hbqsc")
 property_name = &"color"
 
+[sub_resource type="Resource" id="Resource_px1ul"]
+script = ExtResource("9_8dkrl")
+value = false
+type = 1
+_override_property_info = {}
+metadata/_custom_type_script = "uid://bnucnuycbrx4b"
+
+[sub_resource type="Resource" id="Resource_kvkwk"]
+script = ExtResource("10_cqitt")
+type = 22
+_override_property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "synced_properties_3/node_path",
+"type": 22,
+"usage": 4
+}
+
+[sub_resource type="Resource" id="Resource_d6re0"]
+resource_name = "SyncVariantResource"
+script = ExtResource("3_2tmcw")
+resource = SubResource("Resource_kvkwk")
+property_name = &"synced_properties_3/node_path"
+
+[sub_resource type="Resource" id="Resource_d6m4d"]
+script = ExtResource("11_376k1")
+value = &"visible"
+type = 21
+_override_property_info = {
+"class_name": &"",
+"hint": 3,
+"hint_string": "unique_name_in_owner,visible,show_behind_parent,top_level,z_as_relative,y_sort_enabled,use_parent_material,clip_contents,localize_numeral_system,auto_translate,mouse_force_pass_scroll_events",
+"name": "synced_properties_3/property_name",
+"type": 21,
+"usage": 4102
+}
+
+[sub_resource type="Resource" id="Resource_6wak4"]
+resource_name = "SyncVariantResource"
+script = ExtResource("3_2tmcw")
+resource = SubResource("Resource_d6m4d")
+property_name = &"synced_properties_3/property_name"
+
 [node name="BasicOverrideScene" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -144,8 +171,7 @@ offset_left = 16.0
 offset_top = 12.0
 offset_right = 139.0
 offset_bottom = 35.0
-text = "something cool and fun!"
-metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_d6re0")])
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([])
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
@@ -162,20 +188,24 @@ collision_layer = 4194304
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_cqitt"), SubResource("Resource_7u2t2"), SubResource("Resource_lkmnf")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 478.0
 offset_top = 115.0
 offset_right = 994.0
 offset_bottom = 507.0
-color = Color(0.6255902, 0.1708551, 0.1708551, 1)
+color = Color(0.4932113, 0.1460537, 0.1460537, 1)
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_o8nsk")])
 
 [node name="PropertySyncNode" type="Node" parent="."]
 script = ExtResource("8_o8nsk")
-synced_properties_count = 1
-_synced_properties_paths = Array[NodePath]([NodePath("../Label")])
-_synced_properties_resources = Array[ExtResource("9_d5deg")]([null])
+synced_properties_count = 4
+_synced_properties_paths = Array[NodePath]([NodePath("../Label"), NodePath(""), NodePath(""), NodePath("../ColorRect")])
+_synced_properties_names = Array[StringName]([&"", &"", &"", &"visible"])
+_synced_properties_resources = Array[ExtResource("9_d5deg")]([null, null, null, SubResource("Resource_px1ul")])
+synced_properties_3/property_name = &"visible"
 metadata/_custom_type_script = "uid://cd4joj4o4emeh"
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_d6re0"), SubResource("Resource_6wak4")])
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
 auto_translate_mode = 2
