@@ -12,18 +12,40 @@ static func unsubscribe() -> void:
 	_unsubscribe(_stream)
 	_stream = null
 
+static func _log(msg: String, stream_name := "") -> void:
+	print_rich(
+		"%s%s" % [
+			"[%s] : " % stream_name if stream_name else "",
+			msg
+		]
+	)
+
+static func _warn(msg: String, stream_name: String = "") -> void:
+	push_warning(
+		"%s%s" % [
+			"[%s] : " % stream_name if stream_name else "",
+			msg
+		]
+	)
+
+static func _error(msg: String, stream_name: String = "") -> void:
+	push_warning(
+		"%s%s" % [
+			"[%s] : " % stream_name if stream_name else "",
+			msg
+		]
+	)
+
 static func _subscribe(stream: LogStream) -> void:
-	if _stream:
-		_unsubscribe(_stream)
-	stream.logged_debug.connect(print_rich)
-	stream.logged_info.connect(print_rich)
-	stream.logged_warn.connect(push_warning)
-	stream.logged_error.connect(push_error)
-	# stream.substream_added.connect(_subscribe)
+	stream.logged_debug.connect(_log)
+	stream.logged_info.connect(_log)
+	stream.logged_warn.connect(_warn)
+	stream.logged_error.connect(_error)
+	stream.substream_added.connect(_subscribe)
 
 static func _unsubscribe(stream: LogStream) -> void:
-	stream.logged_debug.disconnect(print_rich)
-	stream.logged_info.disconnect(print_rich)
-	stream.logged_warn.disconnect(push_warning)
-	stream.logged_error.disconnect(push_error)
-	# stream.substream_added.disconnect(_subscribe)
+	stream.logged_debug.disconnect(_log)
+	stream.logged_info.disconnect(_log)
+	stream.logged_warn.disconnect(_warn)
+	stream.logged_error.disconnect(_error)
+	stream.substream_added.disconnect(_subscribe)

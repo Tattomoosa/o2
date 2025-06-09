@@ -31,4 +31,4 @@ func _subscribe(p_stream: LogStream) -> void:
 	p_stream.logged_info.connect(_log.bind(p_stream.name))
 	p_stream.logged_warn.connect(_warn.bind(p_stream.name))
 	p_stream.logged_error.connect(_error.bind(p_stream.name))
-	# p_stream.substream_added.connect(_subscribe)
+	p_stream.substream_added.connect(_subscribe)

@@ -50,7 +50,6 @@ const IGNORE_USAGE : Array[int] = [ PROPERTY_USAGE_INTERNAL ]
 
 func _can_handle(_object: Object) -> bool:
 	return true
-	# return object is not VariantResource
 
 func _parse_extended_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags: int, _wide: bool) -> bool:
 	if !name:

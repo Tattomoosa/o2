@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5258mnsr6qim"
-path="res://.godot/imported/o2.svg-fcfa3e2c658f44c8329d2ef924e34844.ctex"
+uid="uid://k5wnyh01jilk"
+path="res://.godot/imported/Namespacer.svg-7338bc80dda56d209afb033a651b92dc.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/o2/assets/icons/o2.svg"
-dest_files=["res://.godot/imported/o2.svg-fcfa3e2c658f44c8329d2ef924e34844.ctex"]
+source_file="res://addons/o2/addons/namespacer/icon/Namespacer.svg"
+dest_files=["res://.godot/imported/Namespacer.svg-7338bc80dda56d209afb033a651b92dc.ctex"]
 
 [params]
 

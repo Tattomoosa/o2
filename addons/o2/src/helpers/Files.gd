@@ -10,7 +10,6 @@ static func get_all_files(path: String, file_ext := "", files := PackedStringArr
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		# if not file_name in [".", ".."]:
 		var file_path := dir.get_current_dir().path_join(file_name)
 		if dir.current_is_dir():
 			get_all_files(file_path, file_ext, files)
@@ -19,6 +18,9 @@ static func get_all_files(path: String, file_ext := "", files := PackedStringArr
 				files.append(file_path)
 		file_name = dir.get_next()
 	return files
+
+static func is_resource_path(path: String) -> bool:
+	return path.begins_with("res://")
 
 static func get_subdirectories(path: String) -> PackedStringArray:
 	var dir := DirAccess.open(path)

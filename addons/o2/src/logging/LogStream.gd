@@ -17,8 +17,8 @@ var name := ""
 var level := LogLevel.INFO
 var substreams : Dictionary[String, Self]
 
-func _init() -> void:
-	pass
+func _init(p_level := LogLevel.INFO) -> void:
+	level = p_level
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:

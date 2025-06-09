@@ -70,5 +70,4 @@ func _load_plugins() -> void:
 			"[O2.TreeWatcher] Loading plugin: ",
 			O2.Helpers.Files.get_file_without_extension(plugin_script.resource_path)
 		)
-		# var plugin : TreeWatcherPlugin = plugin_script.new()
 		plugins.push_back(plugin_script.new())

@@ -51,9 +51,10 @@ static func enable_subplugins(plugin: EditorPlugin) -> void:
 			var enabled : bool = Settings.get_or_add(setting_name, true)
 			var enable_string := get_plugin_root_dir(plugin).path_join("addons").path_join(subplugin_name)
 			enable_string = enable_string.replace("res://addons/", "")
-			print(enable_string)
 			EditorInterface.set_plugin_enabled(
 					enable_string, enabled)
+	# in case settings were added
+	ProjectSettings.save()
 
 static func disable_subplugins(plugin: EditorPlugin) -> void:
 	for subplugin_name in get_subplugin_names(plugin):
@@ -61,3 +62,44 @@ static func disable_subplugins(plugin: EditorPlugin) -> void:
 		enable_string = enable_string.replace("res://addons/", "")
 		EditorInterface.set_plugin_enabled(enable_string, false)
 
+static func get_all_plugin_paths() -> PackedStringArray:
+	var plugin_dirs := PackedStringArray()
+	var cfg_file_paths := Files.get_all_files("res://addons/", "cfg")
+	for cfg_path in cfg_file_paths:
+		if cfg_path.get_file() == "plugin.cfg":
+			plugin_dirs.push_back(cfg_path.get_base_dir())
+	return plugin_dirs
+
+static func get_plugin_enable_string_from_path(path: String) -> String:
+	if path.ends_with(".gd"):
+		path = path.get_base_dir()
+	return path.replace("res://addons/", "")
+
+# TODO
+static func get_plugin_icon(plugin_path: String) -> Texture2D:
+	var config_file := get_plugin_config_file(plugin_path)
+	if config_file.has_section_key("plugin", "icon"):
+		var icon_path : String = config_file.get_value("plugin", "icon", null)
+		return load(icon_path)
+	return null
+
+static func get_plugin_config_category(plugin_path: String) -> String:
+	var plugin_enable_string := get_plugin_enable_string_from_path(plugin_path)
+	return plugin_enable_string.replace("addons/", "")
+
+static func get_plugin_config_file(plugin_path: String) -> ConfigFile:
+	var config_file := ConfigFile.new()
+	config_file.load(plugin_path.path_join("plugin.cfg"))
+	return config_file
+
+static func get_plugin_script(plugin_path: String) -> Script:
+	var config_file := get_plugin_config_file(plugin_path)
+	var script_name : String = config_file.get_value("plugin", "script", "")
+	var script : GDScript = load(plugin_path.path_join(script_name))
+	return script
+	
+
+
+
+# static func get_plugin_script(plugin_path: String) -> Script:
+# 	var script := Script.new()

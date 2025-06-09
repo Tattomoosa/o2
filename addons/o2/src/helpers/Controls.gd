@@ -12,6 +12,18 @@ static func margin_container(
 	mc.add_theme_constant_override("margin_left", margin3)
 	return mc
 
+static func icon_button(icon: Texture2D, flat := false) -> Button:
+	var button := Button.new()
+	button.icon = icon
+	button.flat = flat
+	return button
+
+static func icon_menu_button(icon: Texture2D, flat := false) -> MenuButton:
+	var button := MenuButton.new()
+	button.icon = icon
+	button.flat = flat
+	return button
+
 static func create_vbox(
 	separation: int = 0,
 ) -> VBoxContainer:

@@ -8,7 +8,7 @@ const Logging := preload("uid://b5hb25ps522o0")
 const TreeWatcher := preload("uid://c5n7icddagd25")
 
 # maybe should be Logger since its static
-static var logger : Logging.LogStream = Logging.LogStream.new()
+static var logger : Logging.LogStream = Logging.LogStream.new(Logging.LogStream.LogLevel.DEBUG)
 # could be a separate autoload?
 static var tree_watcher : TreeWatcher
 static var instance : O2 = null

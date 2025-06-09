@@ -37,6 +37,11 @@ static func get_next_sibling(node: Node) -> Node:
 	var index := node.get_index()
 	return node.get_parent().get_child(index + 1)
 
+## Gets the node's previous sibling
+static func get_previous_sibling(node: Node) -> Node:
+	var index := node.get_index()
+	return node.get_parent().get_child(index - 1)
+
 ## Checks if the current node is scene root, useful if you want a different behavior when
 ## playing a single scene than when that scene is instanced.
 static func is_scene_root(node: Node) -> bool:
@@ -83,6 +88,11 @@ static func get_child_count_recursive(node: Node) -> int:
 static func add_children(parent: Node, nodes: Array[Node], internal := Node.INTERNAL_MODE_DISABLED) -> void:
 	for node in nodes:
 		parent.add_child(node, false, internal)
+
+static func move_relative(node: Node, by := 1) -> void:
+	var index := node.get_index()
+	var parent := node.get_parent()
+	parent.move_child(node, index + by)
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")
