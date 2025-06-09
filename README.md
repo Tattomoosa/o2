@@ -25,17 +25,18 @@
 	<br/>
 </div>
 
-## Features
-
 Collection of utility/helper scripts and addons. Basically whatever I like to use in Godot, am experimenting
 with, and may or may not be in a usable and stable place to release as a standalone addon,
-as well as my collection of utilities that live in the `O2` autoload.
+as well as my collection of utilities.
 
-> This is a work in progress and is not currently documented for other's use.
-> It probably isn't too bad to poke around and figure things out, though.
-> And please do open an issue if there's anything you think I could do better.
+## Features
 
-[Variant Resources](addons/o2/addons/variant_resources/README.md)
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" alt="drawing" width="14"/> MetadataScripts
+
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/namespacer/icon/Namespacer.svg" alt="drawing" width="14"/> Namespacer
+
+### [Variant Resources](addons/o2/addons/variant_resources/README.md)
+
 
 ## The Future
 
@@ -81,3 +82,5 @@ Dead simple plugin management via git submodule, for Godot
 ### [o2](https://github.com/Tattomoosa/o2) (unreleased, experimental)
 
 A collection of assorted goodies, for Godot
+
+[metadata_scripts_icon]: https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg
