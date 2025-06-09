@@ -1,20 +1,21 @@
 <div align="center">
 	<br/>
-	<br/>
+	<!-- <br/> -->
 	<img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" width="100"/>
 	<br/>
-	<h1>
-		<br/>
-		<br/>
-		<sub>
-		<sub>
+	<br/>
+		<!-- <br/> -->
+		<!-- <br/> -->
+		<!-- <sub> -->
+		<!-- <sub> -->
 		The plugin suite that does the impossible, for <a href="https://godotengine.org/">Godot</a>
-		</sub>
-		</sub>
-		</sub>
-		<br/>
-		<br/>
-	</h1>
+		<!-- </sub> -->
+		<!-- </sub> -->
+		<!-- </sub> -->
+	<br/>
+	<br/>
+	<br/>
+	<!-- </h1> -->
 	<!-- <br/> -->
 	<!-- <br/> -->
 	<!-- <img src="https://raw.githubusercontent.com/Tattomoosa/gd-submodules/refs/heads/main/media/image.png" height="400"> -->
