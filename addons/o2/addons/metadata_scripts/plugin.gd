@@ -9,24 +9,20 @@ const MetadataScriptTreeWatcherPlugin := preload("uid://segrgfetays3")
 var editor_inspector_plugin := MetadataScriptEditorInspectorPlugin.new()
 
 func _enable_plugin() -> void:
-	print("enable metadata_scripts")
 	# Add autoloads here.
 	pass
 
 
 func _disable_plugin() -> void:
-	print("disable metadata_scripts")
 	# Remove autoloads here.
 	pass
 
 func _enter_tree() -> void:
-	print("enter_tree metadata_scripts")
 	TreeWatcher.register_plugin(MetadataScriptTreeWatcherPlugin.new())
 	add_inspector_plugin(editor_inspector_plugin)
 
 
 func _exit_tree() -> void:
-	print("exit_tree metadata_scripts")
 	TreeWatcher.unregister_plugin(MetadataScriptTreeWatcherPlugin.new())
 	remove_inspector_plugin(editor_inspector_plugin)
 

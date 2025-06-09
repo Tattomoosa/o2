@@ -1,11 +1,11 @@
 @tool
 ## Waits for a duration to elapse
 static func wait(duration: float) -> void:
-	await o2.get_tree().create_timer(duration).timeout
+	await O2.instance.get_tree().create_timer(duration).timeout
 
 ## Waits a frame
 static func wait_frame() -> void:
-	await o2.get_tree().process_frame
+	await O2.instance.get_tree().process_frame
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

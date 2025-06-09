@@ -73,7 +73,7 @@ func _parse_extended_property(object: Object, type: Variant.Type, name: String, 
 
 			var variant_editor = _create_variant_editor(object, name)
 			if !variant_editor:
-				print(PropertyInfo.prettify(PropertyInfo.get_property(object, name)))
+				# print(PropertyInfo.prettify(PropertyInfo.get_property(object, name)))
 				return false
 
 			add_property_editor(name, variant_editor)
@@ -308,7 +308,7 @@ class VariantResourceEditorProperty extends EditorProperty:
 			if !value_editor.visibility_changed.is_connected(_replace_value_editor):
 				value_editor.visibility_changed.connect(_replace_value_editor, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 			return
-		print("replacing value editor")
+		# print("replacing value editor")
 		_update_resource_name_label_text()
 		var new_value_editor := create_value_editor()
 		var parent := value_editor.get_parent()

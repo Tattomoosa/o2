@@ -1,4 +1,4 @@
-extends RefCounted
+extends Logger
 
 ## LogStreams have a 
 
@@ -16,6 +16,30 @@ enum LogLevel { DEBUG, INFO, WARN, ERROR }
 var name := ""
 var level := LogLevel.INFO
 var substreams : Dictionary[String, Self]
+
+func _init() -> void:
+	pass
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		pass
+	
+func _log_error(function: String, file: String, line: int, code: String, rationale: String, _editor_notify: bool, error_type: int, script_backtraces: Array[ScriptBacktrace]) -> void:
+	error(":".join([
+		function,
+		file,
+		line,
+		code,
+		rationale,
+		error_string(error_type),
+		script_backtraces,
+	]))
+
+func _log_message(message: String, is_error: bool) -> void:
+	if is_error:
+		error(message)
+	else:
+		info(message)
 
 ## Logs at LogLevel.DEBUG
 func debug(
@@ -78,6 +102,12 @@ func dim(
 
 func add_substream(stream_level: LogLevel, stream_name: String) -> Self:
 	assert(stream_name, "Anonymous sub-streams are not allowed")
+	if stream_name in substreams:
+		var old_stream := substreams[stream_name]
+		old_stream.logged_debug.disconnect(debug)
+		old_stream.logged_info.disconnect(info)
+		old_stream.logged_warning.disconnect(warn)
+		old_stream.logged_error.disconnect(error)
 	var stream := Self.new()
 	stream.level = stream_level
 	stream.logged_debug.connect(debug)

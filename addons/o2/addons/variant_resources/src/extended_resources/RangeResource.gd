@@ -40,7 +40,6 @@ func _validate_property(property: Dictionary) -> void:
 
 func _changed() -> void:
 	_set_value(value)
-	print("emitting range change")
 	emit_changed()
 	notify_property_list_changed()
 

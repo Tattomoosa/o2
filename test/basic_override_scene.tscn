@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cd4joj4o4emeh" path="res://addons/o2/addons/variant_resources/src/sync_node/PropertySyncNode.gd" id="8_o8nsk"]
 [ext_resource type="Script" uid="uid://lnwnu0o7gwtk" path="res://addons/o2/addons/variant_resources/src/variant_resources/VariantResource.gd" id="9_d5deg"]
 
-[sub_resource type="Resource" id="Resource_376k1"]
+[sub_resource type="Resource" id="Resource_d5deg"]
 script = ExtResource("4_5ybcm")
 value = Color(0.9310799, 0.5022795, 0.5022795, 1)
 type = 20
@@ -23,10 +23,10 @@ _override_property_info = {
 "usage": 6
 }
 
-[sub_resource type="Resource" id="Resource_px1ul"]
+[sub_resource type="Resource" id="Resource_qdu6j"]
 resource_name = "SyncVariantResource"
 script = ExtResource("3_2tmcw")
-resource = SubResource("Resource_376k1")
+resource = SubResource("Resource_d5deg")
 property_name = &"color"
 
 [sub_resource type="Resource" id="Resource_kvkwk"]
@@ -135,7 +135,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.9310799, 0.5022795, 0.5022795, 1)
-metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_px1ul")])
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_qdu6j")])
 
 [node name="Label" type="Label" parent="."]
 visible = false

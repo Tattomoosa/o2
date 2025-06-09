@@ -197,8 +197,9 @@ static func parse_hint_type_string(t_string: String) -> String:
 	if result:
 		# last one is hint string
 		var count := result.get_group_count()
-		if count != 2:
-			print_debug("huh", result)
+		assert(count == 2, str(result))
+		# if count != 2:
+			# print_debug("huh", result)
 		var section0 := result.get_string(1)
 		var type_data := (
 			Array(section0.split(":"))
