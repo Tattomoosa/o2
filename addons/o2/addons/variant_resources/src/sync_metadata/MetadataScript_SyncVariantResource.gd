@@ -19,11 +19,14 @@ enum SyncMode {
 		resource = v
 		if Engine.is_editor_hint() and node:
 			_patch_property_name_into_valid_property_enum()
+			_update_resource_name()
 		_update()
 
 @export var property_name : StringName:
 	set(v):
 		property_name = v
+		if Engine.is_editor_hint():
+			_update_resource_name()
 		_update()
 
 @export var sync_mode := SyncMode.SyncResourceToProperty:
@@ -56,6 +59,15 @@ func _process_callback() -> void:
 			await node.get_tree().physics_frame
 	process_next_callback.emit()
 
+func _update_resource_name() -> void:
+	if resource and property_name:
+		resource_name = "".join([
+			"Sync",
+			resource.resource_name if resource.resource_name else O2.Helpers.Scripts.get_script_name(resource.get_script()).replace("Resource", ""),
+			"To",
+			property_name.to_pascal_case()
+		])
+
 func _enter_tree() -> void:
 	if Engine.is_editor_hint():
 		_patch_property_name_into_valid_property_enum()
@@ -74,6 +86,7 @@ func _update() -> void:
 func _validate_property(property: Dictionary) -> void:
 	if !Engine.is_editor_hint():
 		return
+	super(property)
 	if property.name == "property_name":
 		property.hint = _property_name_property.hint
 		property.hint_string = _property_name_property.hint_string

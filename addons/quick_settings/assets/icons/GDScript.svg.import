@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmf2kpb2tkkab"
-path="res://.godot/imported/GDScript.svg-d2dbee5d6f4e982a9a9a7a410a4878dd.ctex"
+path="res://.godot/imported/GDScript.svg-a9b8e1ac811e843eab5afb79db7044a5.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/o2/addons/quick_settings/assets/icons/GDScript.svg"
-dest_files=["res://.godot/imported/GDScript.svg-d2dbee5d6f4e982a9a9a7a410a4878dd.ctex"]
+source_file="res://addons/quick_settings/assets/icons/GDScript.svg"
+dest_files=["res://.godot/imported/GDScript.svg-a9b8e1ac811e843eab5afb79db7044a5.ctex"]
 
 [params]
 

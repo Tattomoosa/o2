@@ -228,10 +228,10 @@ class VariantResourceEditorProperty extends EditorProperty:
 
 			if use_bottom_editor:
 				var bottom_panel := PanelContainer.new()
-				bottom_panel.add_theme_stylebox_override(
-					"panel",
-					get_theme_stylebox("sub_inspector_bg1", "EditorStyles")
-				)
+				# bottom_panel.add_theme_stylebox_override(
+				# 	"panel",
+				# 	get_theme_stylebox("sub_inspector_bg1", "EditorStyles")
+				# )
 				bottom_panel.add_child(value_editor_parent)
 				value_editor_parent = bottom_panel
 
@@ -340,30 +340,7 @@ class VariantResourceEditorProperty extends EditorProperty:
 		return _get_resource().value
 	
 	func _should_use_bottom_editor() -> bool:
-		if O2.Helpers.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition):
-			return true
-		var resource := _get_resource()
-		if (
-			resource is Vector3Resource
-			or resource is Vector3iResource
-			or resource is Vector4Resource
-			or resource is Vector4iResource
-			or resource is PackedByteArrayResource
-			or resource is PackedInt32ArrayResource
-			or resource is PackedInt64ArrayResource
-			or resource is PackedFloat32ArrayResource
-			or resource is PackedFloat64ArrayResource
-			or resource is PackedStringArrayResource
-			or resource is PackedVector2ArrayResource
-			or resource is PackedVector3ArrayResource
-			or resource is PackedColorArrayResource
-			or resource is PackedVector4ArrayResource
-			or resource is ArrayResource
-			or resource is DictionaryResource
-			or resource is QuaternionResource
-		):
-			return true
-		return false
+		return O2.Helpers.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition)
 
 class VariantResourceOverrideEditorProperty extends VariantResourceEditorProperty:
 	var original_object : Object
@@ -422,25 +399,21 @@ class OverriddenEditorProperty extends EditorProperty:
 
 	func _ready() -> void:
 		deletable = true
+		name_split_ratio = 0.5
+
 		var hbox := HBoxContainer.new()
 		add_child(resource_editor)
-		# hbox.add_child(resource_editor)
-		name_split_ratio = 0.5
+
 		resource_editor.name_split_ratio = 0
 		resource_editor.label = ""
-		# resource_editor.picker.reparent(self)
 		resource_editor.picker.reparent(hbox)
+
 		mode_button = MenuButton.new()
 		mode_button.flat = true
 		mode_button.icon = _get_mode_icon(resource_editor.metadata_script.sync_mode)
 		mode_button.expand_icon = false
-		# resource_editor.add_child(mode_button)
 		hbox.add_child(mode_button)
 		add_child(hbox)
-		# resource_editor.picker.add_child(mode_button, false, Node.INTERNAL_MODE_BACK)
-		# resource_editor.picker_internal_hbox.add_child(mode_button)
-		# add_child(mode_button)
-		# O2.Helpers.Nodes.move_relative(mode_button, -1)
 
 		if resource_editor.use_bottom_editor:
 			set_bottom_editor(resource_editor)

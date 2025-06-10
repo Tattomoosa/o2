@@ -14,7 +14,7 @@ const SHOW_WINDOW_BUTTON_SETTING := "window_mode_menu/enable"
 const SHOW_WINDOW_BUTTON_TEXT_SETTING := "window_mode_menu/show_button_text"
 const SHOW_PLUGIN_BUTTON_SETTING := "plugin_menu/enable"
 const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "plugin_menu/show_button_text"
-const PLUGIN_MENU_DISABLE_QUICK_SETTING := "plugin_menu/disable_quick_settings"
+const PLUGIN_MENU_DISABLE_QUICK_SETTING := "plugin_menu/hide_quick_settings"
 
 var button_parent : Control
 var dialog : Window
@@ -61,8 +61,10 @@ func _create_control() -> void:
 
 	if _get_setting(SHOW_PLUGIN_BUTTON_SETTING):
 		var plugin_button := Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
+		if _get_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
+			plugin_button.text = "Plugins"
 		plugin_button.tooltip_text = "Enable/disable EditorPlugins"
-		_create_plugin_popup(plugin_button)
+		_create_plugin_popup(plugin_button.get_popup())
 		hbox.add_child(plugin_button)
 
 	button_parent.add_child(hbox)
@@ -94,20 +96,19 @@ func _create_viewport_popup(viewport_button: MenuButton) -> void:
 			viewport_button.text = names[index]
 	)
 
-func _create_plugin_popup(plugin_button: MenuButton) -> void:
-	var popup := plugin_button.get_popup()
+func _create_plugin_popup(popup: PopupMenu) -> void:
 	popup.clear()
+	popup.size.y = 0
 	popup.hide_on_checkable_item_selection = false
 	plugin_enable_strings.clear()
 	var plugin_paths := Plugins.get_all_plugin_paths()
 
-	if _get_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
-		plugin_button.text = "Plugins"
-
-	# for path in plugin_paths:
-	# 	if path.get_file() == "quick_settings":
-	# 		plugin_paths.erase(path)
-	# 		break
+	if _get_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING):
+		for path in plugin_paths:
+			if path.get_file() == "quick_settings":
+			# if path.get_file() == get_script().resource_path.get_base_dir():
+				plugin_paths.erase(path)
+				break
 
 	for i in plugin_paths.size():
 		var plugin_path := plugin_paths[i]
@@ -121,16 +122,23 @@ func _create_plugin_popup(plugin_button: MenuButton) -> void:
 		popup.add_icon_check_item(icon, display_name)
 		popup.set_item_indent(i, plugin_enable_string.count("/") * O2.Helpers.Editor.Settings.scale)
 		popup.set_item_checked(i, EditorInterface.is_plugin_enabled(plugin_enable_string))
-		Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(plugin_button))
+		Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(popup))
 		Signals.connect_if_not_connected(popup.index_pressed, _set_plugin_enabled.bind(popup))
 
 func _set_plugin_enabled(index: int, popup: PopupMenu) -> void:
+	for i in popup.item_count:
+		popup.set_item_disabled(i, true)
+	var inspector := EditorInterface.get_inspector()
+	var edited_object := inspector.get_edited_object()
+	inspector.edit(null)
+	await get_tree().process_frame
 	var enable_string := plugin_enable_strings[index]
 	EditorInterface.set_plugin_enabled(
 		enable_string,
 		!EditorInterface.is_plugin_enabled(enable_string)
 	)
-	popup.set_item_checked(index, EditorInterface.is_plugin_enabled(enable_string)
-)
+	inspector.edit(edited_object)
+	_create_plugin_popup(popup)
+	# popup.set_item_checked(index, EditorInterface.is_plugin_enabled(enable_string))
 
 

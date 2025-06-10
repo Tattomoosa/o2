@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgmit4iptr022"
-path="res://.godot/imported/ViewportTexture.svg-4e71828c290a97592521ff9b138d453a.ctex"
+path="res://.godot/imported/ViewportTexture.svg-034debe0525520ca487a319cf36610e4.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/o2/addons/quick_settings/assets/icons/ViewportTexture.svg"
-dest_files=["res://.godot/imported/ViewportTexture.svg-4e71828c290a97592521ff9b138d453a.ctex"]
+source_file="res://addons/quick_settings/assets/icons/ViewportTexture.svg"
+dest_files=["res://.godot/imported/ViewportTexture.svg-034debe0525520ca487a319cf36610e4.ctex"]
 
 [params]
 

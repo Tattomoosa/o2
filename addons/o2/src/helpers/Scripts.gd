@@ -14,6 +14,12 @@ static func get_script_name(script: Script) -> String:
 	var extension := file.get_extension()
 	return file.replace(".%s" % extension, "")
 
+static func get_class_name_or_script_name(script: Script) -> String:
+	var cname := script.get_global_name()
+	if !cname:
+		cname = get_script_name(script)
+	return cname
+
 ## This used to be a lot harder! Probably can deprecate this
 # TODO deprecate
 static func get_object_class_name(object: Object) -> String:

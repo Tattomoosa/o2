@@ -51,7 +51,6 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	remove_inspector_plugin(inspector_context_menu)
 	remove_tool_menu_item(REIMPORT_ICON_COMMAND)
-	inspector_context_menu.queue_free()
 
 func _reimport_icons() -> void:
 	var files := O2.Helpers.Files.get_all_files("res://", "svg")

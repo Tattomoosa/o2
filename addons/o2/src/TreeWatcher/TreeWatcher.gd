@@ -47,6 +47,7 @@ static func register_plugin(plugin: TreeWatcherPlugin) -> void:
 		"hint": PROPERTY_HINT_TYPE_STRING,
 		"hint_string": "4/13:", #TYPE_STRING/PROPERTY_HINT_FILE
 	})
+	ProjectSettings.save()
 
 static func unregister_plugin(plugin: TreeWatcherPlugin) -> void:
 	var plugin_paths : Array = Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
@@ -58,6 +59,7 @@ static func unregister_plugin(plugin: TreeWatcherPlugin) -> void:
 
 func _load_plugins() -> void:
 	var plugin_paths : Array = Settings.get_or_add(TREE_WATCHER_PLUGINS_SETTING, PackedStringArray([]))
+	var plugin_names := PackedStringArray()
 	for path in plugin_paths:
 		var plugin_script : Script = load(path)
 		if !plugin_script:
@@ -66,8 +68,10 @@ func _load_plugins() -> void:
 		if "new" not in plugin_script:
 			push_error("Plugin script %s missing 'new' method!" % plugin_script)
 			continue
-		O2.logger.info(
-			"[O2.TreeWatcher] Loading plugin: ",
-			O2.Helpers.Files.get_file_without_extension(plugin_script.resource_path)
-		)
 		plugins.push_back(plugin_script.new())
+		plugin_names.push_back(O2.Helpers.Files.get_file_without_extension(plugin_script.resource_path))
+	O2.logger.info(
+		"[O2.TreeWatcher] Loaded plugins: ",
+		",".join(plugin_names)
+	)
+	

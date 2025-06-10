@@ -5,6 +5,9 @@ const CONTEXT_MENU_META_PROPERTY_NAME := &"editor_property_context_items"
 const PropertyInfo := O2.Helpers.PropertyInfo
 static var _FAKE_RESOURCE := _FakeResource.new()
 
+# TODO
+var _bottom_editor : Control
+
 func _parse_property(
 	object: Object,
 	type: Variant.Type,
@@ -98,13 +101,6 @@ static func property_is_in_bottom_editor(property: Dictionary) -> bool:
 	if "type" in property:
 		if property.type in [
 			TYPE_ARRAY,
-			TYPE_QUATERNION,
-			TYPE_VECTOR2,
-			TYPE_VECTOR2I,
-			TYPE_VECTOR3,
-			TYPE_VECTOR3I,
-			TYPE_VECTOR4,
-			TYPE_VECTOR4I,
 			TYPE_DICTIONARY,
 			TYPE_PACKED_BYTE_ARRAY,
 			TYPE_PACKED_INT32_ARRAY,
@@ -117,6 +113,23 @@ static func property_is_in_bottom_editor(property: Dictionary) -> bool:
 			TYPE_PACKED_COLOR_ARRAY,
 			TYPE_PACKED_VECTOR4_ARRAY,
 		]:
+			return true
+	var editor_settings := EditorInterface.get_editor_settings()
+	if editor_settings:
+		if editor_settings.get_setting("interface/inspector/horizontal_vector_types_editing")\
+		and property.type in [
+				TYPE_VECTOR3,
+				TYPE_VECTOR3I,
+				TYPE_VECTOR4,
+				TYPE_VECTOR4I,
+				TYPE_RECT2,
+				TYPE_RECT2I,
+				TYPE_PLANE,
+				TYPE_QUATERNION,
+			]:
+				return true
+		if editor_settings.get_setting("interface/inspector/horizontal_vector2_editing")\
+		and property.type in [TYPE_VECTOR2, TYPE_VECTOR2I]:
 			return true
 	if "hint" in property:
 		match property.hint:

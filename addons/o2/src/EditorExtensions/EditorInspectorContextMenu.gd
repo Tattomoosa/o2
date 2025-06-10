@@ -55,9 +55,22 @@ func _add_context_menu(ep: EditorProperty) -> void:
 		# hbox.add_child(vbox, false, Node.INTERNAL_MODE_FRONT)
 		hbox.add_child(vbox)
 	else:
-		if property.type not in [TYPE_ARRAY, TYPE_OBJECT]:
+		# TODO adjust for bottom editor properly
+		if ep.get_child_count() == 1:
 			ep.name_split_ratio = 1.0
-		ep.add_child(button, false, Node.INTERNAL_MODE_FRONT)
+			ep.add_child(button)
+		else:
+			ep.print_tree_pretty()
+			var hbox := HBoxContainer.new()
+			hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			for i in ep.get_children().size():
+				if i == 0:
+					continue
+				var child := ep.get_child(i)
+				child.reparent(hbox)
+				child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			hbox.add_child(button)
+			ep.add_child(hbox, false, Node.INTERNAL_MODE_BACK)
 	
 	var popup := button.get_popup()
 	if ep.has_meta(CONTEXT_MENU_META_PROPERTY_NAME):

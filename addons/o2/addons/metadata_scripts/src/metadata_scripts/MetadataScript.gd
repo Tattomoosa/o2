@@ -9,6 +9,7 @@ const METADATA_SCRIPTS_PROPERTY := "metadata_scripts"
 const _Signals := O2.Helpers.Signals
 
 func _init() -> void:
+	resource_local_to_scene = true
 	if Engine.is_editor_hint():
 		var display_name := (get_script() as Script).get_global_name()
 		resource_name = display_name.replace("MetadataScript_", "")
@@ -51,7 +52,14 @@ func add_to_node(p_node: Node) -> void:
 	if !has_metadata_scripts(p_node):
 		p_node.set_meta(METADATA_SCRIPTS_PROPERTY, [] as Array[MetadataScript])
 	var md_scripts := get_metadata_scripts(p_node)
-	md_scripts.push_back(self)
+	if !resource_local_to_scene:
+		push_warning("%s is not local to scene! Call super() in _init()! Attaching duplicate to %s." % [self, node])
+		md_scripts.push_back(self.duplicate())
+	else:
+		md_scripts.push_back(self)
 	if p_node.is_inside_tree():
 		tree_entered(p_node)
 
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "resource_local_to_scene":
+		property.usage = PROPERTY_USAGE_NONE

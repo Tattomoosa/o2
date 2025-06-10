@@ -1,28 +1,17 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8um61f6jh5ku"]
+[gd_scene load_steps=24 format=3 uid="uid://c8um61f6jh5ku"]
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_7d2n1"]
 [ext_resource type="Script" uid="uid://c7cjsjtruf4y5" path="res://addons/o2/addons/variant_resources/src/variant_resources/ColorResource.gd" id="2_2tmcw"]
 [ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="3_5ybcm"]
+[ext_resource type="Script" uid="uid://dmxk8u8loyc43" path="res://addons/o2/addons/variant_resources/src/variant_resources/Vector2Resource.gd" id="4_hbqsc"]
 [ext_resource type="Script" uid="uid://c0mgsavsenfjd" path="res://addons/o2/addons/variant_resources/src/variant_resources/FloatResource.gd" id="5_5ybcm"]
 [ext_resource type="Script" uid="uid://djdxn6wi2t33k" path="res://addons/o2/addons/variant_resources/src/variant_resources/StringResource.gd" id="5_hbqsc"]
 [ext_resource type="Script" uid="uid://0svcbakobqb4" path="res://addons/o2/addons/variant_resources/src/extended_resources/RangeResource.gd" id="6_hbqsc"]
 
-[sub_resource type="GDScript" id="GDScript_o8nsk"]
-script/source = "extends HBoxContainer
-
-@export var color : ColorResource
-"
-
-[sub_resource type="Resource" id="Resource_d5deg"]
+[sub_resource type="Resource" id="Resource_oexyp"]
+resource_name = "A Color!"
 script = ExtResource("2_2tmcw")
-value = Color(0, 0, 0, 1)
-type = 20
-_override_property_info = {}
-metadata/_custom_type_script = "uid://c7cjsjtruf4y5"
-
-[sub_resource type="Resource" id="Resource_8dkrl"]
-script = ExtResource("2_2tmcw")
-value = Color(0, 0, 0, 1)
+value = Color(0.6697165, 0.43395725, 0.43395725, 1)
 type = 20
 _override_property_info = {
 "class_name": &"",
@@ -36,43 +25,36 @@ _override_property_info = {
 [sub_resource type="Resource" id="Resource_376k1"]
 resource_name = "SyncVariantResource"
 script = ExtResource("3_5ybcm")
-resource = SubResource("Resource_8dkrl")
+resource = SubResource("Resource_oexyp")
 property_name = &"color"
-sync_mode = 0
-
-[sub_resource type="Resource" id="Resource_px1ul"]
-script = ExtResource("2_2tmcw")
-value = Color(0, 0, 0, 1)
-type = 20
-_override_property_info = {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "color",
-"type": 20,
-"usage": 6
-}
+sync_mode = 1
 
 [sub_resource type="Resource" id="Resource_kvkwk"]
 resource_name = "SyncVariantResource"
 script = ExtResource("3_5ybcm")
-resource = SubResource("Resource_px1ul")
+resource = SubResource("Resource_oexyp")
 property_name = &"color"
 sync_mode = 0
 
-[sub_resource type="Resource" id="Resource_oexyp"]
-resource_name = "A Color!"
-script = ExtResource("2_2tmcw")
-value = Color(1, 1, 1, 1)
-type = 20
+[sub_resource type="Resource" id="Resource_d5deg"]
+script = ExtResource("4_hbqsc")
+value = Vector2(0, 0)
+type = 5
 _override_property_info = {
 "class_name": &"",
 "hint": 0,
-"hint_string": "",
-"name": "color",
-"type": 20,
+"hint_string": "suffix:px",
+"name": "custom_minimum_size",
+"type": 5,
 "usage": 6
 }
+
+[sub_resource type="Resource" id="Resource_8dkrl"]
+resource_name = "SyncVariantResource"
+script = ExtResource("3_5ybcm")
+resource = SubResource("Resource_d5deg")
+property_name = &"custom_minimum_size"
+sync_mode = 0
 
 [sub_resource type="Resource" id="Resource_o8nsk"]
 resource_name = "SyncVariantResource"
@@ -97,7 +79,7 @@ sync_mode = 0
 
 [sub_resource type="Resource" id="Resource_d6re0"]
 script = ExtResource("5_hbqsc")
-value = ""
+value = "something or another!"
 type = 4
 _override_property_info = {
 "class_name": &"",
@@ -178,39 +160,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_o8nsk")
-color = SubResource("Resource_d5deg")
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([])
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
 layout_mode = 2
+color = Color(0.6697165, 0.43395725, 0.43395725, 1)
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_376k1")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(0, 0, 0, 1)
-metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_kvkwk")])
+color = Color(0.6697165, 0.43395725, 0.43395725, 1)
+metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_kvkwk"), SubResource("Resource_8dkrl")])
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+color = Color(0.6697165, 0.43395725, 0.43395725, 1)
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_o8nsk")])
 
 [node name="ColorRect3" type="ColorRect" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+color = Color(0.6697165, 0.43395725, 0.43395725, 1)
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_qdu6j")])
 
 [node name="ColorRect4" type="ColorRect" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+color = Color(0.6697165, 0.43395725, 0.43395725, 1)
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_cqitt")])
 
 [node name="Label" type="Label" parent="ColorRect4"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+text = "something or another!"
 metadata/metadata_scripts = Array[ExtResource("1_7d2n1")]([SubResource("Resource_d6m4d")])
 
 [node name="VSlider" type="VSlider" parent="."]

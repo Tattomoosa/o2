@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyb1wf2a7s8d3"
-path="res://.godot/imported/ProjectList.svg-0035722245be529313823fcabac8a5c1.ctex"
+uid="uid://obguu32af2v"
+path="res://.godot/imported/EditorPlugin.svg-ed5110d3a90e673ff58c59fe7e6cf8ed.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/o2/addons/quick_settings/assets/icons/ProjectList.svg"
-dest_files=["res://.godot/imported/ProjectList.svg-0035722245be529313823fcabac8a5c1.ctex"]
+source_file="res://addons/quick_settings/assets/icons/EditorPlugin.svg"
+dest_files=["res://.godot/imported/EditorPlugin.svg-ed5110d3a90e673ff58c59fe7e6cf8ed.ctex"]
 
 [params]
 
