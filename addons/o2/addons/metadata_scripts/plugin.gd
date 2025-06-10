@@ -21,11 +21,9 @@ func _enter_tree() -> void:
 	TreeWatcher.register_plugin(MetadataScriptTreeWatcherPlugin.new())
 	add_inspector_plugin(editor_inspector_plugin)
 
-
 func _exit_tree() -> void:
 	TreeWatcher.unregister_plugin(MetadataScriptTreeWatcherPlugin.new())
 	remove_inspector_plugin(editor_inspector_plugin)
-
 
 class MetadataScriptEditorInspectorPlugin extends EditorInspectorPlugin:
 	var metadata_script_class_data : Array[Dictionary] = []

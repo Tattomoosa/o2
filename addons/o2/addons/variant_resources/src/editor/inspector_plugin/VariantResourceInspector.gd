@@ -6,6 +6,9 @@ const InspectorPlugin := preload("VariantResourceInspector.gd")
 const Controls := O2.Helpers.Controls
 const H := O2.Helpers
 const RESOURCE_ICON := preload("uid://b3hbc21pvf0fs")
+const RESOURCE_OVERRIDE_ICON := preload("uid://cmhsyh2bllenw")
+const SYNC_RESOURCE_PROCESS_ICON := preload("uid://bfqtnpcim5od6")
+const SYNC_RESOURCE_PHYSICS_ICON := preload("uid://ciejl2enkdkyp")
 
 const TYPE_MAP : Dictionary[Variant.Type, String] = {
 	TYPE_BOOL: "BoolResource",
@@ -51,7 +54,7 @@ const IGNORE_USAGE : Array[int] = [ PROPERTY_USAGE_INTERNAL ]
 func _can_handle(_object: Object) -> bool:
 	return true
 
-func _parse_extended_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags: int, _wide: bool) -> bool:
+func _parse_extended_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if !name:
 		return false
 	if type == TYPE_OBJECT and hint_type == PROPERTY_HINT_RESOURCE_TYPE:
@@ -67,41 +70,10 @@ func _parse_extended_property(object: Object, type: Variant.Type, name: String, 
 			add_property_editor(name, overridden_property_editor)
 			return true
 		else:
-			if O2.Helpers.BitMasks.has_any(usage_flags, IGNORE_USAGE):
-				return false
-
 			var variant_editor = _create_variant_editor(object, name)
-			if !variant_editor:
-				# print(PropertyInfo.prettify(PropertyInfo.get_property(object, name)))
-				return false
-
 			add_property_editor(name, variant_editor)
-			# _patch_variant_editor_property(variant_editor, object, name)
-			# variant_editor.ready.connect(_on_variant_editor_ready.bind(variant_editor))
-
-			variant_editor.ready.connect(_patch_variant_editor_property.bindv([variant_editor, object, name]).call_deferred)
 			return true
 	return false
-
-func _patch_variant_editor_property(variant_editor: EditorProperty, object: Object, name: String) -> void:
-	var hbox := HBoxContainer.new()
-	var parent := variant_editor.get_parent()
-	var index := variant_editor.get_index()
-	variant_editor.reparent(hbox)
-	variant_editor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	parent.add_child(hbox)
-	parent.move_child(hbox, index)
-
-	var button := Button.new()
-	button.flat = true
-	button.icon = RESOURCE_ICON
-	button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
-	button.add_theme_color_override("icon_normal_color", Color(Color.WHITE, 0.2))
-	button.tooltip_text = "Add VariantResource Override"
-
-	button.expand_icon = false
-	hbox.add_child(button)
-	button.pressed.connect(_add_resource_override.bindv([object, name]))
 
 func _add_resource_override(object: Object, property_name: String) -> void:
 	if object is not Node:
@@ -134,17 +106,12 @@ func _add_resource_override(object: Object, property_name: String) -> void:
 	md_script.add_to_node(object)
 	object.notify_property_list_changed()
 
-func _position_resource_override_button(_property_name: String, can_revert: bool, _variant_editor: EditorProperty, button: Button) -> void:
-	if !can_revert:
-		button.position.x = -ES.scale_int(25)
-	else:
-		button.position.x = -ES.scale_int(50)
-
 func _create_variant_editor(object: Object, property_name: String) -> EditorProperty:
 	var variant_editor := instantiate_default_property_editor(
 		object,
 		property_name
 	)
+	_add_override_context_menu_item(variant_editor)
 	return variant_editor
 
 func _create_resource_editor(object: Object, property_name: String) -> EditorProperty:
@@ -178,14 +145,22 @@ func _get_override_resource_editor(object: Object, property_name: String) -> Edi
 			var resource_editor := instantiate_patched_property_editor(s, property, VariantResourceOverrideEditorProperty)
 			var vr_editor := resource_editor as VariantResourceOverrideEditorProperty
 			vr_editor.label = property_name.to_pascal_case()
-			vr_editor.override_edited_object = s
+			vr_editor.metadata_script = s
 			vr_editor.original_object = object
 			vr_editor.property_definition = object_property
-			if resource_editor:
-				var overridden_editor_property := OverriddenEditorProperty.new()
-				overridden_editor_property.resource_editor = resource_editor
-				return overridden_editor_property
+			var overridden_editor_property := OverriddenEditorProperty.new()
+			overridden_editor_property.resource_editor = vr_editor
+			return overridden_editor_property
 	return null
+
+func _add_override_context_menu_item(ep: EditorProperty) -> void:
+	create_context_menu_item(
+		"Add Property Override Resource",
+		_add_resource_override.bindv(
+			[ep.get_edited_object(), ep.get_edited_property()]
+		).unbind(1),
+		ep
+	)
 
 static func get_resource_override_metadata_script(object: Object, property_name: String) -> MetadataScript_SyncVariantResource:
 	var metadata_scripts : Array = object.get_meta("metadata_scripts")
@@ -201,6 +176,7 @@ static func get_resource_override_metadata_script(object: Object, property_name:
 class VariantResourceEditorProperty extends EditorProperty:
 	var picker : EditorResourcePicker
 	var picker_button : Button
+	var picker_internal_hbox : HBoxContainer
 	var value_editor : EditorProperty
 	var value_editor_parent : Control
 	var use_bottom_editor := false
@@ -223,7 +199,7 @@ class VariantResourceEditorProperty extends EditorProperty:
 
 		var mc := Controls.margin_container(ES.scale_int(0))
 
-		var picker_internal_hbox := HBoxContainer.new()
+		picker_internal_hbox = HBoxContainer.new()
 		picker_internal_hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 		var heading := Control.new()
@@ -307,7 +283,6 @@ class VariantResourceEditorProperty extends EditorProperty:
 			if !value_editor.visibility_changed.is_connected(_replace_value_editor):
 				value_editor.visibility_changed.connect(_replace_value_editor, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 			return
-		# print("replacing value editor")
 		_update_resource_name_label_text()
 		var new_value_editor := create_value_editor()
 		var parent := value_editor.get_parent()
@@ -365,24 +340,8 @@ class VariantResourceEditorProperty extends EditorProperty:
 		return _get_resource().value
 	
 	func _should_use_bottom_editor() -> bool:
-		if "hint" in property_definition:
-			match property_definition.hint:
-				PROPERTY_HINT_MULTILINE_TEXT:
-					return true
-				PROPERTY_HINT_ARRAY_TYPE:
-					return true
-				PROPERTY_HINT_DICTIONARY_TYPE:
-					return true
-				PROPERTY_HINT_LAYERS_2D_NAVIGATION,\
-				PROPERTY_HINT_LAYERS_2D_PHYSICS,\
-				PROPERTY_HINT_LAYERS_2D_RENDER,\
-				PROPERTY_HINT_LAYERS_3D_NAVIGATION,\
-				PROPERTY_HINT_LAYERS_3D_PHYSICS,\
-				PROPERTY_HINT_LAYERS_3D_RENDER,\
-				PROPERTY_HINT_LAYERS_AVOIDANCE:
-					return true
-				PROPERTY_HINT_TYPE_STRING:
-					return true
+		if O2.Helpers.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition):
+			return true
 		var resource := _get_resource()
 		if (
 			resource is Vector3Resource
@@ -408,11 +367,11 @@ class VariantResourceEditorProperty extends EditorProperty:
 
 class VariantResourceOverrideEditorProperty extends VariantResourceEditorProperty:
 	var original_object : Object
-	var override_edited_object : Object
+	var metadata_script : Object
 
 	func _ready() -> void:
 		selectable = true
-		set_object_and_property(override_edited_object, get_edited_property())
+		set_object_and_property(metadata_script, get_edited_property())
 		super()
 		property_can_revert_changed.emit(property_definition.name, false)
 
@@ -459,14 +418,29 @@ class VariantResourceOverrideEditorProperty extends VariantResourceEditorPropert
 		
 class OverriddenEditorProperty extends EditorProperty:
 	var resource_editor : VariantResourceOverrideEditorProperty
+	var mode_button : MenuButton
 
 	func _ready() -> void:
 		deletable = true
+		var hbox := HBoxContainer.new()
 		add_child(resource_editor)
+		# hbox.add_child(resource_editor)
 		name_split_ratio = 0.5
 		resource_editor.name_split_ratio = 0
 		resource_editor.label = ""
-		resource_editor.picker.reparent(self)
+		# resource_editor.picker.reparent(self)
+		resource_editor.picker.reparent(hbox)
+		mode_button = MenuButton.new()
+		mode_button.flat = true
+		mode_button.icon = _get_mode_icon(resource_editor.metadata_script.sync_mode)
+		mode_button.expand_icon = false
+		# resource_editor.add_child(mode_button)
+		hbox.add_child(mode_button)
+		add_child(hbox)
+		# resource_editor.picker.add_child(mode_button, false, Node.INTERNAL_MODE_BACK)
+		# resource_editor.picker_internal_hbox.add_child(mode_button)
+		# add_child(mode_button)
+		# O2.Helpers.Nodes.move_relative(mode_button, -1)
 
 		if resource_editor.use_bottom_editor:
 			set_bottom_editor(resource_editor)
@@ -474,6 +448,26 @@ class OverriddenEditorProperty extends EditorProperty:
 			resource_editor.using_bottom_editor.connect(_set_bottom_editor)
 		
 		EditorInterface.get_inspector().property_deleted.connect(_on_deleted)
+
+		var popup := mode_button.get_popup()
+		popup.add_icon_item(RESOURCE_OVERRIDE_ICON, "Resource -> Property (Override)")
+		popup.set_item_tooltip(0, "Every time the Resource's value changes, the property is updated")
+		popup.add_icon_item(SYNC_RESOURCE_PROCESS_ICON, "Resource <-> Property (Process)")
+		popup.set_item_tooltip(1, "The resource and the property are kept in sync every frame")
+		popup.add_icon_item(SYNC_RESOURCE_PHYSICS_ICON, "Resource <-> Property (Physics Process)")
+		popup.set_item_tooltip(2, "The resource and the property are kept in sync every physics frame")
+		popup.index_pressed.connect(_popup_pressed)
+	
+	func _popup_pressed(index: int) -> void:
+		resource_editor.metadata_script.sync_mode = index
+		mode_button.icon = _get_mode_icon(resource_editor.metadata_script.sync_mode)
+	
+	func _get_mode_icon(index: int) -> Texture2D:
+		return [
+			RESOURCE_OVERRIDE_ICON,
+			SYNC_RESOURCE_PROCESS_ICON,
+			SYNC_RESOURCE_PHYSICS_ICON
+		][index]
 
 	func _update_property() -> void:
 		var value : Variant = get_edited_object().get(get_edited_property())

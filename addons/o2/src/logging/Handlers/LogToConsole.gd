@@ -13,28 +13,22 @@ static func unsubscribe() -> void:
 	_stream = null
 
 static func _log(msg: String, stream_name := "") -> void:
-	print_rich(
-		"%s%s" % [
-			"[%s] : " % stream_name if stream_name else "",
-			msg
-		]
-	)
+	print_rich("%s%s" % [
+		"[%s] : " % stream_name if stream_name else "",
+		msg,
+	])
 
 static func _warn(msg: String, stream_name: String = "") -> void:
-	push_warning(
-		"%s%s" % [
-			"[%s] : " % stream_name if stream_name else "",
-			msg
-		]
-	)
+	push_warning("%s%s" % [
+		"[%s] : " % stream_name if stream_name else "",
+		msg,
+	])
 
 static func _error(msg: String, stream_name: String = "") -> void:
-	push_warning(
-		"%s%s" % [
-			"[%s] : " % stream_name if stream_name else "",
-			msg
-		]
-	)
+	push_warning("%s%s" % [
+		"[%s] : " % stream_name if stream_name else "",
+		msg
+	])
 
 static func _subscribe(stream: LogStream) -> void:
 	stream.logged_debug.connect(_log)

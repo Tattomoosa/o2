@@ -61,13 +61,15 @@ static func get_descendents(node: Node) -> Array[Node]:
 	return arr
 
 ## Gets all children, grandchildren, etc with a given type
-static func get_descendents_with_type(node: Node, type: Variant) -> Array[Node]:
+## Optionally does not go deeper than the first chlid of that type found in any sub-tree
+static func get_descendents_with_type(node: Node, type: Variant, stop_at_type := false) -> Array[Node]:
 	var arr : Array[Node]
 	var parent_stack : Array[Node] = [node]
 	while parent_stack.size():
 		var parent = parent_stack.pop_front()
 		for child in parent.get_children():
-			parent_stack.push_back(child)
+			if !stop_at_type or !is_instance_of(child, type):
+				parent_stack.push_back(child)
 			if is_instance_of(child, type):
 				arr.push_back(child)
 	return arr
@@ -93,6 +95,12 @@ static func move_relative(node: Node, by := 1) -> void:
 	var index := node.get_index()
 	var parent := node.get_parent()
 	parent.move_child(node, index + by)
+
+static func get_nth_parent(node: Node, n := 1) -> Node:
+	for i in n:
+		node = node.get_parent()
+	return node
+
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

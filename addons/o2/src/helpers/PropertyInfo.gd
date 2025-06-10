@@ -158,7 +158,6 @@ static func get_property_hint_name(property_hint: int) -> StringName:
 static func prettify(property: Dictionary) -> String:
 	if "name" not in property:
 		push_error(property)
-		print_stack()
 		return "%s" % property
 	var prop_str := "[ Property Info: '%s' ]\n" % property.name
 	if "class_name" in property:
@@ -178,7 +177,7 @@ static func prettify(property: Dictionary) -> String:
 				property.hint_string,
 			]
 		else:
-			prop_str += "%s\n" % property.hint_string
+			prop_str += "\"%s\"\n" % property.hint_string
 	if "usage" in property:
 		prop_str += "usage: %s (%s)" % [
 			property.usage,
@@ -296,12 +295,8 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 ## Whether or not a given int property is bitflags
 static func property_is_bitflags(property: Dictionary) -> bool:
 		return (
-			(
-				"usage" in property
-				and _BitMasks.get_bit_value(
-					property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD
-				)
-			)
+			"usage" in property\
+			and _BitMasks.get_bit_value(property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD)\
 			or property.hint in [
 				PROPERTY_HINT_FLAGS,
 				PROPERTY_HINT_LAYERS_2D_RENDER,

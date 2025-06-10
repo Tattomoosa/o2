@@ -100,15 +100,19 @@ func _get_callable(index: int) -> Callable:
 	return _synced_properties_callables[index]
 
 func _validate_property(property: Dictionary) -> void:
-	editor_array_helper.validate_property_helper(property)
+	if editor_array_helper:
+		editor_array_helper.validate_property_helper(property)
 
 func _get_property_list() -> Array[Dictionary]:
+	if !editor_array_helper:
+		return [{}]
 	var props := editor_array_helper.get_property_list_helper()
 	for p in props:
 		if p.name.ends_with(PROPERTY_NAME_SUFFIX):
 			_patch_property_name_field_into_valid_property_enum(p)
 	return props
 
+# TODO this could probably just be handled by the InspectorPlugin
 func _patch_property_name_field_into_valid_property_enum(p: Dictionary) -> void:
 	var i : int = p.name.to_int()
 	var node := _get_node(i)
@@ -124,6 +128,7 @@ func _patch_property_name_field_into_valid_property_enum(p: Dictionary) -> void:
 	else:
 		p.usage = PROPERTY_USAGE_NONE
 
+# TODO this could probably just be handled by the InspectorPlugin
 func _can_sync_to_property(resource: VariantResource, property: Dictionary) -> bool:
 	if !property:
 		return false

@@ -7,6 +7,12 @@ extends MetadataScript
 const _PropertyInfo := O2.Helpers.PropertyInfo
 const _BitMasks := O2.Helpers.BitMasks
 
+enum SyncMode {
+	SyncResourceToProperty,
+	BindProcess,
+	BindPhysics,
+}
+
 @export var resource : VariantResource:
 	set(v):
 		_Signals.swap(resource, v, "value_changed", _update)
@@ -14,25 +20,57 @@ const _BitMasks := O2.Helpers.BitMasks
 		if Engine.is_editor_hint() and node:
 			_patch_property_name_into_valid_property_enum()
 		_update()
+
 @export var property_name : StringName:
 	set(v):
 		property_name = v
 		_update()
+
+@export var sync_mode := SyncMode.SyncResourceToProperty:
+	set(value):
+		sync_mode = value
+		if !node:
+			return
+		if sync_mode != SyncMode.SyncResourceToProperty:
+			_process_callback()
+
+signal process_next_callback
 
 var _property_name_property : Dictionary = {
 	"hint": PROPERTY_HINT_ENUM_SUGGESTION,
 	"hint_string": ""
 }
 
+func _process_callback() -> void:
+	if !node or !is_instance_valid(node) or !node.is_inside_tree():
+		return
+	var v : Variant = node.get(property_name)
+	if resource.value != v:
+		resource.value = v
+	match sync_mode:
+		SyncMode.SyncResourceToProperty:
+			return
+		SyncMode.BindProcess:
+			await node.get_tree().process_frame
+		SyncMode.BindPhysics:
+			await node.get_tree().physics_frame
+	process_next_callback.emit()
+
 func _enter_tree() -> void:
-	_patch_property_name_into_valid_property_enum()
+	if Engine.is_editor_hint():
+		_patch_property_name_into_valid_property_enum()
+	_update()
+	O2.Helpers.Signals.connect_if_not_connected(process_next_callback, _process_callback)
+	if sync_mode != SyncMode.SyncResourceToProperty:
+		_process_callback()
 
 func _update() -> void:
 	if !node:
 		return
 	if resource and property_name:
-		node.set(property_name, resource.get("value"))
+		node.set(property_name, resource.value)
 
+# TODO this could probably just be handled by the InspectorPlugin
 func _validate_property(property: Dictionary) -> void:
 	if !Engine.is_editor_hint():
 		return
@@ -40,13 +78,14 @@ func _validate_property(property: Dictionary) -> void:
 		property.hint = _property_name_property.hint
 		property.hint_string = _property_name_property.hint_string
 
+# TODO this could probably just be handled by the InspectorPlugin
 func _patch_property_name_into_valid_property_enum() -> void:
 	var p := _property_name_property
 	if node and resource:
 		p.hint = PROPERTY_HINT_ENUM_SUGGESTION
 		var hint_strings : Array[String] = []
 		for property in node.get_property_list():
-			if _can_sync_to_property(property):
+			if "name" in property and _can_sync_to_property(property):
 				hint_strings.append(property.name)
 		p.hint_string = ",".join(hint_strings)
 	else:

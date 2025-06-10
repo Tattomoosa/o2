@@ -1,6 +1,7 @@
 @tool
 extends EditorInspectorPlugin
 
+const CONTEXT_MENU_META_PROPERTY_NAME := &"editor_property_context_items"
 const PropertyInfo := O2.Helpers.PropertyInfo
 static var _FAKE_RESOURCE := _FakeResource.new()
 
@@ -64,6 +65,11 @@ static func instantiate_property_editor(object: Object, property: Dictionary, in
 	)
 	return pe
 
+## Callable(PropertyEditor)
+static func create_context_menu_item(item_name: String, callable: Callable, ep: EditorProperty) -> void:
+	var items : Array = O2.Helpers.Metadata.get_or_add_meta(ep, CONTEXT_MENU_META_PROPERTY_NAME, [])
+	items.push_back({"name": item_name, "callable": callable})
+
 ## Creates a property editor and attaches a script to it
 static func instantiate_patched_property_editor(
 	object: Object,
@@ -87,6 +93,50 @@ static func style_inspector_button(button: Button, icon_name: String = "") -> vo
 			status,
 			inspector.get_theme_stylebox(status, &"InspectorActionButton")
 		)
+
+static func property_is_in_bottom_editor(property: Dictionary) -> bool:
+	if "type" in property:
+		if property.type in [
+			TYPE_ARRAY,
+			TYPE_QUATERNION,
+			TYPE_VECTOR2,
+			TYPE_VECTOR2I,
+			TYPE_VECTOR3,
+			TYPE_VECTOR3I,
+			TYPE_VECTOR4,
+			TYPE_VECTOR4I,
+			TYPE_DICTIONARY,
+			TYPE_PACKED_BYTE_ARRAY,
+			TYPE_PACKED_INT32_ARRAY,
+			TYPE_PACKED_INT64_ARRAY,
+			TYPE_PACKED_FLOAT32_ARRAY,
+			TYPE_PACKED_FLOAT64_ARRAY,
+			TYPE_PACKED_STRING_ARRAY,
+			TYPE_PACKED_VECTOR2_ARRAY,
+			TYPE_PACKED_VECTOR3_ARRAY,
+			TYPE_PACKED_COLOR_ARRAY,
+			TYPE_PACKED_VECTOR4_ARRAY,
+		]:
+			return true
+	if "hint" in property:
+		match property.hint:
+			PROPERTY_HINT_MULTILINE_TEXT:
+				return true
+			PROPERTY_HINT_ARRAY_TYPE:
+				return true
+			PROPERTY_HINT_DICTIONARY_TYPE:
+				return true
+			PROPERTY_HINT_LAYERS_2D_NAVIGATION,\
+			PROPERTY_HINT_LAYERS_2D_PHYSICS,\
+			PROPERTY_HINT_LAYERS_2D_RENDER,\
+			PROPERTY_HINT_LAYERS_3D_NAVIGATION,\
+			PROPERTY_HINT_LAYERS_3D_PHYSICS,\
+			PROPERTY_HINT_LAYERS_3D_RENDER,\
+			PROPERTY_HINT_LAYERS_AVOIDANCE:
+				return true
+			PROPERTY_HINT_TYPE_STRING:
+				return true
+	return false
 
 class _FakeResource extends Resource:
 	pass

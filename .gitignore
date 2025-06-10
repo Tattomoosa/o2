@@ -5,5 +5,4 @@ export.cfg
 export_credentials.cfg
 *.translation
 *.tscn-*
-!addons/o2
-addons
+addons/inspector_tabs

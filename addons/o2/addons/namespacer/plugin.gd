@@ -126,10 +126,8 @@ func _get_index_content(dir: String, entries: Array, is_root := false) -> String
 	return "\n".join(lines)
 
 func _deleted_files(files: PackedStringArray) -> void:
-	var root := TEST_ROOT
-	for file in files:
-		var relative_file := file.replace(root, "")
-		L.debug("Deleted: ", relative_file)
+	# TODO check if any roots we care about are in any file
+	_files_updated()
 
 class NamespaceEntry extends RefCounted:
 	var uid : int
@@ -158,19 +156,3 @@ class NamespaceEntry extends RefCounted:
 
 	func _get_is_index() -> bool:
 		return name == "_index"
-	
-# class NewIndexNamespaceEntry extends NamespaceEntry:
-# 	var _path : String
-
-# 	func _init(p_path: String) -> void:
-# 		super(-1)
-# 		_path = p_path
-	
-# 	func _get_is_index() -> bool:
-# 		return true
-	
-# 	func _get_path() -> String:
-# 		return _path.path_join(name)
-	
-# 	func _get_name() -> String:
-# 		return "_index.gd"

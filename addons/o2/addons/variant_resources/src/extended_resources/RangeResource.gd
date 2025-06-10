@@ -28,6 +28,7 @@ func set_override_property_info(_property_info: Dictionary) -> void:
 	return
 
 func _validate_property(property: Dictionary) -> void:
+	super(property)
 	if property.name == "value":
 		property.hint = PROPERTY_HINT_RANGE
 		property.hint_string = "%f,%f" % [min_value.value, max_value.value]
