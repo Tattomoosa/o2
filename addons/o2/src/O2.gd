@@ -5,7 +5,7 @@ extends Node
 
 const Logging := preload("uid://b5hb25ps522o0")
 const TreeWatcher := preload("uid://c5n7icddagd25")
-const EditorExtensions := preload("uid://braab2m6xl6u")
+const EditorExtensions := preload("uid://bgceakmub8odv")
 
 # maybe should be Logger since its static
 static var logger : Logging.LogStream = Logging.LogStream.new(Logging.LogStream.LogLevel.DEBUG)

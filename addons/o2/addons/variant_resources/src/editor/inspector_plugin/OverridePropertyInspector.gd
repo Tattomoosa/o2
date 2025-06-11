@@ -239,5 +239,5 @@ func _add_resource_override(object: Object, property_name: String) -> void:
 	var md_script := MetadataScript_SyncVariantResource.new()
 	md_script.resource = vr
 	md_script.property_name = property_name
-	md_script.add_to_node(object)
+	md_script.attach_to(object)
 	object.notify_property_list_changed()

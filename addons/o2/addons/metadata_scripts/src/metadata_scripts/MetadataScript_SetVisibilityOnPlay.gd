@@ -4,7 +4,7 @@ extends MetadataScript
 
 @export var visible := false
 
-func _enter_tree() -> void:
+func _ready() -> void:
 	if !Engine.is_editor_hint():
 		if "visible" in node:
 			node.visible = visible

@@ -31,10 +31,10 @@ static func _error(msg: String, stream_name: String = "") -> void:
 	])
 
 static func _subscribe(stream: LogStream) -> void:
-	stream.logged_debug.connect(_log)
-	stream.logged_info.connect(_log)
-	stream.logged_warn.connect(_warn)
-	stream.logged_error.connect(_error)
+	stream.logged_debug.connect(_log.bind(stream.name))
+	stream.logged_info.connect(_log.bind(stream.name))
+	stream.logged_warn.connect(_warn.bind(stream.name))
+	stream.logged_error.connect(_error.bind(stream.name))
 	stream.substream_added.connect(_subscribe)
 
 static func _unsubscribe(stream: LogStream) -> void:

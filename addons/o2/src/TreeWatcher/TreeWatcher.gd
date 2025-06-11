@@ -14,17 +14,22 @@ func _init(root: Node) -> void:
 		return
 	_load_plugins()
 	_node_entered(root)
-	if Engine.is_editor_hint():
-		for child in Nodes.get_descendents(root):
-			_node_entered(child)
+	for child in Nodes.get_descendents(root):
+		_node_entered(child)
 
 func _node_entered(node: Node) -> void:
 	if !node.child_entered_tree.is_connected(_node_entered):
 		node.child_entered_tree.connect(_node_entered)
+	if !node.ready.is_connected(_node_ready):
+		node.ready.connect(_node_ready.bind(node))
 	if !node.child_exiting_tree.is_connected(_node_exiting):
 		node.child_exiting_tree.connect(_node_exiting)
 	for plugin in plugins:
 		plugin.node_entered(node)
+
+func _node_ready(node: Node) -> void:
+	for plugin in plugins:
+		plugin.node_ready(node)
 
 func _node_exiting(node: Node) -> void:
 	if node.child_entered_tree.is_connected(_node_entered):

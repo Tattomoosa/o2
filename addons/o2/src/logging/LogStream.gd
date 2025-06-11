@@ -17,8 +17,9 @@ var name := ""
 var level := LogLevel.INFO
 var substreams : Dictionary[String, Self]
 
-func _init(p_level := LogLevel.INFO) -> void:
+func _init(p_level := LogLevel.INFO, p_name := "") -> void:
 	level = p_level
+	name = p_name
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
@@ -106,13 +107,13 @@ func add_substream(stream_level: LogLevel, stream_name: String) -> Self:
 		var old_stream := substreams[stream_name]
 		old_stream.logged_debug.disconnect(debug)
 		old_stream.logged_info.disconnect(info)
-		old_stream.logged_warning.disconnect(warn)
+		old_stream.logged_warn.disconnect(warn)
 		old_stream.logged_error.disconnect(error)
 	var stream := Self.new()
 	stream.level = stream_level
 	stream.logged_debug.connect(debug)
 	stream.logged_info.connect(info)
-	stream.logged_warning.connect(warn)
+	stream.logged_warn.connect(warn)
 	stream.logged_error.connect(error)
 	substreams[stream_name] = stream
 	substream_added.emit(stream)

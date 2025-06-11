@@ -15,8 +15,10 @@ var inspector_plugin : InspectorPlugin
 var fake_resource_holder := FakeArray.new()
 var array : Array = []
 var is_dragging := false
-var label_text : String
-var expand_text : String
+var button_icon : Texture2D
+var show_size := true
+
+var instance_state : Dictionary
 
 var drag_drop_parent := VBoxContainer.new()
 var array_panel := PanelContainer.new()
@@ -36,18 +38,12 @@ func _get_add_button() -> Button:
 	return btn
 
 func _ready() -> void:
+	_load_instance_state()
 	var inspector := EditorInterface.get_inspector()
 	inspector.property_deleted.connect(_on_deleted)
 	var object := get_edited_object()
 	fake_resource_holder.object = object
 	fake_resource_holder.array = array
-
-	name_split_ratio = 0.5
-	if label_text:
-		label = label_text
-	# TODO howwww to color the thing
-	# might need to custom control :(
-	# theme_type_variation = "sub_inspector_bg1"
 
 	add_child(heading_hbox)
 	add_child(array_panel)
@@ -61,6 +57,7 @@ func _ready() -> void:
 
 	# Delete Button (if custom needed)
 	if use_custom_delete_button:
+		deletable = false
 		var delete_array_button := Button.new()
 		InspectorPlugin.style_inspector_button(delete_array_button, "Close")
 		delete_array_button.flat = true
@@ -98,17 +95,27 @@ func _ready() -> void:
 	cc.add_child(end_button_hbox)
 
 	panel_vbox.add_child(cc)
-	if array_panel.visible:
-		set_bottom_editor(array_panel)
-
-func _update_button_size(b: Button, y: int) -> void:
-	b.custom_minimum_size.y = y
-
-func _toggle_array_panel() -> void:
-	array_panel.visible = !array_panel.visible
-	if array_panel.visible:
+	if !instance_state.collapsed:
 		set_bottom_editor(array_panel)
 	else:
+		array_panel.hide()
+
+func _load_instance_state():
+	instance_state = state.get_or_add(get_edited_object(), {}).get_or_add(get_edited_property(), {})
+	if "collapsed" not in instance_state:
+		instance_state.collapsed = true
+
+# func _update_button_size(b: Button, y: int) -> void:
+# 	b.custom_minimum_size.y = y
+
+func _toggle_array_panel() -> void:
+	instance_state.collapsed = !instance_state.collapsed
+	array_panel.visible = !instance_state.collapsed
+	if array_panel.visible:
+		array_panel.show()
+		set_bottom_editor(array_panel)
+	else:
+		array_panel.hide()
 		set_bottom_editor(null)
 
 func _delete_all() -> void:
@@ -129,8 +136,9 @@ func _move_down(i: int) -> void:
 	H.Arrays.swap(array, i, i + 1)
 	object.notify_property_list_changed()
 
-func _on_deleted(_property_name: String) -> void:
-	pass
+func _on_deleted(property_name: String) -> void:
+	if property_name == get_edited_property():
+		_delete_all()
 
 func _drag_index(_pos: Vector2, draggable: Control) -> Variant:
 	is_dragging = true
@@ -231,6 +239,12 @@ class ArrayItem extends PanelContainer:
 
 		# for b in [delete_button, up_button, down_button, drag_button]:
 		# 	_update_button_size.call_deferred(b, ep.size.y)
+	
+	func _move_up() -> void:
+		move_up.emit(get_index())
+
+	func _move_down() -> void:
+		move_down.emit(get_index())
 
 class FakeArray extends RefCounted:
 	var object : Object

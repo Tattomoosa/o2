@@ -9,25 +9,33 @@ const MetadataScriptArrayEditorProperty := preload("MetadataScriptArrayEditorPro
 func _can_handle(object: Object) -> bool:
 	return object is Node
 
-func add_metadata_scripts_array(object: Object) -> void:
+func add_metadata_scripts_array(object: Object, custom_delete := false) -> void:
 	if MetadataScript.has_metadata_scripts(object):
 		var ep := MetadataScriptArrayEditorProperty.new()
 		ep.set_object_and_property(object, METADATA_SCRIPTS_PROPERTY)
 		ep.inspector_plugin = self
+		if false:
+			var fc := create_foldable_container("Metadata Scripts")
+			fc.add_child(ep)
+			add_custom_control(fc)
+		ep.name_split_ratio = 0.0
+		ep.label = ""
+		ep.use_custom_delete_button = custom_delete
+		add_heading(METADATA_SCRIPTS_ICON, "Metadata Scripts")
 		add_property_editor(METADATA_SCRIPTS_PROPERTY, ep)
 
-func parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
+func parse_property(_object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if name == "metadata/" + METADATA_SCRIPTS_PROPERTY:
-		return true
+		return false
 	return false
 
 func _parse_begin(object: Object) -> void:
-	add_heading(METADATA_SCRIPTS_ICON, "Metadata Scripts")
-	add_metadata_scripts_array(object)
 	pass
 
 func _parse_end(object: Object) -> void:
+	print(object)
 	if MetadataScript.has_metadata_scripts(object):
+		add_metadata_scripts_array(object, true)
 		return
 	metadata_script_class_data = []
 	for class_data in ProjectSettings.get_global_class_list():
@@ -80,15 +88,5 @@ func _popup_id_pressed(id: int, object: Object) -> void:
 	var class_data := metadata_script_class_data[id]
 	var metadata_script_class : GDScript = load(class_data.path)
 	var metadata_script : MetadataScript = metadata_script_class.new()
-	if object.has_meta(METADATA_SCRIPTS_PROPERTY):
-		var scripts : Array[MetadataScript] = object.get_meta(METADATA_SCRIPTS_PROPERTY)
-		scripts.append(metadata_script)
-	else:
-		object.set_meta(METADATA_SCRIPTS_PROPERTY, [metadata_script] as Array[MetadataScript])
-	metadata_script.node = object
-	object.notify_property_list_changed()
-
-func _remove(script: MetadataScript, object: Object) -> void:
-	var scripts : Array[MetadataScript] = object.get_meta(METADATA_SCRIPTS_PROPERTY)
-	scripts.erase(script)
+	metadata_script.attach_to(object)
 	object.notify_property_list_changed()

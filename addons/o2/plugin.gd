@@ -56,7 +56,7 @@ func _exit_tree() -> void:
 	remove_tool_menu_item(REIMPORT_ICON_TOOL)
 
 func _reimport_icons() -> void:
-	var files := H.Files.get_all_files("res://", "svg")
+	var files := H.Files.get_all_files("res://", ["svg"])
 	EditorInterface.get_resource_filesystem().reimport_files(files)
 
 func _show_mouse() -> void:

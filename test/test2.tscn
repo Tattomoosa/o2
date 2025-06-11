@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dongjxg1neqoe"]
+
+[ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_wto88"]
+[ext_resource type="Script" uid="uid://b36o8rurjivrp" path="res://addons/o2/addons/variant_resources/src/variant_resources/Vector3Resource.gd" id="2_1vbpq"]
+[ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="3_bgw77"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dxhor"]
+
+[sub_resource type="Resource" id="Resource_atfwp"]
+script = ExtResource("2_1vbpq")
+type = 9
+_override_property_info = {
+"class_name": &"",
+"hint": 1,
+"hint_string": "-99999,99999,or_greater,or_less,hide_slider,suffix:m",
+"name": "position",
+"type": 9,
+"usage": 4
+}
+
+[sub_resource type="Resource" id="Resource_53w3y"]
+resource_local_to_scene = true
+resource_name = "SyncVector3ToPosition"
+script = ExtResource("3_bgw77")
+resource = SubResource("Resource_atfwp")
+property_name = &"position"
+sync_mode = 0
+
+[node name="Node3D" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_dxhor")
+metadata/metadata_scripts = Array[ExtResource("1_wto88")]([SubResource("Resource_53w3y")])
+metadata/value = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6403308)

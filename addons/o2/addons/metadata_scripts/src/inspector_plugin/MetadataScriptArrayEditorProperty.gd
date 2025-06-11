@@ -37,19 +37,19 @@ func _create_new_metadata_script() -> void:
 		EditorInterface.get_current_directory()
 	)
 
-func _delete_all() -> void:
+func _remove(row: ArrayItem) -> void:
 	var object := get_edited_object()
-	object.remove_meta(get_edited_property())
-
-func _remove_at(index: int) -> void:
-	var object := get_edited_object()
+	var index := row.get_index()
+	var md_script := metadata_scripts[index]
+	md_script.detach()
 	metadata_scripts.remove_at(index)
 	if metadata_scripts.is_empty():
 		object.remove_meta(get_edited_property())
 	object.notify_property_list_changed()
 
-func _on_deleted(property_name: String) -> void:
+func _delete_all() -> void:
+	for s in metadata_scripts:
+		s.detach()
 	var object := get_edited_object()
-	if property_name == "metadata_scripts":
-		object.remove_meta(get_edited_property())
+	object.remove_meta(get_edited_property())
 	object.notify_property_list_changed()

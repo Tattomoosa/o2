@@ -6,3 +6,4 @@ export_credentials.cfg
 *.translation
 *.tscn-*
 addons/inspector_tabs
+addons/signal_lens

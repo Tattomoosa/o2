@@ -87,10 +87,11 @@ func _create_viewport_popup(viewport_button: MenuButton) -> void:
 
 	H.Signals.connect_if_not_connected(popup.about_to_popup, _create_viewport_popup.bind(viewport_button))
 	H.Signals.connect_if_not_connected(
-		popup.index_pressed,
+		popup.id_pressed,
 		func(index):
 			ProjectSettings.set_setting(setting_string, index)
 			viewport_button.text = names[index]
+			ProjectSettings.save()
 	)
 
 func _create_plugin_popup(popup: PopupMenu) -> void:

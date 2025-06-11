@@ -159,21 +159,23 @@ func get_icon(icon_name: String) -> Texture2D:
 	var inspector := EditorInterface.get_inspector()
 	return inspector.get_theme_icon(icon_name, &"EditorIcons")
 
-func create_foldable_container() -> FoldableContainer:
+func create_foldable_container(title: String = "") -> FoldableContainer:
 	var inspector := EditorInterface.get_inspector()
-	var panel := FoldableContainer.new()
+	var fc := FoldableContainer.new()
 	var stylebox := inspector.get_theme_stylebox("Content", &"EditorStyles")
-	panel.add_theme_stylebox_override(
-		"panel",
+	fc.title = title
+	fc.add_theme_stylebox_override(
+		"fc",
 		stylebox
 	)
-	panel.add_theme_color_override("hover_font_color", panel.get_theme_color("font_color"))
-	panel.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	panel.add_theme_stylebox_override("title_collapsed_hover_panel", stylebox)
-	panel.add_theme_stylebox_override("title_collapsed_panel", stylebox)
-	panel.add_theme_stylebox_override("title_hover_panel", stylebox)
-	panel.add_theme_stylebox_override("title_panel", stylebox)
-	return panel
+	fc.add_theme_color_override("hover_font_color", fc.get_theme_color("font_color"))
+	fc.add_theme_color_override("collapsed_font_color", fc.get_theme_color("font_color"))
+	fc.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	fc.add_theme_stylebox_override("title_collapsed_hover_panel", stylebox)
+	fc.add_theme_stylebox_override("title_collapsed_panel", stylebox)
+	fc.add_theme_stylebox_override("title_hover_panel", stylebox)
+	fc.add_theme_stylebox_override("title_panel", stylebox)
+	return fc
 
 static func get_property(object: Object, name: String) -> Dictionary:
 	return H.PropertyInfo.get_property(object, name)

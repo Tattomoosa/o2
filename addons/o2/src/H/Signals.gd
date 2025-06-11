@@ -26,7 +26,7 @@ static func disconnect_if_connected(p_signal: Signal, callable: Callable) -> voi
 
 # would be better to implement on the callable side I think actually, because you need to keep
 # a callable reference to disconnect a signal anyway
-class Debouncer extends RefCounted:
+class SignalDebouncer extends RefCounted:
 	signal ready
 	var dirty := false
 	var _NO_ARG := RefCounted.new()

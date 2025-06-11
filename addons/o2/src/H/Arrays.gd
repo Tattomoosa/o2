@@ -31,5 +31,6 @@ static func get_first_dictionary_matching_property(array: Array, key: String, va
 	return dict
 
 
+
 ## 'Static' class
 func _init() -> void: assert(false, "Class can't be instantiated")
