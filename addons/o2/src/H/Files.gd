@@ -5,15 +5,15 @@ const Files := H.Files
 
 static func get_all_files(
 	path: String,
-	file_ext := "",
+	file_extensions := [],
 	include_hidden := false,
 	files := PackedStringArray([])
 ) -> PackedStringArray:
 	var dir := DirAccess.open(path)
-	dir.include_hidden = include_hidden
 	if !dir:
 		push_error(error_string(DirAccess.get_open_error()))
 		return files
+	dir.include_hidden = include_hidden
 	dir.include_navigational = false
 	if DirAccess.get_open_error() != OK:
 		push_error("Could not open directory at '%s'" % path, error_string(DirAccess.get_open_error()))
@@ -22,9 +22,9 @@ static func get_all_files(
 	while file_name != "":
 		var file_path := dir.get_current_dir().path_join(file_name)
 		if dir.current_is_dir():
-			get_all_files(file_path, file_ext, include_hidden, files)
+			get_all_files(file_path, file_extensions, include_hidden, files)
 		else:
-			if !file_ext or file_name.get_extension() == file_ext:
+			if !file_extensions or file_name.get_extension() in file_extensions:
 				files.append(file_path)
 		file_name = dir.get_next()
 	return files
@@ -65,15 +65,15 @@ class DirWatcher extends RefCounted:
 	signal files_deleted(files: PackedStringArray)
 
 	var _root : String
-	var _extension : String
+	var _extensions : Array[String]
 	var _watched : Dictionary[String, WatchedFile] = {}
 	var _first_pass := true
 	var _include_hidden := false
 
-	func _init(root := "res://", extension := "", include_hidden := false) -> void:
+	func _init(root := "res://", extensions : Array[String] = [], include_hidden := false) -> void:
 		_root = root
-		_extension = extension
-		_include_hidden = false
+		_extensions = extensions
+		_include_hidden = include_hidden
 		update()
 
 	func update() -> void:
@@ -81,7 +81,7 @@ class DirWatcher extends RefCounted:
 			watched_file.was_found = false
 		var created := PackedStringArray()
 		var modified := PackedStringArray()
-		var file_paths := Files.get_all_files(_root, _extension)
+		var file_paths := Files.get_all_files(_root, _extensions, _include_hidden)
 		for path in file_paths:
 			var modified_time := FileAccess.get_modified_time(path)
 			if !path in _watched:

@@ -11,6 +11,7 @@ var L := O2.instance.logger
 
 var dir_watcher : DirWatcher
 var working := false
+var roots : Array[String]
 
 func _enable_plugin() -> void:
 	# Add autoloads here.
@@ -26,7 +27,8 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	working = false
-	dir_watcher = DirWatcher.new(TEST_ROOT, "gd")
+	# dir_watcher = DirWatcher.new("res://", [], true)
+	dir_watcher = DirWatcher.new("res://", ["gd", "namespace"], true)
 	dir_watcher.files_created.connect(_files_updated.unbind(1))
 	dir_watcher.files_deleted.connect(_files_updated.unbind(1))
 	EditorInterface.get_resource_filesystem().filesystem_changed.connect(_update_dir_watcher)
@@ -37,6 +39,7 @@ func _exit_tree() -> void:
 	EditorInterface.get_command_palette().remove_command(SET_IDLE)
 	EditorInterface.get_resource_filesystem().filesystem_changed.disconnect(_update_dir_watcher)
 	dir_watcher = null
+	request_ready()
 
 func _update_dir_watcher() -> void:
 	if working:
@@ -55,17 +58,37 @@ func _files_updated() -> void:
 	working = true
 
 	var dirs : Dictionary[String, Array] = {}
-	var root := TEST_ROOT
+	# var root := TEST_ROOT
 
+	# TODO be smarter lol
+	roots = []
 	var files := dir_watcher.get_files()
+	for path in files:
+		# print(path)
+		if path.get_file() == ".namespace":
+			roots.push_back(path.get_base_dir())
+	for i in range(files.size() - 1, -1, -1):
+		var path := files[i]
+		if !path.ends_with(".gd"):
+			files.remove_at(i)
+			continue
+		var found_root := false
+		for root in roots:
+			if root in path:
+				found_root = true
+				break
+		if !found_root:
+			files.remove_at(i)
+	print(files)
 
 	# collect NamespaceEntries
 	for file_path in files:
 		var uid := ResourceLoader.get_resource_uid(file_path)
 		if uid != -1:
 			var entry := NamespaceEntry.new(uid)
-			if root in entry.dir_path:
-				dirs.get_or_add(entry.dir_path, []).push_back(entry)
+			for root in roots:
+				if root in entry.dir_path:
+					dirs.get_or_add(entry.dir_path, []).push_back(entry)
 		else:
 			push_warning("Unkown UID - ", ResourceUID.id_to_text(uid), " (%s)" % file_path)
 
@@ -102,7 +125,7 @@ func _scan() -> void:
 	L.debug("DONE SCANNING")
 
 func _is_dir_root(dir: String) -> bool:
-	return dir == TEST_ROOT
+	return dir in roots
 
 func _get_index_path(path: String) -> String:
 	return path.path_join("_index.gd")

@@ -61,7 +61,7 @@ static func disable_subplugins(plugin: EditorPlugin) -> void:
 
 static func get_all_plugin_paths() -> PackedStringArray:
 	var plugin_dirs := PackedStringArray()
-	var cfg_file_paths := H.Files.get_all_files("res://addons/", "cfg")
+	var cfg_file_paths := H.Files.get_all_files("res://addons/", ["cfg"])
 	for cfg_path in cfg_file_paths:
 		if cfg_path.get_file() == "plugin.cfg":
 			plugin_dirs.push_back(cfg_path.get_base_dir())
