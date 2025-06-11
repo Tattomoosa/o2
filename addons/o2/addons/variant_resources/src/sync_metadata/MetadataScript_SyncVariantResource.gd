@@ -2,6 +2,11 @@
 class_name MetadataScript_SyncVariantResource
 extends MetadataScript
 
+# TODO maybe one resource syncs multiple properties? metadata scripts need to be unique per node
+# anyway, and with more on an object it could get cluttered and also would be better for performance
+
+# should be easier now with the custom array, but need to modify that to handle dictionaries
+
 ## Requires MetadataScript plugin
 
 const Scripts := H.Scripts
@@ -12,7 +17,6 @@ enum SyncMode {
 	BindProcess,
 	BindPhysics,
 }
-
 
 @export var resource : VariantResource:
 	set(v):

@@ -19,7 +19,7 @@ func add_metadata_scripts_array(object: Object) -> void:
 func parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if name == "metadata/" + METADATA_SCRIPTS_PROPERTY:
 		add_metadata_scripts_array(object)
-		return false
+		return true
 	return false
 
 func _parse_end(object: Object) -> void:

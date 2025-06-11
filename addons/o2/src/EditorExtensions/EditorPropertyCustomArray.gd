@@ -1,7 +1,8 @@
 extends EditorProperty
 
-# TODO test this etc, kinda just quickly genericized
-# the metadata one
+# TODO probably lots to clean up here
+# maybe needs a paginator like the native one?
+# idk
 
 const InspectorPlugin := H.Editor.InspectorPlugin
 const C := H.Controls
@@ -11,7 +12,8 @@ static var state : Dictionary
 var use_custom_delete_button := false
 
 var inspector_plugin : InspectorPlugin
-var value : Array = []
+var fake_resource_holder := FakeArray.new()
+var array : Array = []
 var is_dragging := false
 var label_text : String
 var expand_text : String
@@ -20,11 +22,26 @@ var drag_drop_parent := VBoxContainer.new()
 var array_panel := PanelContainer.new()
 var expand_button := Button.new()
 var heading_hbox := HBoxContainer.new()
+var add_button := Button.new()
+
+# Needs extended
+func _get_editor_property(_array: Array, _index: int) -> EditorProperty:
+	return EditorProperty.new()
+
+# Needs extended
+func _get_add_button() -> Button:
+	var btn := Button.new()
+	btn.text = "Add Item"
+	btn.add_theme_icon_override("icon", EditorInterface.get_inspector().get_theme_icon("Add", &"EditorIcons"))
+	return btn
 
 func _ready() -> void:
 	var inspector := EditorInterface.get_inspector()
 	inspector.property_deleted.connect(_on_deleted)
 	var object := get_edited_object()
+	fake_resource_holder.object = object
+	fake_resource_holder.array = array
+
 	name_split_ratio = 0.5
 	if label_text:
 		label = label_text
@@ -36,7 +53,7 @@ func _ready() -> void:
 	add_child(array_panel)
 
 	# Expand Button
-	expand_button.text = "%s (size %s)" % value.size()
+	expand_button.text = "%s (size %s)" % ["Array", array.size()]
 	expand_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	InspectorPlugin.style_inspector_button(expand_button)
 	expand_button.pressed.connect(_toggle_array_panel)
@@ -55,14 +72,11 @@ func _ready() -> void:
 	array_panel.add_child(panel_vbox)
 	panel_vbox.add_child(drag_drop_parent)
 
-	var fake_resource_holder := FakeArray.new()
-	fake_resource_holder.object = object
-
-	for i in value.size():
+	for i in array.size():
 		var item_row_hbox := HBoxContainer.new()
 		item_row_hbox.size_flags_horizontal = SIZE_EXPAND_FILL
 
-		var ep := _get_editor_property(value, i)
+		var ep := _get_editor_property(array, i)
 		ep.name_split_ratio = 0.5
 		ep.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ep.label = str(i)
@@ -79,7 +93,7 @@ func _ready() -> void:
 
 		var down_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
 		down_button.pressed.connect(_move_down.bind(i))
-		if i == value.size() - 1: down_button.hide()
+		if i == array.size() - 1: down_button.hide()
 
 		up_button.hide()
 		down_button.hide()
@@ -104,9 +118,7 @@ func _ready() -> void:
 		for b in [delete_button, up_button, down_button, drag_button]:
 			_update_button_size.call_deferred(b, ep.size.y)
 
-	var add_button : MenuButton = inspector_plugin.create_metadata_script_popup_button(object)
-	add_button.icon = null
-	add_button.add_theme_icon_override("icon", inspector.get_theme_icon("Add", &"EditorIcons"))
+	add_button = _get_add_button()
 
 	var end_button_hbox := VBoxContainer.new()
 	end_button_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -128,30 +140,25 @@ func _toggle_array_panel() -> void:
 		set_bottom_editor(null)
 
 func _delete_all() -> void:
-	var object := get_edited_object()
-	object.remove_meta(get_edited_property())
+	array.clear()
+	get_edited_object().notify_property_list_changed()
 
 func _remove(row: HBoxContainer) -> void:
-	value.remove_at(row.get_index())
-
-func _get_editor_property(array: Array, index: int) -> EditorProperty:
-	return EditorProperty.new()
+	array.remove_at(row.get_index())
+	get_edited_object().notify_property_list_changed()
 
 func _move_up(i: int) -> void:
 	var object := get_edited_object()
-	H.Arrays.swap(value, i, i - 1)
+	H.Arrays.swap(array, i, i - 1)
 	object.notify_property_list_changed()
 
 func _move_down(i: int) -> void:
 	var object := get_edited_object()
-	H.Arrays.swap(value, i, i + 1)
+	H.Arrays.swap(array, i, i + 1)
 	object.notify_property_list_changed()
 
 func _on_deleted(property_name: String) -> void:
-	var object := get_edited_object()
-	if property_name == "metadata_scripts":
-		object.remove_meta(get_edited_property())
-	object.notify_property_list_changed()
+	pass
 
 func _drag_index(_pos: Vector2, draggable: Control) -> Variant:
 	is_dragging = true
@@ -187,18 +194,21 @@ func _can_drop_index(_pos: Vector2, data: Variant, draggable: Control) -> bool:
 		return true
 	return false
 
+# TODO move a bunch of stuff here!
 class ArrayItem extends HBoxContainer:
 	pass
 
 class FakeArray extends RefCounted:
 	var object : Object
+	var array : Array
 
 	func _get(property: StringName) -> Variant:
 		var i := property.to_int()
-		return object.get_meta("metadata_scripts")[i]
+		return array[i]
 
 	func _set(property: StringName, value: Variant) -> bool:
 		var i := property.to_int()
-		var md_scripts : Array[MetadataScript] = object.get_meta("metadata_scripts")
-		md_scripts[i] = value
+		# var md_scripts : Array[MetadataScript] = object.get_meta("metadata_scripts")
+		# md_scripts[i] = array
+		array[i] = value
 		return true
