@@ -1,10 +1,9 @@
 @tool
-extends O2.Helpers.Editor.InspectorPlugin
+extends H.Editor.InspectorPlugin
 
 const VariantResourceEditorProperty := preload("VariantResourceEditorProperty.gd")
 const InspectorPlugin := preload("VariantResourceInspector.gd")
-const Controls := O2.Helpers.Controls
-const H := O2.Helpers
+const Controls := H.Controls
 const ES := H.Editor.Settings
 
 const TYPE_MAP : Dictionary[Variant.Type, String] = {
@@ -49,12 +48,13 @@ func parse_property(object: Object, type: Variant.Type, name: String, hint_type:
 	if !name:
 		return false
 	if type == TYPE_OBJECT and hint_type == PROPERTY_HINT_RESOURCE_TYPE:
-		if !O2.Helpers.Scripts.is_class_name(hint_string):
+		if !H.Scripts.is_class_name(hint_string):
 			return false
-		if !O2.Helpers.Scripts.class_name_extends_from(hint_string, "VariantResource"):
+		if !H.Scripts.class_name_extends_from(hint_string, "VariantResource"):
 			return false
 		add_property_editor(name, _create_resource_editor(object, name))
 		# add_context_menu_item(object, name, "Paste Into %s Value" % hint_string, _paste_into_resource_value)
+		# add_context_menu_item(object, name, "Copy %s Value" % hint_string, _copy_from_resource_value)
 		return true
 	return false
 
@@ -62,22 +62,9 @@ func parse_property(object: Object, type: Variant.Type, name: String, hint_type:
 # Or implement my own... :/
 func _paste_into_resource_value(_ep: EditorProperty) -> void:
 	pass
-# 	var paste_data = DisplayServer.clipboard_get()
-# 	print(paste_data)
-# 	paste_data = DisplayServer.clipboard_get_image()
-# 	print(paste_data)
 
-
-	# elif object is Node and type in TYPE_MAP:
-	# 	var overridden_property_editor := _get_override_resource_editor(object, name)
-	# 	if overridden_property_editor:
-	# 		add_property_editor(name, overridden_property_editor)
-	# 		return true
-	# 	else:
-	# 		var variant_editor = _create_variant_editor(object, name)
-	# 		add_property_editor(name, variant_editor)
-	# 		return true
-	# return false
+func _copy_from_resource_value(_ep: EditorProperty) -> void:
+	pass
 
 func _create_resource_editor(object: Object, property_name: String) -> EditorProperty:
 	var property := PropertyInfo.get_property(object, property_name)

@@ -2,8 +2,8 @@
 class_name PropertySyncNode
 extends Node
 
-const _PropertyInfo := O2.Helpers.PropertyInfo
-const EditorArrayGroupHelper := O2.Helpers.Editor.EditorArrayGroupHelper
+const PropertyInfo := H.PropertyInfo
+const EditorArrayGroupHelper := H.Editor.EditorArrayGroupHelper
 
 const ARRAY_PREFIX := "synced_properties_"
 const PATH_SUFFIX := "node_path"
@@ -64,7 +64,7 @@ func _on_array_changed(key: String, index: int) -> void:
 			r.value_changed.connect(callable)
 			var node = _get_node(index)
 			var property_name := _synced_properties_names[index]
-			if !node or !_can_sync_to_property(r, _PropertyInfo.get_property(node, property_name)):
+			if !node or !_can_sync_to_property(r, PropertyInfo.get_property(node, property_name)):
 				_synced_properties_names[index] = ""
 	_update(index)
 
@@ -133,7 +133,7 @@ func _can_sync_to_property(resource: VariantResource, property: Dictionary) -> b
 	if !property:
 		return false
 	if resource is FlagsResource:
-		return O2.Helpers.PropertyInfo.property_is_bitflags(property)
+		return PropertyInfo.property_is_bitflags(property)
 	return property.type == resource.get_type()
 
 func _get(property: StringName) -> Variant:

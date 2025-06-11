@@ -3,10 +3,15 @@
 abstract class_name MetadataScript
 extends Resource
 
-var node : Node
+var node : Node:
+	set(v):
+		if node == v:
+			return
+		assert(node == null, "Node can only be set once!")
+		node = v
+		_setup(v)
 
 const METADATA_SCRIPTS_PROPERTY := "metadata_scripts"
-const _Signals := O2.Helpers.Signals
 
 func _init() -> void:
 	resource_local_to_scene = true
@@ -23,18 +28,6 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	pass
 
-func ready() -> void:
-	_ready()
-
-func tree_entered(p_node: Node) -> void:
-	node = p_node
-	_Signals.connect_if_not_connected(node.ready, ready)
-	_enter_tree()
-
-func tree_exiting() -> void:
-	_Signals.disconnect_if_connected(node.ready, ready)
-	_exit_tree()
-
 static func can_attach_to(p_node: Node) -> bool:
 	return p_node != null
 
@@ -48,7 +41,7 @@ static func get_metadata_scripts(object: Object) -> Array[MetadataScript]:
 
 func add_to_node(p_node: Node) -> void:
 	assert(p_node and is_instance_valid(p_node), "Invalid node!")
-	assert(p_node is Node, "node is not a node!")
+	assert(!node, "Already attached to a node %s" % node)
 	if !has_metadata_scripts(p_node):
 		p_node.set_meta(METADATA_SCRIPTS_PROPERTY, [] as Array[MetadataScript])
 	var md_scripts := get_metadata_scripts(p_node)
@@ -57,8 +50,16 @@ func add_to_node(p_node: Node) -> void:
 		md_scripts.push_back(self.duplicate())
 	else:
 		md_scripts.push_back(self)
-	if p_node.is_inside_tree():
-		tree_entered(p_node)
+	_setup(p_node)
+
+func _setup(p_node: Node) -> void:
+	node = p_node
+	if !node.tree_entered.is_connected(_enter_tree):
+		node.tree_entered.connect(_enter_tree)
+	if !node.tree_exiting.is_connected(_exit_tree):
+		node.tree_exiting.connect(_exit_tree)
+	if !node.ready.is_connected(_ready):
+		node.ready.connect(_ready)
 
 func _validate_property(property: Dictionary) -> void:
 	match property.name:

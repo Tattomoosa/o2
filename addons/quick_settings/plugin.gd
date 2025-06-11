@@ -1,11 +1,8 @@
 @tool
 extends EditorPlugin
 
-const Controls := O2.Helpers.Controls
-const Nodes := O2.Helpers.Nodes
-const Plugins := O2.Helpers.Editor.Plugins
-const Signals := O2.Helpers.Signals
-const Settings := O2.Helpers.Settings
+const Plugins := H.Editor.Plugins
+
 const GDSCRIPT_ICON := preload("uid://dmf2kpb2tkkab")
 const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
@@ -33,9 +30,9 @@ func _enter_tree() -> void:
 	_create_control()
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, button_parent)
 
-	var hbox := Nodes.get_previous_sibling(button_parent)
+	var hbox := H.Nodes.get_previous_sibling(button_parent)
 	button_parent.reparent(hbox)
-	Nodes.move_relative(button_parent, -1)
+	H.Nodes.move_relative(button_parent, -1)
 
 func _exit_tree() -> void:
 	if button_parent and is_instance_valid(button_parent):
@@ -43,7 +40,7 @@ func _exit_tree() -> void:
 
 func _get_or_add_setting(setting: String, default_value: Variant) -> Variant:
 	var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
-	return Settings.get_or_add(plugin_config_prefix.path_join(setting), default_value)
+	return H.Settings.get_or_add(plugin_config_prefix.path_join(setting), default_value)
 
 func _get_setting(setting: String) -> Variant:
 	var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
@@ -54,13 +51,13 @@ func _create_control() -> void:
 	var hbox := HBoxContainer.new()
 
 	if _get_setting(SHOW_WINDOW_BUTTON_SETTING):
-		var viewport_button := Controls.icon_menu_button(VIEWPORT_SETTINGS_ICON, false)
+		var viewport_button := H.Controls.icon_menu_button(VIEWPORT_SETTINGS_ICON, false)
 		viewport_button.tooltip_text = "Change the gameplay window mode"
 		_create_viewport_popup(viewport_button)
 		hbox.add_child(viewport_button)
 
 	if _get_setting(SHOW_PLUGIN_BUTTON_SETTING):
-		var plugin_button := Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
+		var plugin_button := H.Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
 		if _get_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
 			plugin_button.text = "Plugins"
 		plugin_button.tooltip_text = "Enable/disable EditorPlugins"
@@ -88,8 +85,8 @@ func _create_viewport_popup(viewport_button: MenuButton) -> void:
 	else:
 		viewport_button.text = ""
 
-	Signals.connect_if_not_connected(popup.about_to_popup, _create_viewport_popup.bind(viewport_button))
-	Signals.connect_if_not_connected(
+	H.Signals.connect_if_not_connected(popup.about_to_popup, _create_viewport_popup.bind(viewport_button))
+	H.Signals.connect_if_not_connected(
 		popup.index_pressed,
 		func(index):
 			ProjectSettings.set_setting(setting_string, index)
@@ -115,15 +112,15 @@ func _create_plugin_popup(popup: PopupMenu) -> void:
 		var plugin_enable_string := Plugins.get_plugin_enable_string_from_path(plugin_path)
 		var icon := Plugins.get_plugin_icon(plugin_path)
 		var display_name := plugin_enable_string.get_file()
-		display_name = O2.Helpers.Strings.to_title_cased_spaced(display_name)
+		display_name = H.Strings.to_title_cased_spaced(display_name)
 		if !icon:
 			icon = GDSCRIPT_ICON
 		plugin_enable_strings.push_back(plugin_enable_string)
 		popup.add_icon_check_item(icon, display_name)
-		popup.set_item_indent(i, plugin_enable_string.count("/") * O2.Helpers.Editor.Settings.scale)
+		popup.set_item_indent(i, plugin_enable_string.count("/") * H.Editor.Settings.scale)
 		popup.set_item_checked(i, EditorInterface.is_plugin_enabled(plugin_enable_string))
-		Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(popup))
-		Signals.connect_if_not_connected(popup.index_pressed, _set_plugin_enabled.bind(popup))
+		H.Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(popup))
+		H.Signals.connect_if_not_connected(popup.index_pressed, _set_plugin_enabled.bind(popup))
 
 func _set_plugin_enabled(index: int, popup: PopupMenu) -> void:
 	for i in popup.item_count:
@@ -139,6 +136,5 @@ func _set_plugin_enabled(index: int, popup: PopupMenu) -> void:
 	)
 	inspector.edit(edited_object)
 	_create_plugin_popup(popup)
-	# popup.set_item_checked(index, EditorInterface.is_plugin_enabled(enable_string))
 
 

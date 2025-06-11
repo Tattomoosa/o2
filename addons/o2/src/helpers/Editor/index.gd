@@ -1,5 +1,0 @@
-const Settings := preload("Settings.gd")
-const InspectorPlugin := preload("InspectorPlugin.gd")
-const EditorArrayGroupHelper := preload("ArrayGroupHelper.gd")
-const SceneRootChangeNotifier := preload("SceneRootChangeNotifier.gd")
-const Plugins := preload("Plugins.gd")

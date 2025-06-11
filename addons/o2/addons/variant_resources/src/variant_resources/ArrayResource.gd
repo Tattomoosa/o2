@@ -3,7 +3,7 @@
 class_name ArrayResource
 extends VariantResource
 
-const _PropertyInfo := O2.Helpers.PropertyInfo
+const _PropertyInfo := H.PropertyInfo
 
 @export var value : Array:
 	get: return _value

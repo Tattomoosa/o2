@@ -1,8 +1,7 @@
 @tool
-extends O2.Helpers.Editor.InspectorPlugin
+extends H.Editor.InspectorPlugin
 
 var metadata_script_class_data : Array[Dictionary] = []
-const Scripts := O2.Helpers.Scripts
 const METADATA_SCRIPTS_PROPERTY := MetadataScript.METADATA_SCRIPTS_PROPERTY
 const METADATA_SCRIPTS_ICON := preload("uid://cm3wwdg8y3x7m")
 const MetadataScriptArrayEditorProperty := preload("MetadataScriptArrayEditorProperty.gd")
@@ -20,7 +19,7 @@ func add_metadata_scripts_array(object: Object) -> void:
 func parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if name == "metadata/" + METADATA_SCRIPTS_PROPERTY:
 		add_metadata_scripts_array(object)
-		return true
+		return false
 	return false
 
 func _parse_end(object: Object) -> void:
@@ -42,7 +41,7 @@ func _parse_end(object: Object) -> void:
 	add_custom_control(hbox)
 	var inspector := EditorInterface.get_inspector()
 	var add_metadata_button : Button
-	var buttons := O2.Helpers.Nodes.get_descendents_with_type(inspector, Button, true)
+	var buttons := H.Nodes.get_descendents_with_type(inspector, Button, true)
 	for b in buttons:
 		if b.text == "Add Metadata":
 			add_metadata_button = b
@@ -53,7 +52,7 @@ func _parse_end(object: Object) -> void:
 
 func create_metadata_script_popup_button(object: Object) -> MenuButton:
 	var btn := MenuButton.new()
-	O2.Helpers.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
+	H.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
 	btn.icon = METADATA_SCRIPTS_ICON
 	btn.text = "Add Metadata Script"
 	btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -82,7 +81,7 @@ func _popup_id_pressed(id: int, object: Object) -> void:
 		scripts.append(metadata_script)
 	else:
 		object.set_meta(METADATA_SCRIPTS_PROPERTY, [metadata_script] as Array[MetadataScript])
-	metadata_script.tree_entered(object)
+	metadata_script.node = object
 	object.notify_property_list_changed()
 
 func _remove(script: MetadataScript, object: Object) -> void:

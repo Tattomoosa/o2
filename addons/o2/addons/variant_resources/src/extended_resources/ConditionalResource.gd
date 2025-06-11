@@ -2,7 +2,7 @@
 class_name ConditionalResource
 extends BoolResource
 
-const _Signals := O2.Helpers.Signals
+const _Signals := H.Signals
 
 enum Condition {
 	IS_TRUE,

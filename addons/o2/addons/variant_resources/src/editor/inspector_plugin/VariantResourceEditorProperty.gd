@@ -12,10 +12,10 @@ var use_bottom_editor := false
 var resource_name_label : Label
 var property_definition : Dictionary
 var resource_class_name : String
-var inspector_plugin : O2.Helpers.Editor.InspectorPlugin
+var inspector_plugin : H.Editor.InspectorPlugin
 
-const Controls := O2.Helpers.Controls
-const H := O2.Helpers
+const Controls := H.Controls
+const Scripts := H.Scripts
 const ES := H.Editor.Settings
 
 signal using_bottom_editor(node: Node)
@@ -38,7 +38,7 @@ func _ready() -> void:
 
 	var heading := Control.new()
 	if resource:
-		resource_class_name = O2.Helpers.Scripts.get_object_class_name(resource)
+		resource_class_name = H.Scripts.get_object_class_name(resource)
 		if !use_bottom_editor:
 			heading.custom_minimum_size.y = ES.scale * 12
 			resource_name_label = Label.new()
@@ -169,4 +169,4 @@ func _property_get_revert(_property: StringName) -> Variant:
 	return _get_resource().value
 
 func _should_use_bottom_editor() -> bool:
-	return O2.Helpers.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition)
+	return H.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition)

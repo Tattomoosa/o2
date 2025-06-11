@@ -4,7 +4,7 @@ extends EditorPlugin
 
 const O2_INSTANCE := "o2"
 const O2_PATH := "src/O2.gd"
-const Plugins := O2.Helpers.Editor.Plugins
+const Plugins := H.Editor.Plugins
 const ICON := preload("uid://b5258mnsr6qim")
 const InspectorContextMenu := preload("uid://drhs82tyfy2j2")
 
@@ -53,7 +53,7 @@ func _exit_tree() -> void:
 	remove_tool_menu_item(REIMPORT_ICON_COMMAND)
 
 func _reimport_icons() -> void:
-	var files := O2.Helpers.Files.get_all_files("res://", "svg")
+	var files := H.Files.get_all_files("res://", "svg")
 	EditorInterface.get_resource_filesystem().reimport_files(files)
 
 		

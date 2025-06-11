@@ -1,7 +1,6 @@
 @tool
-extends O2.Helpers.Editor.InspectorPlugin
+extends H.Editor.InspectorPlugin
 
-const H := O2.Helpers
 const VariantResourceInspector := preload("VariantResourceInspector.gd")
 const TYPE_MAP := VariantResourceInspector.TYPE_MAP
 const RESOURCE_OVERRIDE_ICON := preload("uid://cmhsyh2bllenw")
@@ -30,10 +29,9 @@ func can_patch(ep: EditorProperty) -> bool:
 	return false
 
 func patch(ep: EditorProperty) -> EditorProperty:
-	print("Override override_script_property inspector patching: ", ep)
 	var object := ep.get_edited_object()
 	var property_name := ep.get_edited_property()
-	var object_property := O2.Helpers.PropertyInfo.get_property(object, property_name)
+	var object_property := H.PropertyInfo.get_property(object, property_name)
 	var override_script := _get_override_script(object, property_name)
 	if !override_script:
 		return ep
@@ -94,34 +92,11 @@ func _get_override_resource_editor(object: Object, property_name: String) -> Edi
 			return overridden_editor_property
 	return null
 
-# static func get_resource_override_metadata_script(object: Object, property_name: String) -> MetadataScript_SyncVariantResource:
-# 	var metadata_scripts : Array = object.get_meta("metadata_scripts")
-# 	for md_script in metadata_scripts:
-# 		if !md_script is MetadataScript_SyncVariantResource:
-# 			continue
-# 		var s := md_script as MetadataScript_SyncVariantResource
-# 		if s.property_name != property_name:
-# 			continue
-# 		return s
-# 	return null
-
-
 class VariantResourceOverrideEditorProperty extends VariantResourceInspector.VariantResourceEditorProperty:
 	var original_object : Object
 	var metadata_script : Object
 
-	# func _init() -> void:
-	# 	print("OVERRIDE INIT!")
-	# 	if is_inside_tree():
-	# 		print("IS IN TREE")
-	# 	if is_node_ready():
-	# 		print("NODE IS READY!")
-	# 		_ready()
-	# 	print("NODE NOT READY!")
-	# 	ready.connect(_ready)
-
 	func _ready() -> void:
-		print("OVERRIDE READY!")
 		selectable = true
 		set_object_and_property(metadata_script, get_edited_property())
 		super()

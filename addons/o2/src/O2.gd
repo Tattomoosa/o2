@@ -3,7 +3,6 @@
 class_name O2
 extends Node
 
-const Helpers := preload("uid://qle0x0d234xi")
 const Logging := preload("uid://b5hb25ps522o0")
 const TreeWatcher := preload("uid://c5n7icddagd25")
 const EditorExtensions := preload("uid://braab2m6xl6u")
@@ -20,7 +19,7 @@ func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	Logging.Handlers.LogToConsole.subscribe(logger)
 
-func _enter_tree() -> void:
+func _ready() -> void:
 	tree_watcher = TreeWatcher.new(get_tree().root)
 
 func _exit_tree() -> void:

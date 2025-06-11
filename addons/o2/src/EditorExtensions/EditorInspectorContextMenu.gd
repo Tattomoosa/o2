@@ -2,6 +2,7 @@
 extends EditorInspectorPlugin
 
 const CONTEXT_MENU_ICON := preload("uid://cwkhdjneks2ad")
+# TODO sections?
 """
 {
 	object (Object): {
@@ -35,8 +36,11 @@ func _can_handle(_object: Object) -> bool:
 	return true
 
 func _parse_end(_object: Object) -> void:
+	_parse_end_idle_frame.call_deferred()
+
+func _parse_end_idle_frame() -> void:
 	var inspector := EditorInterface.get_inspector()
-	var properties := O2.Helpers.Nodes.get_descendents_with_type(
+	var properties := H.Nodes.get_descendents_with_type(
 		inspector,
 		EditorProperty,
 		true
@@ -50,7 +54,6 @@ func _parse_end(_object: Object) -> void:
 func _add_context_menu(ep: EditorProperty) -> void:
 	var object := ep.get_edited_object()
 	var property_name := ep.get_edited_property()
-	# var property := O2.Helpers.PropertyInfo.get_property(ep.get_edited_object(), ep.get_edited_property())
 
 	var button := MenuButton.new()
 	button.flat = true
@@ -88,13 +91,13 @@ func _on_popup_pressed(index: int, popup: PopupMenu, ep: EditorProperty) -> void
 	popup.get_item_metadata(index).call(ep)
 
 func _print_property_info(ep: EditorProperty) -> void:
-	var property := O2.Helpers.PropertyInfo.get_property(ep.get_edited_object(), ep.get_edited_property())
+	var property := H.PropertyInfo.get_property(ep.get_edited_object(), ep.get_edited_property())
 	var obj := ep.get_edited_object()
 	var prop := ep.get_edited_property()
 	var name : String = '"%s"' % obj.name if ("name" in obj and obj.name) else\
 		'"%s"' % obj.resource_name if ("resource_name" in obj and obj.resource_name) else\
-		O2.Helpers.Scripts.get_class_name_or_script_name(obj)
-	print("Property Info <", name, ".", prop, ">:\n", O2.Helpers.PropertyInfo.prettify(property))
+		H.Scripts.get_class_name_or_script_name(obj)
+	print("Property Info <", name, ".", prop, ">:\n", H.PropertyInfo.prettify(property))
 
 func _print_editor_property_tree(ep: EditorProperty) -> void:
 	ep.print_tree_pretty()

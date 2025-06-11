@@ -1,9 +1,7 @@
 @tool
 extends EditorPlugin
 
-const _Scripts := O2.Helpers.Scripts
 const TreeWatcher := O2.TreeWatcher
-const METADATA_SCRIPTS_PROPERTY := "metadata_scripts"
 const MetadataScriptTreeWatcherPlugin := preload("uid://segrgfetays3")
 const MetadataScriptEditorInspectorPlugin := preload("uid://oak2yxxjxyjt")
 

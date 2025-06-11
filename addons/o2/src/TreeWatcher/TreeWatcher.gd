@@ -1,8 +1,8 @@
 @tool
 extends RefCounted
 
-const Settings := O2.Helpers.Settings
-const Nodes := O2.Helpers.Nodes
+const Settings := H.Settings
+const Nodes := H.Nodes
 
 const TreeWatcherPlugin := preload("uid://jdhkmwip1txo")
 const TREE_WATCHER_PLUGINS_SETTING := "o2/tree_watcher/tree_watcher_plugins"
@@ -69,7 +69,7 @@ func _load_plugins() -> void:
 			push_error("Plugin script %s missing 'new' method!" % plugin_script)
 			continue
 		plugins.push_back(plugin_script.new())
-		plugin_names.push_back(O2.Helpers.Files.get_file_without_extension(plugin_script.resource_path))
+		plugin_names.push_back(H.Files.get_file_without_extension(plugin_script.resource_path))
 	O2.logger.info(
 		"[O2.TreeWatcher] Loaded plugins: ",
 		",".join(plugin_names)
