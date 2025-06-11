@@ -36,7 +36,7 @@ static func get_subplugin_enabled_setting_name(plugin: EditorPlugin, subplugin_n
 	var category := get_subplugin_category(plugin, subplugin_name)
 	return category.path_join("enabled")
 
-static func is_subplugin_enabled(plugin: EditorPlugin, subplugin_name: String) -> bool:
+static func is_subplugin_enabled_in_settings(plugin: EditorPlugin, subplugin_name: String) -> bool:
 	var setting_name := get_subplugin_enabled_setting_name(plugin, subplugin_name)
 	return Settings.get_or_add(setting_name, true)
 
@@ -46,21 +46,22 @@ static func get_subplugin_category(plugin: EditorPlugin, subplugin_name: String)
 
 static func enable_subplugins(plugin: EditorPlugin) -> void:
 	for subplugin_name in get_subplugin_names(plugin):
-		if is_subplugin_enabled(plugin, subplugin_name):
+		if is_subplugin_enabled_in_settings(plugin, subplugin_name):
 			var setting_name := get_subplugin_enabled_setting_name(plugin, subplugin_name)
 			var enabled : bool = Settings.get_or_add(setting_name, true)
 			var enable_string := get_plugin_root_dir(plugin).path_join("addons").path_join(subplugin_name)
 			enable_string = enable_string.replace("res://addons/", "")
-			EditorInterface.set_plugin_enabled(
-					enable_string, enabled)
-	# in case settings were added
+			print("enabling ", enable_string)
+			if !EditorInterface.is_plugin_enabled(enable_string):
+				EditorInterface.set_plugin_enabled(enable_string, enabled)
 	ProjectSettings.save()
 
 static func disable_subplugins(plugin: EditorPlugin) -> void:
 	for subplugin_name in get_subplugin_names(plugin):
 		var enable_string := get_plugin_root_dir(plugin).path_join("addons").path_join(subplugin_name)
 		enable_string = enable_string.replace("res://addons/", "")
-		EditorInterface.set_plugin_enabled(enable_string, false)
+		if EditorInterface.is_plugin_enabled(enable_string):
+			EditorInterface.set_plugin_enabled(enable_string, false)
 
 static func get_all_plugin_paths() -> PackedStringArray:
 	var plugin_dirs := PackedStringArray()

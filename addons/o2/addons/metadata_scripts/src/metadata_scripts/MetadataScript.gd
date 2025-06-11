@@ -61,5 +61,10 @@ func add_to_node(p_node: Node) -> void:
 		tree_entered(p_node)
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "resource_local_to_scene":
-		property.usage = PROPERTY_USAGE_NONE
+	match property.name:
+		"resource_local_to_scene":
+			property.usage = PROPERTY_USAGE_NONE
+		"resource_name":
+			property.usage = PROPERTY_USAGE_STORAGE
+		"resource_path":
+			property.usage = PROPERTY_USAGE_STORAGE

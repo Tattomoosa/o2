@@ -4,11 +4,11 @@ const _BitMasks := O2.Helpers.BitMasks
 
 ## Converts from a usage flag bit to the corresponding string
 ## Note that PROPERTY_USAGE_DEFAULT is just PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR
-const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
-	# special
+const SPECIAL_USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	0: &"PROPERTY_USAGE_NONE",
 	6: &"PROPERTY_USAGE_DEFAULT",
-	# normal bitflags
+}
+const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	2: &"PROPERTY_USAGE_STORAGE",
 	4: &"PROPERTY_USAGE_EDITOR",
 	8: &"PROPERTY_USAGE_INTERNAL",
@@ -135,8 +135,8 @@ const PROPERTY_HINT_STRINGS : Array[StringName] = [
 ## Takes a property.usage bitflag int and returns all the flags as strings
 static func get_usage_flag_names(usage: int) -> Array[StringName]:
 	var used_flag_strings : Array[StringName] = []
-	if usage in USAGE_FLAG_STRINGS.keys():
-		used_flag_strings.append(USAGE_FLAG_STRINGS[usage])
+	if usage in SPECIAL_USAGE_FLAG_STRINGS.keys():
+		used_flag_strings.append(SPECIAL_USAGE_FLAG_STRINGS[usage])
 	else:
 		for flag in USAGE_FLAG_STRINGS.keys():
 			if has_flag(usage, flag):
@@ -159,35 +159,44 @@ static func prettify(property: Dictionary) -> String:
 	if "name" not in property:
 		push_error(property)
 		return "%s" % property
-	var prop_str := "[ Property Info: '%s' ]\n" % property.name
+	var prop_str := "{\n"
+	if "name" in property:
+		prop_str += '\t&"name": "%s"\n' % property.name
 	if "class_name" in property:
-		prop_str += 'class_name: &"%s"\n' % property.class_name
+		prop_str += '\t&"class_name": "%s"\n' % property.class_name
 	if "type" in property:
-		prop_str += "type: %s\n" % TYPE_STRINGS[property.type]
+		prop_str += '\t&"type": %s\n' % TYPE_STRINGS[property.type]
 	if "hint" in property:
-		prop_str += "hint: %s (%s)\n" % [
+		prop_str += '\t&"hint": %s # (%s)\n' % [
+			PROPERTY_HINT_STRINGS[property.hint],
 			property.hint,
-			PROPERTY_HINT_STRINGS[property.hint]
 		]
 	if "hint_string" in property:
-		prop_str += "hint_string: "
+		prop_str += '\t&"hint_string": '
 		if property.hint == PROPERTY_HINT_TYPE_STRING:
-			prop_str += "%s (\"%s\")\n" % [
-				parse_hint_type_string(property.hint_string),
+			prop_str += '"%s" (%s)\n' % [
 				property.hint_string,
+				parse_hint_type_string(property.hint_string),
 			]
 		else:
 			prop_str += "\"%s\"\n" % property.hint_string
 	if "usage" in property:
-		prop_str += "usage: %s (%s)" % [
+		prop_str += '\t&"usage": %s # (%s)\n' % [
+			", ".join(get_usage_flag_names(property.usage)),
 			property.usage,
-			", ".join(get_usage_flag_names(property.usage))
 		]
+	for key in property:
+		if key not in ["name", "class_name", "type", "hint", "hint_string", "usage"]:
+			prop_str += '\t&"%s": %s\n' % [key, property[key]] 
+	prop_str += "}"
 	return prop_str
 
 ## PROPERTY_HINT_TYPE_STRING is especially hairy, this tells you what it's doing and is... 
 ## probably mostly correct?
 # TODO Needs a lot of testing I haven't done
+# TODO doesn't do dictionaries right
+# should be able to just split at ;
+# and parse from there tho!
 static func parse_hint_type_string(t_string: String) -> String:
 	var parsed_str := ""
 	var regex := RegEx.new()
@@ -205,11 +214,11 @@ static func parse_hint_type_string(t_string: String) -> String:
 				.filter(func(x): return !x.is_empty())
 		)
 		if ";" in section0:
-			parsed_str += "{ "
+			parsed_str += "{"
 		for t in type_data:
 			if "/" not in t:
 				parsed_str += get_type_name(t.to_int())
-				parsed_str += " : "
+				parsed_str += ":"
 				continue
 			else:
 				t = t.split("/")
@@ -217,11 +226,11 @@ static func parse_hint_type_string(t_string: String) -> String:
 				parsed_str += "/"
 				parsed_str += get_property_hint_name(t[1].to_int())
 				if ";" in t[0]:
-					parsed_str += " } : "
+					parsed_str += "}:"
 				else:
-					parsed_str += " : "
+					parsed_str += ":"
 		var hint_string := result.get_string(2)
-		parsed_str += "'%s'" % hint_string
+		parsed_str += '"%s"' % hint_string
 		return parsed_str
 	return "???"
 

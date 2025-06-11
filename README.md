@@ -25,17 +25,17 @@
 
 ## Included Plugins
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" alt="drawing" width="18"/>&nbsp;&nbsp; Metadata Scripts
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" width="18"/>&nbsp;&nbsp; Metadata Scripts
 
 Run scripts from metadata. As many as you'd like per node.
 
 Simple uses include freeing or changing the visibility of a node based on feature flags or 
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/variant_resources/assets/icons/Variant.svg" alt="drawing" width="18"/>&nbsp;&nbsp; [Variant Resources](addons/o2/addons/variant_resources/README.md)
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/variant_resources/assets/icons/Variant.svg" width="18"/>&nbsp;&nbsp; [Variant Resources](addons/o2/addons/variant_resources/README.md)
 
 Override almost every non-Object Variant type with a resource that syncs its value back to the node, either through a  PropertySyncNode in the scene tree or the much easier to use metadata script and its associated editor tooling.
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/namespacer/icon/Namespacer.svg" alt="drawing" width="18"/>&nbsp;&nbsp; Namespacer
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/namespacer/icon/Namespacer.svg" width="18"/>&nbsp;&nbsp; Namespacer
 
 One `class_name`, unlimited statically accessible classes.
 
@@ -43,12 +43,12 @@ But GDScript [doesn't have namespaces](https://github.com/godotengine/godot-prop
 
 Mark a directory as a namespace root and Namespacer hooks every file up from that directory to be accessed in a namespace-like way.
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/quick_settings/assets/icons/ProjectList.svg" alt="drawing" width="18"/>&nbsp;&nbsp; Quick Settings
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/b7ea26b7a4a5a170568850199b29d77aff40f7d5/addons/o2/addons/quick_settings/assets/icons/ProjectList.svg" width="18"/>&nbsp;&nbsp; Quick Settings
 
 Toggle plugins and adjust the viewport mode via a little quick menu. Everyone's made the plugin toggle menu, but mine works
 with nested plugins. And I don't think anyone's made a quick viewport mode setter... Maybe I'm weird but I change that setting all the time.
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" alt="drawing" width="18"/>&nbsp;&nbsp; Core
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" width="18"/>&nbsp;&nbsp; Core
 
 ##### TreeWatcher
 

@@ -1,12 +1,20 @@
 @tool
 extends EditorInspectorPlugin
 
-const CONTEXT_MENU_META_PROPERTY_NAME := &"editor_property_context_items"
+const EditorInspectorContextMenu := O2.EditorExtensions.EditorInspectorContextMenu
 const PropertyInfo := O2.Helpers.PropertyInfo
+# Needed to always be able to generate a default property editor
+# that bypasses any other plugins (that extend from this class, at least)
 static var _FAKE_RESOURCE := _FakeResource.new()
 
-# TODO
-var _bottom_editor : Control
+func _can_handle(_object: Object) -> bool:
+	return true
+
+func can_patch(_ep: EditorProperty) -> bool:
+	return false
+
+func patch(ep: EditorProperty) -> EditorProperty:
+	return ep
 
 func _parse_property(
 	object: Object,
@@ -17,13 +25,31 @@ func _parse_property(
 	usage_flags: int,
 	wide: bool
 ) -> bool:
-	# Needed to always be able to generate a default property editor
+	if name == "script":
+		var script_name := O2.Helpers.Scripts.get_class_name_or_script_name(get_script())
+		print(script_name)
 	if object is _FakeResource:
 		return false
-	return _parse_extended_property(object, type, name, hint_type, hint_string, usage_flags, wide)
+	return parse_property(object, type, name, hint_type, hint_string, usage_flags, wide)
 
-## Extending classes should override this method instead of _parse_property
-func _parse_extended_property(
+func _parse_end(object: Object) -> void:
+	var editor_properties := O2.Helpers.Nodes.get_descendents_with_type(
+		EditorInterface.get_inspector(),
+		EditorProperty,
+	)
+	for ep in editor_properties:
+		if can_patch(ep):
+			patch(ep)
+	parse_end(object)
+
+func parse_end(_object: Object) -> void:
+	pass
+
+## Extending classes should override this method instead of _parse_property,
+## This ensures "instantiate_default_property_editor" will work!
+##
+## Anything fancy should probably be done in "patch" though.
+func parse_property(
 	_object: Object,
 	_type: Variant.Type,
 	_name: String,
@@ -34,11 +60,11 @@ func _parse_extended_property(
 ) -> bool:
 	return false
 
-static func instantiate_default_property_editor(object: Object, name: String) -> EditorProperty:
+func instantiate_default_property_editor(object: Object, name: String) -> EditorProperty:
 	var property := PropertyInfo.get_property(object, name)
 	return instantiate_property_editor(object, property, true)
 
-static func instantiate_property_editor(object: Object, property: Dictionary, init_with_fake_resource := false) -> EditorProperty:
+func instantiate_property_editor(object: Object, property: Dictionary, init_with_fake_resource := false) -> EditorProperty:
 	if !object:
 		push_error("Object is null")
 		return null
@@ -69,12 +95,37 @@ static func instantiate_property_editor(object: Object, property: Dictionary, in
 	return pe
 
 ## Callable(PropertyEditor)
-static func create_context_menu_item(item_name: String, callable: Callable, ep: EditorProperty) -> void:
-	var items : Array = O2.Helpers.Metadata.get_or_add_meta(ep, CONTEXT_MENU_META_PROPERTY_NAME, [])
-	items.push_back({"name": item_name, "callable": callable})
+func add_context_menu_item(
+	object: Object,
+	property_name: String, 
+	item_name: String,
+	callable: Callable,
+) -> void:
+	EditorInspectorContextMenu.add_context_menu_item(object, property_name, item_name, callable)
+
+func add_heading(icon: Texture2D, text: String) -> void:
+	var inspector := EditorInterface.get_inspector()
+	var heading := PanelContainer.new()
+	heading.add_theme_stylebox_override("panel", inspector.get_theme_stylebox("bg", &"EditorInspectorCategory"))
+	var h_hbox := HBoxContainer.new()
+	# TODO separation
+
+	h_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	heading.add_child(h_hbox)
+	var trect := TextureRect.new()
+	trect.texture = icon
+	trect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	h_hbox.add_child(trect)
+	var l := Label.new()
+	l.theme_type_variation = "HeaderSmall"
+	l.text = "Metadata Scripts"
+	l.add_theme_constant_override("line_spacing", 0)
+	l.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	h_hbox.add_child(l)
+	add_custom_control(heading)
 
 ## Creates a property editor and attaches a script to it
-static func instantiate_patched_property_editor(
+func instantiate_patched_property_editor(
 	object: Object,
 	property: Dictionary,
 	patch_script: Script
@@ -87,7 +138,7 @@ static func instantiate_patched_property_editor(
 	property_editor.set_script(patch_script)
 	return property_editor
 
-static func style_inspector_button(button: Button, icon_name: String = "") -> void:
+static func style_inspector_button(button: Button, icon_name: String = "") -> Button:
 	var inspector := EditorInterface.get_inspector()
 	if icon_name:
 		button.add_theme_icon_override("icon", inspector.get_theme_icon(icon_name, &"EditorIcons"))
@@ -96,6 +147,34 @@ static func style_inspector_button(button: Button, icon_name: String = "") -> vo
 			status,
 			inspector.get_theme_stylebox(status, &"InspectorActionButton")
 		)
+	return button
+
+static func get_panel_style(style_name: String, theme_type: String) -> StyleBox:
+	var inspector := EditorInterface.get_inspector()
+	return inspector.get_theme_stylebox(style_name, theme_type)
+
+func get_icon(icon_name: String) -> Texture2D:
+	var inspector := EditorInterface.get_inspector()
+	return inspector.get_theme_icon(icon_name, &"EditorIcons")
+
+func create_foldable_container() -> FoldableContainer:
+	var inspector := EditorInterface.get_inspector()
+	var panel := FoldableContainer.new()
+	var stylebox := inspector.get_theme_stylebox("Content", &"EditorStyles")
+	panel.add_theme_stylebox_override(
+		"panel",
+		stylebox
+	)
+	panel.add_theme_color_override("hover_font_color", panel.get_theme_color("font_color"))
+	panel.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	panel.add_theme_stylebox_override("title_collapsed_hover_panel", stylebox)
+	panel.add_theme_stylebox_override("title_collapsed_panel", stylebox)
+	panel.add_theme_stylebox_override("title_hover_panel", stylebox)
+	panel.add_theme_stylebox_override("title_panel", stylebox)
+	return panel
+
+static func get_property(object: Object, name: String) -> Dictionary:
+	return O2.Helpers.PropertyInfo.get_property(object, name)
 
 static func property_is_in_bottom_editor(property: Dictionary) -> bool:
 	if "type" in property:

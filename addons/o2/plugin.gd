@@ -8,7 +8,7 @@ const Plugins := O2.Helpers.Editor.Plugins
 const ICON := preload("uid://b5258mnsr6qim")
 const InspectorContextMenu := preload("uid://drhs82tyfy2j2")
 
-const REIMPORT_ICON_COMMAND := "reimport_editor_scale"
+const REIMPORT_ICON_COMMAND := "Reimport Editor Scaled Icons"
 
 const EditorSceneRootChangeNotifier := preload("uid://q222j6y6bix6")
 

@@ -10,6 +10,12 @@ static func shuffled(array: Array) -> Array:
 	a.shuffle()
 	return a
 
+static func swap(array: Array, from: int, to: int) -> void:
+	var a = array[from]
+	var b = array[to]
+	array[to] = a
+	array[from] = b
+
 ## Array.find_custom, but also grabs the value
 static func find_and_get(array: Array, callable: Callable) -> Variant:
 	var index := array.find_custom(callable)

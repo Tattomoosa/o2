@@ -93,6 +93,7 @@ func _validate_property(property: Dictionary) -> void:
 
 # TODO this could probably just be handled by the InspectorPlugin
 func _patch_property_name_into_valid_property_enum() -> void:
+	print("patching property name hint string")
 	var p := _property_name_property
 	if node and resource:
 		p.hint = PROPERTY_HINT_ENUM_SUGGESTION
