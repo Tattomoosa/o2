@@ -22,7 +22,7 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/editor_scenes/plugin.cfg", "res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [o2]
 

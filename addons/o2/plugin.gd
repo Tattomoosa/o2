@@ -8,7 +8,8 @@ const Plugins := H.Editor.Plugins
 const ICON := preload("uid://b5258mnsr6qim")
 const InspectorContextMenu := preload("uid://drhs82tyfy2j2")
 
-const REIMPORT_ICON_COMMAND := "Reimport Editor Scaled Icons"
+const REIMPORT_ICON_TOOL := "Reimport Editor Scaled Icons"
+const SHOW_MOUSE_COMMAND := "show_mouse"
 
 const EditorSceneRootChangeNotifier := preload("uid://q222j6y6bix6")
 
@@ -44,18 +45,22 @@ func _on_scene_changed(scene_root: Node) -> void:
 func _enter_tree() -> void:
 	inspector_context_menu = InspectorContextMenu.new()
 	add_inspector_plugin(inspector_context_menu)
-	add_tool_menu_item(REIMPORT_ICON_COMMAND, _reimport_icons)
+	add_tool_menu_item(REIMPORT_ICON_TOOL, _reimport_icons)
+	EditorInterface.get_command_palette().add_command("Set Mouse Mode Visible", SHOW_MOUSE_COMMAND, _show_mouse)
 	scene_change_notifier = EditorSceneRootChangeNotifier.new()
 	scene_change_notifier.scene_root_changed.connect(_on_scene_changed)
 
 func _exit_tree() -> void:
+	EditorInterface.get_command_palette().remove_command(SHOW_MOUSE_COMMAND)
 	remove_inspector_plugin(inspector_context_menu)
-	remove_tool_menu_item(REIMPORT_ICON_COMMAND)
+	remove_tool_menu_item(REIMPORT_ICON_TOOL)
 
 func _reimport_icons() -> void:
 	var files := H.Files.get_all_files("res://", "svg")
 	EditorInterface.get_resource_filesystem().reimport_files(files)
 
+func _show_mouse() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
 
 

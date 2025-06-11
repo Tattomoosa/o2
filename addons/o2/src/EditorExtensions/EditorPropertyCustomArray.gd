@@ -25,7 +25,7 @@ var heading_hbox := HBoxContainer.new()
 var add_button := Button.new()
 
 # Needs extended
-func _get_editor_property(_array: Array, _index: int) -> EditorProperty:
+func _get_editor_property(_index: int) -> EditorProperty:
 	return EditorProperty.new()
 
 # Needs extended
@@ -73,50 +73,20 @@ func _ready() -> void:
 	panel_vbox.add_child(drag_drop_parent)
 
 	for i in array.size():
-		var item_row_hbox := HBoxContainer.new()
-		item_row_hbox.size_flags_horizontal = SIZE_EXPAND_FILL
+		var item_row := ArrayItem.new()
+		# item_row.index = i
+		item_row.editor_property = _get_editor_property(i)
+		item_row.array = array
 
-		var ep := _get_editor_property(array, i)
-		ep.name_split_ratio = 0.5
-		ep.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		ep.label = str(i)
-		ep.update_property()
+		item_row.drag_button.set_drag_forwarding(
+			_drag_index.bind(item_row),
+			_can_drop_index.bind(item_row),
+			_drop_index.bind(item_row)
+		)
+		item_row.set_drag_forwarding(Callable(), _can_drop_index.bind(item_row), Callable())
+		item_row.deleted.connect(_remove)
 
-		var up_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
-		up_button.pressed.connect(_move_up.bind(i))
-		if i == 0: up_button.hide()
-
-		var drag_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "TripleBar")
-		drag_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		drag_button.set_drag_forwarding(_drag_index.bind(item_row_hbox), _can_drop_index.bind(item_row_hbox), _drop_index.bind(item_row_hbox))
-		item_row_hbox.set_drag_forwarding(Callable(), _can_drop_index.bind(item_row_hbox), Callable())
-
-		var down_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
-		down_button.pressed.connect(_move_down.bind(i))
-		if i == array.size() - 1: down_button.hide()
-
-		up_button.hide()
-		down_button.hide()
-
-		var delete_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "Close")
-		delete_button.pressed.connect(_remove.bind(item_row_hbox))
-		delete_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-
-		var btn_vbox := C.create_vbox_with_children([up_button, drag_button, down_button])
-		C.v_expand_fill(C.h_expand_fill(btn_vbox))
-		var delete_btn_vbox := C.create_vbox_with_children([delete_button])
-		delete_btn_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-
-		item_row_hbox.add_child(btn_vbox)
-		item_row_hbox.add_child(ep)
-		item_row_hbox.add_child(delete_btn_vbox)
-
-		drag_drop_parent.add_child(item_row_hbox)
-		if array_panel.visible:
-			set_bottom_editor(array_panel)
-
-		for b in [delete_button, up_button, down_button, drag_button]:
-			_update_button_size.call_deferred(b, ep.size.y)
+		drag_drop_parent.add_child(item_row)
 
 	add_button = _get_add_button()
 
@@ -128,6 +98,8 @@ func _ready() -> void:
 	cc.add_child(end_button_hbox)
 
 	panel_vbox.add_child(cc)
+	if array_panel.visible:
+		set_bottom_editor(array_panel)
 
 func _update_button_size(b: Button, y: int) -> void:
 	b.custom_minimum_size.y = y
@@ -143,7 +115,7 @@ func _delete_all() -> void:
 	array.clear()
 	get_edited_object().notify_property_list_changed()
 
-func _remove(row: HBoxContainer) -> void:
+func _remove(row: ArrayItem) -> void:
 	array.remove_at(row.get_index())
 	get_edited_object().notify_property_list_changed()
 
@@ -157,7 +129,7 @@ func _move_down(i: int) -> void:
 	H.Arrays.swap(array, i, i + 1)
 	object.notify_property_list_changed()
 
-func _on_deleted(property_name: String) -> void:
+func _on_deleted(_property_name: String) -> void:
 	pass
 
 func _drag_index(_pos: Vector2, draggable: Control) -> Variant:
@@ -168,8 +140,7 @@ func _drag_index(_pos: Vector2, draggable: Control) -> Variant:
 func _drop_index(_pos: Vector2, _data: Variant, _draggable: Control) -> void:
 	var index := 0
 	for item in drag_drop_parent.get_children():
-		var ep := H.Nodes.get_first_child_with_type(item, EditorProperty)
-		ep.label = str(index)
+		item.editor_property.label = str(index)
 		index += 1
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	is_dragging = false
@@ -182,21 +153,84 @@ func _notification(notification_type):
 			_drop_index(Vector2.ZERO, null, null)
 
 func _can_drop_index(_pos: Vector2, data: Variant, draggable: Control) -> bool:
-	if data is HBoxContainer:
-		var d := draggable if draggable is not Button else draggable.get_parent()
-		if data.get_parent() != draggable.get_parent():
-			return false
-		var drag_index : int = data.get_index()
-		var drop_index : int = draggable.get_index()
-		if drag_index != drop_index:
-			var p := d.get_parent()
-			p.move_child(data, drop_index)
-		return true
-	return false
+	if data is not ArrayItem:
+		return false
+	var d := draggable if draggable is not Button else draggable.get_parent().get_parent()
+	if data.get_parent() != draggable.get_parent():
+		return false
+	var drag_index : int = data.get_index()
+	var drop_index : int = draggable.get_index()
+	if drag_index != drop_index:
+		var p := d.get_parent()
+		p.move_child(data, drop_index)
+	return true
 
 # TODO move a bunch of stuff here!
-class ArrayItem extends HBoxContainer:
-	pass
+class ArrayItem extends PanelContainer:
+
+	signal move_up
+	signal move_down
+	signal deleted
+
+	# Need set
+	# var index : int
+	var editor_property : EditorProperty
+	var show_up_down_buttons : bool
+	var array : Array
+	# 
+	var drag_button : Button
+
+	func _init() -> void:
+		drag_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "TripleBar")
+		drag_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	func _update_index() -> void:
+		var index := get_index()
+		self_modulate = Color(0.8, 0.8, 0.8) if index % 2 == 1 else Color.WHITE
+		editor_property.label = str(index)
+
+	func _ready() -> void:
+		get_parent().child_order_changed.connect(_update_index)
+		add_theme_stylebox_override(
+			"panel",
+			get_theme_stylebox("PanelForeground", &"EditorStyles")
+		)
+
+		var hbox := HBoxContainer.new()
+		hbox.size_flags_horizontal = SIZE_EXPAND_FILL
+		add_child(hbox)
+
+		editor_property.name_split_ratio = 0.5
+		editor_property.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		editor_property.update_property()
+
+		var up_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
+		# up_button.pressed.connect(move_up.emit.bind(index))
+		# if index == 0: up_button.hide()
+
+		var down_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
+		# down_button.pressed.connect(move_down.emit.bind(index))
+		# if index == array.size() - 1: down_button.hide()
+
+		if !show_up_down_buttons:
+			up_button.hide()
+			down_button.hide()
+
+		var delete_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "Close")
+		delete_button.pressed.connect(deleted.emit.bind(self))
+		delete_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+		var btn_vbox := C.create_vbox_with_children([up_button, drag_button, down_button])
+		C.v_expand_fill(C.h_expand_fill(btn_vbox))
+		var delete_btn_vbox := C.create_vbox_with_children([delete_button])
+		delete_btn_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+
+		hbox.add_child(btn_vbox)
+		hbox.add_child(editor_property)
+		hbox.add_child(delete_btn_vbox)
+
+		# for b in [delete_button, up_button, down_button, drag_button]:
+		# 	_update_button_size.call_deferred(b, ep.size.y)
 
 class FakeArray extends RefCounted:
 	var object : Object

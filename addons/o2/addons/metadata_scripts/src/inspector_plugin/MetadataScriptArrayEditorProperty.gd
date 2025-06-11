@@ -10,7 +10,7 @@ func _ready() -> void:
 	label = "Metadata Scripts"
 	super()
 
-func _get_editor_property(_array: Array, index: int) -> EditorProperty:
+func _get_editor_property(index: int) -> EditorProperty:
 	var property := {
 		&"name": "md_script",
 		&"class_name": "",

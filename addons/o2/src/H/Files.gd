@@ -3,8 +3,14 @@
 const Strings := H.Strings
 const Files := H.Files
 
-static func get_all_files(path: String, file_ext := "", files := PackedStringArray([])) -> PackedStringArray:
+static func get_all_files(
+	path: String,
+	file_ext := "",
+	include_hidden := false,
+	files := PackedStringArray([])
+) -> PackedStringArray:
 	var dir := DirAccess.open(path)
+	dir.include_hidden = include_hidden
 	if !dir:
 		push_error(error_string(DirAccess.get_open_error()))
 		return files
@@ -16,7 +22,7 @@ static func get_all_files(path: String, file_ext := "", files := PackedStringArr
 	while file_name != "":
 		var file_path := dir.get_current_dir().path_join(file_name)
 		if dir.current_is_dir():
-			get_all_files(file_path, file_ext, files)
+			get_all_files(file_path, file_ext, include_hidden, files)
 		else:
 			if !file_ext or file_name.get_extension() == file_ext:
 				files.append(file_path)
@@ -62,10 +68,12 @@ class DirWatcher extends RefCounted:
 	var _extension : String
 	var _watched : Dictionary[String, WatchedFile] = {}
 	var _first_pass := true
+	var _include_hidden := false
 
-	func _init(root := "res://", extension := "") -> void:
+	func _init(root := "res://", extension := "", include_hidden := false) -> void:
 		_root = root
 		_extension = extension
+		_include_hidden = false
 		update()
 
 	func update() -> void:
