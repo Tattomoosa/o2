@@ -41,9 +41,9 @@ func _delete_all() -> void:
 	var object := get_edited_object()
 	object.remove_meta(get_edited_property())
 
-func _remove(row: HBoxContainer) -> void:
+func _remove_at(index: int) -> void:
 	var object := get_edited_object()
-	metadata_scripts.remove_at(row.get_index())
+	metadata_scripts.remove_at(index)
 	if metadata_scripts.is_empty():
 		object.remove_meta(get_edited_property())
 	object.notify_property_list_changed()
