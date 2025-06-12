@@ -10,18 +10,15 @@ static func begins_with_any(string: String, suffixes: Array[String]) -> bool:
 			return true
 	return false
 
+# TODO support numbers, should match what godot does
 static func to_title_cased_spaced(string: String) -> String:
 	string = string.to_pascal_case()
 	var re := RegEx.new()
-	re.compile(r"[A-Z]")
+	re.compile(r"[A-Z0-9][a-z]*")
 	var result := re.search_all(string)
 	var split_string := []
-	for i in result.size():
-		var match := result[i]
-		var start := match.get_start()
-		var next := result[i + 1].get_start() if result.size() > (i + 1) else -1
-		split_string.push_back(string.substr(start, next)
-		)
+	for match in result:
+		split_string.push_back(match.get_string())
 	return " ".join(split_string)
 
 ## Static class

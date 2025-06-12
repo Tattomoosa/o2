@@ -111,15 +111,18 @@ func _create_plugin_popup(popup: PopupMenu) -> void:
 	for i in plugin_paths.size():
 		var plugin_path := plugin_paths[i]
 		var plugin_enable_string := Plugins.get_plugin_enable_string_from_path(plugin_path)
+		plugin_enable_strings.push_back(plugin_enable_string)
 		var icon := Plugins.get_plugin_icon(plugin_path)
+		var enabled := EditorInterface.is_plugin_enabled(plugin_enable_string)
 		var display_name := plugin_enable_string.get_file()
 		display_name = H.Strings.to_title_cased_spaced(display_name)
 		if !icon:
-			icon = GDSCRIPT_ICON
-		plugin_enable_strings.push_back(plugin_enable_string)
+			icon = PLUGIN_SETTINGS_ICON
 		popup.add_icon_check_item(icon, display_name)
 		popup.set_item_indent(i, plugin_enable_string.count("/") * H.Editor.Settings.scale)
-		popup.set_item_checked(i, EditorInterface.is_plugin_enabled(plugin_enable_string))
+		popup.set_item_checked(i, enabled)
+		if !enabled:
+			popup.set_item_icon_modulate(i, Color(Color.WHITE, 0.2))
 		H.Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(popup))
 		H.Signals.connect_if_not_connected(popup.index_pressed, _set_plugin_enabled.bind(popup))
 

@@ -12,13 +12,17 @@ config_version=5
 
 config/features=PackedStringArray("4.5")
 
+[autoload]
+
+o2="*res://addons/o2/src/O2.gd"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/dictionary_tree/plugin.cfg", "res://addons/load_control_into_dock/plugin.cfg", "res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/namespacer/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [o2]
 

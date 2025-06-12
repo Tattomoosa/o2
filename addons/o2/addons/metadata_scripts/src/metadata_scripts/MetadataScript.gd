@@ -30,12 +30,11 @@ static func can_attach_to(p_node: Node) -> bool:
 
 static func has_metadata_scripts(object: Object) -> bool:
 	if !object:
-		print_stack()
+		push_error("%s is null" % object)
+		return false
 	return object.has_meta(METADATA_SCRIPTS_PROPERTY)
 
 static func get_metadata_scripts(object: Object) -> Array[MetadataScript]:
-	if !object:
-		print_stack()
 	if !has_metadata_scripts(object):
 		return []
 	return object.get_meta(METADATA_SCRIPTS_PROPERTY)

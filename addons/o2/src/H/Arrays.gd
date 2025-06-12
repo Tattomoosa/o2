@@ -30,7 +30,26 @@ static func get_first_dictionary_matching_property(array: Array, key: String, va
 	if dict == null: return {}
 	return dict
 
+static func is_array(array: Variant) -> bool:
+	if array is Array\
+	or array is PackedByteArray\
+	or array is PackedInt32Array\
+	or array is PackedInt64Array\
+	or array is PackedFloat32Array\
+	or array is PackedFloat64Array\
+	or array is PackedStringArray\
+	or array is PackedVector2Array\
+	or array is PackedVector3Array\
+	or array is PackedColorArray\
+	or array is PackedVector4Array:
+		return true
+	return false
 
+static func is_in_typelist(value: Variant, type_list: Array) -> bool:
+	for type in type_list:
+		if value.is_instance_of(type):
+			return true
+	return false
 
 ## 'Static' class
 func _init() -> void: assert(false, "Class can't be instantiated")

@@ -33,7 +33,6 @@ func _parse_begin(object: Object) -> void:
 	pass
 
 func _parse_end(object: Object) -> void:
-	print(object)
 	if MetadataScript.has_metadata_scripts(object):
 		add_metadata_scripts_array(object, true)
 		return

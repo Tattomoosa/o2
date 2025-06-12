@@ -101,6 +101,5 @@ static func get_nth_parent(node: Node, n := 1) -> Node:
 		node = node.get_parent()
 	return node
 
-
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

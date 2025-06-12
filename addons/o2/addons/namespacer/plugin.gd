@@ -149,6 +149,10 @@ func _get_index_content(dir: String, entries: Array) -> String:
 	if dir in class_roots:
 		lines.push_back("class_name %s" % dir.get_file())
 	lines.push_back("")
+	entries.sort_custom(
+		func(a, b):
+			return a.name[0] < b.name[0]
+	)
 	for entry in entries:
 		lines.push_back(entry.get_line())
 	lines.push_back("")
@@ -177,7 +181,10 @@ class NamespaceEntry extends RefCounted:
 		uid = p_uid
 
 	func get_line() -> String:
-		return 'const %s := preload("%s") # %s' % [name if !is_index else index_name, ResourceUID.id_to_text(uid), path]
+		return 'const %s := preload("%s")' % [
+			name if !is_index else index_name,
+			ResourceUID.id_to_text(uid)
+		]
 	
 	func _get_path() -> String:
 		return ResourceUID.get_id_path(uid)
