@@ -8,6 +8,10 @@ const TreeWatcherPlugin := preload("uid://jdhkmwip1txo")
 const TREE_WATCHER_PLUGINS_SETTING := "o2/tree_watcher/tree_watcher_plugins"
 
 var plugins : Array[TreeWatcherPlugin] = []
+var l := O2.logger.add_substream(
+	O2.Logging.LogLevel.DEBUG,
+	&"TreeWatcher"
+)
 
 func _init(root: Node) -> void:
 	if !root:
@@ -75,8 +79,5 @@ func _load_plugins() -> void:
 			continue
 		plugins.push_back(plugin_script.new())
 		plugin_names.push_back(H.Files.get_file_without_extension(plugin_script.resource_path))
-	O2.logger.info(
-		"[O2.TreeWatcher] Loaded plugins: ",
-		",".join(plugin_names)
-	)
+	l.info("Loaded plugins: ", ",".join(plugin_names))
 	

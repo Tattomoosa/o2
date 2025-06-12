@@ -14,19 +14,19 @@ static func unsubscribe() -> void:
 
 static func _log(msg: String, stream_name := "") -> void:
 	print_rich("%s%s" % [
-		"[%s] : " % stream_name if stream_name else "",
+		"[%s] " % stream_name if stream_name else "",
 		msg,
 	])
 
 static func _warn(msg: String, stream_name: String = "") -> void:
 	push_warning("%s%s" % [
-		"[%s] : " % stream_name if stream_name else "",
+		"[%s] " % stream_name if stream_name else "",
 		msg,
 	])
 
 static func _error(msg: String, stream_name: String = "") -> void:
 	push_warning("%s%s" % [
-		"[%s] : " % stream_name if stream_name else "",
+		"[%s] " % stream_name if stream_name else "",
 		msg
 	])
 

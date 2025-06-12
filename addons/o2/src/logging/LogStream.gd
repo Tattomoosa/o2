@@ -103,18 +103,19 @@ func dim(
 
 func add_substream(stream_level: LogLevel, stream_name: String) -> Self:
 	assert(stream_name, "Anonymous sub-streams are not allowed")
-	if stream_name in substreams:
-		var old_stream := substreams[stream_name]
-		old_stream.logged_debug.disconnect(debug)
-		old_stream.logged_info.disconnect(info)
-		old_stream.logged_warn.disconnect(warn)
-		old_stream.logged_error.disconnect(error)
+	# if stream_name in substreams:
+		# var old_stream := substreams[stream_name]
+		# old_stream.logged_debug.disconnect(debug)
+		# old_stream.logged_info.disconnect(info)
+		# old_stream.logged_warn.disconnect(warn)
+		# old_stream.logged_error.disconnect(error)
 	var stream := Self.new()
 	stream.level = stream_level
-	stream.logged_debug.connect(debug)
-	stream.logged_info.connect(info)
-	stream.logged_warn.connect(warn)
-	stream.logged_error.connect(error)
+	stream.name = stream_name
+	# stream.logged_debug.connect(debug)
+	# stream.logged_info.connect(info)
+	# stream.logged_warn.connect(warn)
+	# stream.logged_error.connect(error)
 	substreams[stream_name] = stream
 	substream_added.emit(stream)
 	return stream

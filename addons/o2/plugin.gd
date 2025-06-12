@@ -21,6 +21,7 @@ const PLUGINS : PackedStringArray = [
 var scene_change_notifier : EditorSceneRootChangeNotifier
 var subplugin_roots : PackedStringArray
 var inspector_context_menu : InspectorContextMenu
+# var logging_panel :
 
 func _get_plugin_icon() -> Texture2D:
 	return ICON
@@ -38,9 +39,7 @@ func _disable_plugin() -> void:
 func _on_scene_changed(scene_root: Node) -> void:
 	if !scene_root:
 		return
-	for autoload in get_tree().root.get_children():
-		if autoload.name == O2_INSTANCE:
-			autoload.tree_watcher = autoload.TreeWatcher.new(scene_root)
+	O2.instance._tree_watcher = O2.TreeWatcher.new(scene_root)
 
 func _enter_tree() -> void:
 	inspector_context_menu = InspectorContextMenu.new()

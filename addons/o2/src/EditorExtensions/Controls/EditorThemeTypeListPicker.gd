@@ -1,0 +1,33 @@
+@tool
+extends OptionButton
+
+signal type_selected(type_name: String)
+
+enum Type {
+	ICON,
+	STYLE_BOX,
+}
+@export var type : Type
+
+var type_list : PackedStringArray
+
+func _ready() -> void:
+	var initial_selection = selected
+	_populate()
+	item_selected.connect(_type_selected)
+	selected = initial_selection
+	_type_selected(selected)
+
+func _populate() -> void:
+	clear()
+	var t := EditorInterface.get_editor_theme()
+	match type:
+		Type.ICON:
+			type_list = t.get_icon_type_list()
+		Type.STYLE_BOX:
+			type_list = t.get_stylebox_type_list()
+	for option in type_list:
+		add_item(option)
+
+func _type_selected(which: int) -> void:
+	type_selected.emit(type_list[which])

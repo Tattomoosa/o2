@@ -30,7 +30,7 @@ func _ready() -> void:
 	working = false
 	dir_watcher = DirWatcher.new("res://", ["gd", "namespace", "namespace_class"], true)
 	dir_watcher.files_created.connect(_files_updated.unbind(1))
-	dir_watcher.files_deleted.connect(_files_updated.unbind(1))
+	dir_watcher.files_deleted.connect(_files_deleted)
 	EditorInterface.get_resource_filesystem().filesystem_changed.connect(_update_dir_watcher)
 	# _files_updated()
 
@@ -56,7 +56,7 @@ func _files_updated() -> void:
 		l.debug("Update requested but Filesystem is scanning, waiting...")
 		await get_tree().process_frame
 	working = true
-	l.debug("Namespacer updating...")
+	l.info("Namespacer updating...")
 
 	var dirs : Dictionary[String, Array] = {}
 
@@ -67,10 +67,10 @@ func _files_updated() -> void:
 	for path in files:
 		if path.get_file() == ".namespace":
 			roots.push_back(path.get_base_dir())
-			l.debug("Namespacer found root at: ", path)
+			l.debug("Found root at: ", path)
 		if path.get_file() == ".namespace_class":
 			class_roots.push_back(path.get_base_dir())
-			l.debug("Namespacer found class_name root at: ", path)
+			l.debug("Found class_name root at: ", path)
 	var all_roots := []
 	all_roots.append_array(roots)
 	all_roots.append_array(class_roots)
@@ -114,8 +114,14 @@ func _files_updated() -> void:
 				var new_entry := NamespaceEntry.new(new_uid)
 				dirs[new_entry.dir_path].push_back(new_entry)
 	await _scan()
-	l.debug("Namespacer done!")
+	l.info("Namespacer done!")
 	working = false
+
+# TODO needs to clean up!
+func _files_deleted(file_paths : PackedStringArray) -> void:
+	for file in file_paths:
+		l.debug("File deleted: ", file)
+	pass
 
 func _update_file(path: String) -> void:
 	var fs := EditorInterface.get_resource_filesystem()

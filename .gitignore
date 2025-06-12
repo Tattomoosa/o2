@@ -7,3 +7,4 @@ export_credentials.cfg
 *.tscn-*
 addons/inspector_tabs
 addons/signal_lens
+addons/gdterm

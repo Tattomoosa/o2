@@ -75,7 +75,6 @@ func detach() -> void:
 func _validate_property(property: Dictionary) -> void:
 	if !Engine.is_editor_hint:
 		return
-	return
 	match property.name:
 		"resource_local_to_scene":
 			property.usage = PROPERTY_USAGE_NONE
