@@ -3,6 +3,7 @@ extends EditorPlugin
 
 # TODO need to remove this to release separately
 const Plugins := H.Editor.Plugins
+const Strings := H.Strings
 
 const GDSCRIPT_ICON := preload("uid://dmf2kpb2tkkab")
 const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
@@ -37,6 +38,7 @@ var dialog : Window
 var plugin_enable_strings := PackedStringArray()
 var rendering_options : Control
 var vline : VSeparator
+var plugin_icon_cache : Dictionary[String, Texture2D] = {}
 
 func _enable_plugin() -> void:
 	pass
@@ -48,7 +50,7 @@ func _enter_tree() -> void:
 	_get_or_add_setting(PLUGIN_MENU_SHOW_TEXT, false)
 	_get_or_add_setting(PLUGIN_MENU_HIDE_QUICK_SETTINGS, true)
 	_get_or_add_setting(EXTERNAL_EDITOR_TOGGLE_ENABLE, true)
-	var hide_renderer_button : bool = _get_or_add_setting(HIDE_RENDERING_MODE_BUTTON, true)
+	# var hide_renderer_button : bool = _get_or_add_setting(HIDE_RENDERING_MODE_BUTTON, true)
 	ProjectSettings.save()
 	_create_control()
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, button_parent)
@@ -58,7 +60,6 @@ func _enter_tree() -> void:
 	# rendering_options = H.Nodes.get_previous_sibling(button_parent)
 	# if hide_renderer_button:
 	# 	rendering_options.hide()
-
 
 func _exit_tree() -> void:
 	if rendering_options and !rendering_options.visible:
@@ -74,13 +75,8 @@ func _get_p_setting(setting: String) -> Variant:
 	return ProjectSettings.get_setting(plugin_config_prefix.path_join(setting))
 
 func _create_control() -> void:
-	# button_parent = PanelContainer.new()
-	# button_parent.add_theme_stylebox_override(
-	# 	"panel",
-	# 	EditorInterface.get_base_control().get_theme_stylebox("PanelForeground", &"EditorStyles")
-	# )
 	button_parent = HBoxContainer.new()
-	button_parent.name = "QuickSettingsPanel"
+	button_parent.name = "QuickSettings"
 	button_parent.add_child(VSeparator.new())
 
 	if _get_p_setting(WINDOW_MODE_MENU_ENABLE):
@@ -157,7 +153,7 @@ func _update_viewport_button(vb: Button) -> void:
 
 func _create_plugin_popup(popup: PopupMenu) -> void:
 	popup.clear()
-	popup.size.y = 0
+	popup.min_size.y = 0
 	popup.hide_on_checkable_item_selection = false
 	plugin_enable_strings.clear()
 	var plugin_paths := Plugins.get_all_plugin_paths()
@@ -172,19 +168,27 @@ func _create_plugin_popup(popup: PopupMenu) -> void:
 		var plugin_path := plugin_paths[i]
 		var plugin_enable_string := Plugins.get_plugin_enable_string_from_path(plugin_path)
 		plugin_enable_strings.push_back(plugin_enable_string)
-		var icon := Plugins.get_plugin_icon(plugin_path)
 		var enabled := EditorInterface.is_plugin_enabled(plugin_enable_string)
-		var display_name := plugin_enable_string.get_file()
-		display_name = H.Strings.to_title_cased_spaced(display_name)
-		if !icon:
-			icon = PLUGIN_SETTINGS_ICON
-		popup.add_icon_check_item(icon, display_name)
-		popup.set_item_indent(i, plugin_enable_string.count("/") * H.Editor.Settings.scale)
+		var display_name := Plugins.get_plugin_display_name(plugin_path)
+		popup.add_icon_check_item(_get_icon(plugin_path), display_name)
+		popup.set_item_indent(i, int(plugin_enable_string.count("/") * EditorInterface.get_editor_scale() / 2.0))
 		popup.set_item_checked(i, enabled)
 		if !enabled:
-			popup.set_item_icon_modulate(i, Color(Color.WHITE, 0.2))
-		H.Signals.connect_if_not_connected(popup.about_to_popup, _create_plugin_popup.bind(popup))
-		H.Signals.connect_if_not_connected(popup.index_pressed, _set_plugin_enabled.bind(popup))
+			popup.set_item_icon_modulate(i, Color(Color.WHITE, 0.3))
+		if !popup.about_to_popup.is_connected(_create_plugin_popup):
+			popup.about_to_popup.connect(_create_plugin_popup.bind(popup))
+		if !popup.index_pressed.is_connected(_set_plugin_enabled):
+			popup.index_pressed.connect(_set_plugin_enabled.bind(popup))
+	
+func _get_icon(plugin_path: String) -> Texture2D:
+	if plugin_path in plugin_icon_cache:
+		return plugin_icon_cache[plugin_path]
+	var icon := Plugins.get_plugin_icon(plugin_path)
+	if !icon:
+		icon = PLUGIN_SETTINGS_ICON
+	icon = Plugins.ensure_icon_16x16_at_editor_scale(icon)
+	plugin_icon_cache[plugin_path] = icon
+	return icon
 
 func _set_plugin_enabled(index: int, popup: PopupMenu) -> void:
 	for i in popup.item_count:
