@@ -26,4 +26,5 @@ tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
 
 [quick_settings]
 
-toolbar/window_mode_menu/show_button_text=false
+toolbar/plugins_menu/settings/hide_nested_plugins=false
+toolbar/window_mode_menu/settings/hide_fullscreen=true
