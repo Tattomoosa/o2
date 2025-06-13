@@ -18,7 +18,7 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [o2]
 

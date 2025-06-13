@@ -6,6 +6,8 @@ const Plugins := H.Editor.Plugins
 const GDSCRIPT_ICON := preload("uid://dmf2kpb2tkkab")
 const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
+const INTERNAL_EDITOR_ICON := preload("uid://da5t0jkc41bal")
+const EXTERNAL_EDITOR_ICON := preload("uid://q1hy0uael7v6")
 
 const SHOW_WINDOW_BUTTON_SETTING := "toolbar/window_mode_menu/enable"
 const SHOW_WINDOW_BUTTON_TEXT_SETTING := "toolbar/window_mode_menu/show_button_text"
@@ -53,7 +55,7 @@ func _get_or_add_setting(setting: String, default_value: Variant) -> Variant:
 	var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
 	return H.Settings.get_or_add(plugin_config_prefix.path_join(setting), default_value)
 
-func _get_setting(setting: String) -> Variant:
+func _get_p_setting(setting: String) -> Variant:
 	var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
 	return ProjectSettings.get_setting(plugin_config_prefix.path_join(setting))
 
@@ -66,23 +68,51 @@ func _create_control() -> void:
 	button_parent.name = "QuickSettingsPanel"
 	var hbox := HBoxContainer.new()
 
-	if _get_setting(SHOW_WINDOW_BUTTON_SETTING):
+	if _get_p_setting(SHOW_WINDOW_BUTTON_SETTING):
 		var viewport_button := H.Controls.icon_menu_button(VIEWPORT_SETTINGS_ICON, false)
 		viewport_button.tooltip_text = "Change the gameplay window mode"
 		_create_viewport_popup(viewport_button)
 		hbox.add_child(viewport_button)
 		viewport_button.name = "QuickSettingsViewportButton"
 
-	if _get_setting(SHOW_PLUGIN_BUTTON_SETTING):
+	if _get_p_setting(SHOW_PLUGIN_BUTTON_SETTING):
 		var plugin_button := H.Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
-		if _get_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
+		if _get_p_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING):
 			plugin_button.text = "Plugins"
 		plugin_button.tooltip_text = "Enable/disable EditorPlugins"
 		_create_plugin_popup(plugin_button.get_popup())
 		hbox.add_child(plugin_button)
 		plugin_button.name = "QuickSettingsPluginButton"
 
+	if _get_p_setting(SHOW_EDIT_IN_EXTERNAL_EDITOR_SETTING):
+		var es := EditorInterface.get_editor_settings()
+		var on : bool = es.get("text_editor/external/use_external_editor")
+		var external_button := Button.new()
+		external_button.theme_type_variation = "EditorLogFilterButton"
+		# external_button.add_theme_color_override(
+		# 	"icon_pressed_color",
+		# )
+		external_button.flat = true
+		external_button.toggle_mode = true
+		external_button.tooltip_text = "Enable/disable external code editing"
+		external_button.icon = EXTERNAL_EDITOR_ICON if on else INTERNAL_EDITOR_ICON
+		external_button.toggled.connect(
+			func(value: bool) -> void:
+				print(value)
+				es.set("text_editor/external/use_external_editor", value)
+		)
+		es.settings_changed.connect(_update_external_editor_setting.bind(external_button))
+		hbox.add_child(external_button)
+		external_button.name = "QuickSettingsExternalEditorButton"
+
 	button_parent.add_child(hbox)
+
+func _update_external_editor_setting(external_button: Button) -> void:
+	print("updating external editor button")
+	var es := EditorInterface.get_editor_settings()
+	var value : bool = es.get("text_editor/external/use_external_editor")
+	external_button.icon = EXTERNAL_EDITOR_ICON if value else INTERNAL_EDITOR_ICON
+	external_button.set_pressed_no_signal(value)
 
 func _create_viewport_popup(viewport_button: MenuButton) -> void:
 	var popup := viewport_button.get_popup()
@@ -98,7 +128,7 @@ func _create_viewport_popup(viewport_button: MenuButton) -> void:
 	popup.set_item_checked(value, true)
 	# var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
 
-	if _get_setting(SHOW_WINDOW_BUTTON_TEXT_SETTING):
+	if _get_p_setting(SHOW_WINDOW_BUTTON_TEXT_SETTING):
 		viewport_button.text = names[value]
 	else:
 		viewport_button.text = ""
@@ -119,7 +149,7 @@ func _create_plugin_popup(popup: PopupMenu) -> void:
 	plugin_enable_strings.clear()
 	var plugin_paths := Plugins.get_all_plugin_paths()
 
-	if _get_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING):
+	if _get_p_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING):
 		for path in plugin_paths:
 			if path.get_file() == "quick_settings":
 			# if path.get_file() == get_script().resource_path.get_base_dir():
