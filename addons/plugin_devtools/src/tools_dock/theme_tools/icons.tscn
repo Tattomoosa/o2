@@ -120,7 +120,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-min_value = 16.0
+min_value = 20.0
+max_value = 44.0
 value = 32.0
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

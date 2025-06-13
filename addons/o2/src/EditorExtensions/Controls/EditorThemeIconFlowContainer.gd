@@ -1,6 +1,8 @@
 @tool
 extends Container
 
+const COPY_TEXT := 'EditorInterface.get_inspector().get_theme_icon("%s", "%s")'
+
 signal mouse_hovered_button(icon_name: String)
 signal button_pressed
 
@@ -31,7 +33,7 @@ func _populate() -> void:
 		icon_button.name = icon_name
 		icon_button.mouse_entered.connect(mouse_hovered_button.emit.bind(icon_name))
 		icon_button.mouse_exited.connect(mouse_hovered_button.emit.bind(""))
-		icon_button.pressed.connect(DisplayServer.clipboard_set.bind(icon_name))
+		icon_button.pressed.connect(DisplayServer.clipboard_set.bind(COPY_TEXT % [icon_name, theme_type]))
 		icon_button.pressed.connect(button_pressed.emit)
 		icon_button.set_drag_forwarding(
 			_get_item_drag_data.bind(icon_button),

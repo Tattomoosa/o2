@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://o0a54e1hegug" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/icons.tscn" id="1_elnbm"]
 [ext_resource type="PackedScene" uid="uid://c46faudajs5p6" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/styles.tscn" id="2_jf543"]
 
-[node name="Plugin Tools" type="MarginContainer"]
+[node name="Plugin DevTools" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
