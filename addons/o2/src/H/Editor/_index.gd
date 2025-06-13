@@ -5,7 +5,6 @@ const InspectorPlugin := preload("uid://bnnhvj75a5tfv")
 const Plugins := preload("uid://cf3suapig37p6")
 const Settings := preload("uid://bnlgkreosb7f1")
 const SceneRootChangeNotifier := preload("uid://q222j6y6bix6")
-const Theming := preload("uid://bfuxnqsle846q")
 
 ## "Static" class
 func _init() -> void: assert(false, "Namespace class can't be instantiated")

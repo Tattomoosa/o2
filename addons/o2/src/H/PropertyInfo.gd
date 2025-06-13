@@ -154,7 +154,7 @@ static func get_type_name(type: int) -> StringName:
 static func get_property_hint_name(property_hint: int) -> StringName:
 	return PROPERTY_HINT_STRINGS[property_hint]
 
-## Pretty prints an object property (Dictionary definition returns from get_property_list())
+## Pretties up an object property (Dictionary definition returned from get_property_list())
 static func prettify(property: Dictionary) -> String:
 	if "name" not in property:
 		push_error(property)

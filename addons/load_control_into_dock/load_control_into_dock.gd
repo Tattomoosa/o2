@@ -33,11 +33,10 @@ func _exit_tree() -> void:
 	remove_context_menu_plugin(load_control_from_edited_scene_context_menu_plugin)
 	remove_context_menu_plugin(load_control_from_packed_scene_context_menu_plugin)
 
-# Loads a PackedScene from the filesystem into a dock
+# Loads a PackedScene extending Control from the filesystem into a dock
 class LoadPackedSceneIntoDockContextMenuPlugin extends LoadControlIntoDockContextMenuPlugin:
 	var control_classes := ClassDB.get_inheriters_from_class(&"Control")
 	func _popup_menu(paths: PackedStringArray) -> void:
-		print(paths)
 		if paths.size() > 1:
 			return
 		var path := paths[0]
@@ -75,7 +74,6 @@ class LoadPackedSceneIntoDockContextMenuPlugin extends LoadControlIntoDockContex
 		editor_control.name = control.name
 		_editor_plugin.add_control_to_dock(dock_index, editor_control)
 		_editor_plugin.set_dock_tab_icon(editor_control, _get_icon(control))
-
 
 
 # Loads a Control from a scene into a dock
@@ -134,7 +132,6 @@ class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
 		editor_control.name = control.name
 		_editor_plugin.add_control_to_dock(dock_index, editor_control)
 		_editor_plugin.set_dock_tab_icon(editor_control, _get_icon(control))
-		print(editor_control.get_parent())
 	
 	func _get_icon(control: Control) -> Texture2D:
 		var c_name := ""
@@ -184,7 +181,7 @@ class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
 			hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			if true: # Reload
 				var reload_button := Button.new()
-				reload_button.tooltip = "Reload"
+				# reload_button.tooltip = "Reload"
 				reload_button.icon = EditorInterface.get_inspector().get_theme_icon("Reload", &"EditorIcons")
 				reload_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 				reload_button.pressed.connect(reload_callback.bind(control_parent))
@@ -192,7 +189,7 @@ class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
 			if true: # Inspect Button
 				var inspect_button := Button.new()
 				inspect_button.icon = EditorInterface.get_inspector().get_theme_icon("FileList", &"EditorIcons")
-				inspect_button.tooltip = "Edit in Inspector"
+				# inspect_button.tooltip = "Edit in Inspector"
 				# inspect_button.text = "Inspect"
 				inspect_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 				inspect_button.pressed.connect(func(): EditorInterface.get_inspector().edit(control_parent.get_child(0)))
@@ -213,7 +210,7 @@ class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
 				hbox.add_child(spacer)
 			if true: # Remove
 				var remove_button := Button.new()
-				remove_button.tooltip = "Remove Dock"
+				# remove_button.tooltip = "Remove Dock"
 				remove_button.icon = EditorInterface.get_inspector().get_theme_icon("Close", &"EditorIcons")
 				remove_button.size_flags_horizontal = Control.SIZE_SHRINK_END
 				remove_button.pressed.connect(remove_callback.bind(vbox))

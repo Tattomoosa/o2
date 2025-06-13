@@ -15,7 +15,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
-layout_mode = 2
-color = Color(0.54826444, 0.38326263, 0.97345525, 1)

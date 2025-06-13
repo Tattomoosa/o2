@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bagj2x3qnhgkh"]
+
+[ext_resource type="PackedScene" uid="uid://o0a54e1hegug" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/icons.tscn" id="1_elnbm"]
+[ext_resource type="PackedScene" uid="uid://c46faudajs5p6" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/styles.tscn" id="2_jf543"]
+
+[node name="Plugin Tools" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+drag_to_rearrange_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Theme" type="TabContainer" parent="TabContainer"]
+layout_mode = 2
+current_tab = 1
+metadata/_tab_index = 0
+
+[node name="Icons" parent="TabContainer/Theme" instance=ExtResource("1_elnbm")]
+visible = false
+layout_mode = 2
+
+[node name="Styles" parent="TabContainer/Theme" instance=ExtResource("2_jf543")]
+layout_mode = 2

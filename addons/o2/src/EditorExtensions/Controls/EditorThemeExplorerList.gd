@@ -13,4 +13,6 @@ func set_theme_type(type: String) -> void:
 	_populate()
 
 func _populate() -> void:
+	for child in get_children():
+		child.queue_free()
 	pass

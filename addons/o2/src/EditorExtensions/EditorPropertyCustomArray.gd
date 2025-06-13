@@ -180,12 +180,13 @@ class ArrayItem extends PanelContainer:
 	signal move_down
 	signal deleted
 
-	# Need set
-	# var index : int
+	# need set
 	var editor_property : EditorProperty
-	var show_up_down_buttons : bool
+	var show_up_down_buttons : bool = false
 	var array : Array
-	# 
+
+	var up_button : Button
+	var down_button : Button
 	var drag_button : Button
 
 	func _init() -> void:
@@ -196,6 +197,12 @@ class ArrayItem extends PanelContainer:
 		var index := get_index()
 		self_modulate = Color(0.8, 0.8, 0.8) if index % 2 == 1 else Color.WHITE
 		editor_property.label = str(index)
+		if show_up_down_buttons:
+			up_button.visible = index != 0
+			down_button.visible = index < get_parent().get_child_count() - 1
+		else:
+			up_button.hide()
+			down_button.hide()
 
 	func _ready() -> void:
 		get_parent().child_order_changed.connect(_update_index)
@@ -212,13 +219,11 @@ class ArrayItem extends PanelContainer:
 		editor_property.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		editor_property.update_property()
 
-		var up_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
-		# up_button.pressed.connect(move_up.emit.bind(index))
-		# if index == 0: up_button.hide()
+		up_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
+		up_button.pressed.connect(_move_up)
 
-		var down_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
-		# down_button.pressed.connect(move_down.emit.bind(index))
-		# if index == array.size() - 1: down_button.hide()
+		down_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
+		down_button.pressed.connect(_move_down)
 
 		if !show_up_down_buttons:
 			up_button.hide()
@@ -236,9 +241,6 @@ class ArrayItem extends PanelContainer:
 		hbox.add_child(btn_vbox)
 		hbox.add_child(editor_property)
 		hbox.add_child(delete_btn_vbox)
-
-		# for b in [delete_button, up_button, down_button, drag_button]:
-		# 	_update_button_size.call_deferred(b, ep.size.y)
 	
 	func _move_up() -> void:
 		move_up.emit(get_index())
@@ -256,7 +258,5 @@ class FakeArray extends RefCounted:
 
 	func _set(property: StringName, value: Variant) -> bool:
 		var i := property.to_int()
-		# var md_scripts : Array[MetadataScript] = object.get_meta("metadata_scripts")
-		# md_scripts[i] = array
 		array[i] = value
 		return true

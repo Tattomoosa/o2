@@ -7,15 +7,20 @@ const GDSCRIPT_ICON := preload("uid://dmf2kpb2tkkab")
 const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
 
-const SHOW_WINDOW_BUTTON_SETTING := "window_mode_menu/enable"
-const SHOW_WINDOW_BUTTON_TEXT_SETTING := "window_mode_menu/show_button_text"
-const SHOW_PLUGIN_BUTTON_SETTING := "plugin_menu/enable"
-const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "plugin_menu/show_button_text"
-const PLUGIN_MENU_DISABLE_QUICK_SETTING := "plugin_menu/hide_quick_settings"
+const SHOW_WINDOW_BUTTON_SETTING := "toolbar/window_mode_menu/enable"
+const SHOW_WINDOW_BUTTON_TEXT_SETTING := "toolbar/window_mode_menu/show_button_text"
+const SHOW_PLUGIN_BUTTON_SETTING := "toolbar/plugin_menu/enable"
+const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "toolbar/plugin_menu/show_button_text"
+const PLUGIN_MENU_DISABLE_QUICK_SETTING := "toolbar/plugin_menu/hide_quick_settings_from_menu"
+const SHOW_EDIT_IN_EXTERNAL_EDITOR_SETTING := "toolbar/external_editor/enable"
+const HIDE_RENDERING_BUTTON := "toolbar/renderer/hide_renderer_button"
+
+# const EDIT_IN_EXTERNAL_EDITOR_TOGGLE := "text_editor/external/use_external_editor"
 
 var button_parent : Control
 var dialog : Window
 var plugin_enable_strings := PackedStringArray()
+var rendering_options : Control
 
 func _enable_plugin() -> void:
 	pass
@@ -26,15 +31,21 @@ func _enter_tree() -> void:
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_SETTING, true)
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING, false)
 	_get_or_add_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING, true)
+	_get_or_add_setting(SHOW_EDIT_IN_EXTERNAL_EDITOR_SETTING, true)
+	var hide_renderer_button : bool= _get_or_add_setting(HIDE_RENDERING_BUTTON, true)
 	ProjectSettings.save()
 	_create_control()
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, button_parent)
-
 	var hbox := H.Nodes.get_previous_sibling(button_parent)
 	button_parent.reparent(hbox)
 	H.Nodes.move_relative(button_parent, -1)
+	rendering_options = H.Nodes.get_previous_sibling(button_parent)
+	if hide_renderer_button:
+		rendering_options.hide()
+
 
 func _exit_tree() -> void:
+	rendering_options.show()
 	if button_parent and is_instance_valid(button_parent):
 		button_parent.queue_free()
 
@@ -48,6 +59,11 @@ func _get_setting(setting: String) -> Variant:
 
 func _create_control() -> void:
 	button_parent = PanelContainer.new()
+	button_parent.add_theme_stylebox_override(
+		"panel",
+		EditorInterface.get_base_control().get_theme_stylebox("PanelForeground", &"EditorStyles")
+	)
+	button_parent.name = "QuickSettingsPanel"
 	var hbox := HBoxContainer.new()
 
 	if _get_setting(SHOW_WINDOW_BUTTON_SETTING):
@@ -55,6 +71,7 @@ func _create_control() -> void:
 		viewport_button.tooltip_text = "Change the gameplay window mode"
 		_create_viewport_popup(viewport_button)
 		hbox.add_child(viewport_button)
+		viewport_button.name = "QuickSettingsViewportButton"
 
 	if _get_setting(SHOW_PLUGIN_BUTTON_SETTING):
 		var plugin_button := H.Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
@@ -63,6 +80,7 @@ func _create_control() -> void:
 		plugin_button.tooltip_text = "Enable/disable EditorPlugins"
 		_create_plugin_popup(plugin_button.get_popup())
 		hbox.add_child(plugin_button)
+		plugin_button.name = "QuickSettingsPluginButton"
 
 	button_parent.add_child(hbox)
 

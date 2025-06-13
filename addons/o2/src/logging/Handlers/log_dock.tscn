@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://nya34ciqb5ms"]
+[gd_scene load_steps=17 format=3 uid="uid://nya34ciqb5ms"]
 
 [ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/o2/src/EditorExtensions/Controls/EditorIconButton.gd" id="1_7g00j"]
 [ext_resource type="Script" uid="uid://b6ugv1l23k5o6" path="res://addons/o2/src/Logging/Handlers/LogToMultiStream.gd" id="1_m1wcw"]
-[ext_resource type="Script" uid="uid://bxrpnuiapq4hq" path="res://addons/dictionary_tree/src/DictionaryTree.gd" id="3_27t4o"]
 
-[sub_resource type="SVGTexture" id="SVGTexture_0u8s4"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_votwl"]
+
+[sub_resource type="SVGTexture" id="SVGTexture_27t4o"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m8 1a1 1 0 0 0 -1 1v5h-2c-1.108 0-2 .892-2 2v1h10v-1c0-1.108-.892-2-2-2h-2v-5a1 1 0 0 0 -1-1zm-5 10v4l10-1v-3z\"/></svg>
 "
 base_scale = 2.0
@@ -15,7 +16,29 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egkt5"]
+[sub_resource type="SVGTexture" id="SVGTexture_2e22h"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M2 1a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h1V3h9V2a1 1 0 0 0-1-1zm3 3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm1 2h7v7H6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_jlll4"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M1 2v2h14V2zm7 5v2h7V7zm0 5v2h7v-2zM4.976 14V9h2l-1.5-2-1.5-2-1.5 2-1.5 2h2v5z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0u8s4"]
 content_margin_left = 12.0
 content_margin_top = 9.0
 content_margin_right = 12.0
@@ -24,7 +47,7 @@ bg_color = Color(0.1878431, 0.1878431, 0.1878431, 1)
 border_color = Color(0.25196075, 0.25196075, 0.25196075, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g418r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egkt5"]
 content_margin_left = 12.0
 content_margin_top = 9.0
 content_margin_right = 12.0
@@ -37,7 +60,7 @@ border_width_bottom = 2
 border_color = Color(0.29470584, 0.29470584, 0.29470584, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac6gs"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g418r"]
 content_margin_left = 12.0
 content_margin_top = 9.0
 content_margin_right = 12.0
@@ -50,7 +73,7 @@ border_width_bottom = 2
 border_color = Color(0.33745095, 0.33745095, 0.33745095, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2e22h"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac6gs"]
 content_margin_left = 12.0
 content_margin_top = 9.0
 content_margin_right = 12.0
@@ -63,29 +86,7 @@ border_width_bottom = 2
 border_color = Color(0.25196075, 0.25196075, 0.25196075, 1)
 border_blend = true
 
-[sub_resource type="SVGTexture" id="SVGTexture_jlll4"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M2 1a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h1V3h9V2a1 1 0 0 0-1-1zm3 3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm1 2h7v7H6z\"/></svg>
-"
-base_scale = 2.0
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
-}
-
 [sub_resource type="SVGTexture" id="SVGTexture_yi5wr"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M1 2v2h14V2zm7 5v2h7V7zm0 5v2h7v-2zM4.976 14V9h2l-1.5-2-1.5-2-1.5 2-1.5 2h2v5z\"/></svg>
-"
-base_scale = 2.0
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
-}
-
-[sub_resource type="SVGTexture" id="SVGTexture_tl6xk"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M10.168 8.754a5 5 0 1 0-1.414 1.414l4.316 4.316 1.414-1.414zM6 3a3 3 0 0 1 0 6 3 3 0 0 1 0-6z\"/></svg>
 "
 base_scale = 2.0
@@ -96,7 +97,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_kapso"]
+[sub_resource type="SVGTexture" id="SVGTexture_tl6xk"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5f5f\" d=\"M8 1a7 7 0 0 0 0 14A7 7 0 0 0 8 1zM5.172 3.758 8 6.586l2.828-2.828 1.414 1.414L9.414 8l2.828 2.828-1.414 1.414L8 9.414l-2.828 2.828-1.414-1.414L6.586 8 3.758 5.172l1.414-1.414z\"/></svg>
 "
 base_scale = 2.0
@@ -107,7 +108,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_uynnj"]
+[sub_resource type="SVGTexture" id="SVGTexture_kapso"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ffdd65\" d=\"M8 1a7 7 0 0 0 0 14A7 7 0 0 0 8 1zM7 3h2v7H7zm0 8h2v2H7z\"/></svg>
 "
 base_scale = 2.0
@@ -118,7 +119,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_xfjjm"]
+[sub_resource type="SVGTexture" id="SVGTexture_uynnj"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M3 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm4 2h2v6H7zm0 8h2v2H7z\"/></svg>
 "
 base_scale = 2.0
@@ -129,7 +130,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_nip1k"]
+[sub_resource type="SVGTexture" id="SVGTexture_xfjjm"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 1a5 5 0 0 0-3.535 1.465 1 1 0 0 0 1.414 1.414 3 3 0 0 1 4.242 0 1 1 0 0 0 1.414-1.414A5 5 0 0 0 8 1zM3 4.996a1 1 0 0 0-1 1c0 .833.327 1.697.969 2.5.33.413.77.796 1.3 1.072a4 4 0 0 0-.136.432H2a1 1 0 0 0 0 2h2.131a4 4 0 0 0 .18.537c-.142.09-.279.185-.41.283-.586.44-1.108.97-1.608 1.47a1 1 0 0 0 1.414 1.413c.5-.5.978-.972 1.393-1.283.17-.127.31-.203.443-.27a4 4 0 0 0 4.914 0c.133.067.273.142.442.268.414.311.892.783 1.392 1.283a1 1 0 0 0 1.414-1.414c-.5-.5-1.022-1.03-1.607-1.469a6.236 6.236 0 0 0-.408-.28 4 4 0 0 0 .175-.54h2.133a1 1 0 0 0 0-2h-2.13a4 4 0 0 0-.135-.434 4.117 4.117 0 0 0 1.296-1.07c.643-.803.97-1.666.97-2.5a1 1 0 0 0-2 0c0 .167-.174.803-.532 1.25-.25.314-.549.55-.932.666a4 4 0 0 0-.603-.412 2 2 0 1 0-3.867 0 4 4 0 0 0-.604.408c-.383-.117-.68-.352-.931-.666-.358-.447-.532-1.083-.532-1.25a1 1 0 0 0-1-1z\"/></svg>
 "
 base_scale = 2.0
@@ -140,7 +141,9 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[node name="Logs" type="MarginContainer"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27t4o"]
+
+[node name="Logs" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -158,6 +161,111 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="SidePanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_votwl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel"]
+layout_mode = 2
+
+[node name="Row1" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Clear" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer/Row1"]
+layout_mode = 2
+theme_type_variation = &"PanelBackgroundButton"
+theme_override_icons/icon = SubResource("SVGTexture_27t4o")
+script = ExtResource("1_7g00j")
+icon_name = "Clear"
+button_type = "PanelBackgroundButton"
+
+[node name="Copy" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer/Row1"]
+layout_mode = 2
+theme_type_variation = &"PanelBackgroundButton"
+theme_override_icons/icon = SubResource("SVGTexture_2e22h")
+script = ExtResource("1_7g00j")
+icon_name = "ActionCopy"
+button_type = "PanelBackgroundButton"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Row2" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="CombineLines" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer/Row2"]
+layout_mode = 2
+theme_type_variation = &"InspectorActionbutton"
+theme_override_icons/icon = SubResource("SVGTexture_jlll4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0u8s4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_egkt5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g418r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac6gs")
+toggle_mode = true
+flat = true
+script = ExtResource("1_7g00j")
+icon_name = "CombineLines"
+
+[node name="Search" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer/Row2"]
+layout_mode = 2
+theme_type_variation = &"InspectorActionbutton"
+theme_override_icons/icon = SubResource("SVGTexture_yi5wr")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0u8s4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_egkt5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g418r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac6gs")
+toggle_mode = true
+flat = true
+script = ExtResource("1_7g00j")
+icon_name = "Search"
+
+[node name="FilterError" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"EditorLogFilterButton"
+theme_override_icons/icon = SubResource("SVGTexture_tl6xk")
+toggle_mode = true
+button_pressed = true
+text = "0"
+script = ExtResource("1_7g00j")
+icon_name = "StatusError"
+button_type = "EditorLogFilterButton"
+
+[node name="FilterWarning" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"EditorLogFilterButton"
+theme_override_icons/icon = SubResource("SVGTexture_kapso")
+toggle_mode = true
+button_pressed = true
+text = "0"
+script = ExtResource("1_7g00j")
+icon_name = "StatusWarning"
+button_type = "EditorLogFilterButton"
+
+[node name="FilterInfo" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"EditorLogFilterButton"
+theme_override_icons/icon = SubResource("SVGTexture_uynnj")
+toggle_mode = true
+button_pressed = true
+text = "10"
+script = ExtResource("1_7g00j")
+icon_name = "Popup"
+button_type = "EditorLogFilterButton"
+
+[node name="FilterDebug" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/SidePanel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"EditorLogFilterButton"
+theme_override_icons/icon = SubResource("SVGTexture_xfjjm")
+toggle_mode = true
+button_pressed = true
+text = "4"
+script = ExtResource("1_7g00j")
+icon_name = "Debug"
+button_type = "EditorLogFilterButton"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
 layout_mode = 2
@@ -166,6 +274,7 @@ size_flags_horizontal = 3
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_27t4o")
 current_tab = 0
 drag_to_rearrange_enabled = true
 script = ExtResource("1_m1wcw")
@@ -173,1538 +282,3 @@ script = ExtResource("1_m1wcw")
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Filter Messages"
-
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="Row1" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Clear" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer/Row1"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_0u8s4")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-flat = true
-script = ExtResource("1_7g00j")
-icon_name = "Clear"
-
-[node name="Copy" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer/Row1"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_jlll4")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-flat = true
-script = ExtResource("1_7g00j")
-icon_name = "ActionCopy"
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Row2" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="CombineLines" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer/Row2"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_yi5wr")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-flat = true
-script = ExtResource("1_7g00j")
-icon_name = "CombineLines"
-
-[node name="Search" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer/Row2"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_tl6xk")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-flat = true
-script = ExtResource("1_7g00j")
-icon_name = "Search"
-
-[node name="FilterError" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_kapso")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-text = "0"
-script = ExtResource("1_7g00j")
-icon_name = "StatusError"
-
-[node name="FilterWarning" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_uynnj")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-text = "0"
-script = ExtResource("1_7g00j")
-icon_name = "StatusWarning"
-
-[node name="FilterInfo" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_xfjjm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-text = "10"
-script = ExtResource("1_7g00j")
-icon_name = "Popup"
-
-[node name="FilterDebug" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_nip1k")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_egkt5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g418r")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ac6gs")
-theme_override_styles/normal = SubResource("StyleBoxFlat_2e22h")
-toggle_mode = true
-text = "4"
-script = ExtResource("1_7g00j")
-icon_name = "Debug"
-
-[node name="DictionaryTree" type="Tree" parent="VBoxContainer/HSplitContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 2
-script = ExtResource("3_27t4o")
-data = {
-"properties": Array[Dictionary]([{
-"class_name": &"",
-"hint": 0,
-"hint_string": "Node",
-"name": "Node",
-"type": 0,
-"usage": 128
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "_import_path",
-"type": 22,
-"usage": 10
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "name",
-"type": 21,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "unique_name_in_owner",
-"type": 1,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "scene_file_path",
-"type": 4,
-"usage": 0
-}, {
-"class_name": &"Node",
-"hint": 17,
-"hint_string": "Node",
-"name": "owner",
-"type": 24,
-"usage": 0
-}, {
-"class_name": &"MultiplayerAPI",
-"hint": 17,
-"hint_string": "MultiplayerAPI",
-"name": "multiplayer",
-"type": 24,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "process_",
-"name": "Process",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Pausable,When Paused,Always,Disabled",
-"name": "process_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "process_priority",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "process_physics_priority",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "process_thread",
-"name": "Thread Group",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Main Thread,Sub Thread",
-"name": "process_thread_group",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "process_thread_group_order",
-"type": 2,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 6,
-"hint_string": "Process,Physics Process",
-"name": "process_thread_messages",
-"type": 2,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "physics_interpolation_",
-"name": "Physics Interpolation",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,On,Off",
-"name": "physics_interpolation_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "auto_translate_",
-"name": "Auto Translate",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Always,Disabled",
-"name": "auto_translate_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "editor_",
-"name": "Editor Description",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 18,
-"hint_string": "",
-"name": "editor_description",
-"type": 4,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "accessibility_",
-"name": "Accessibility",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "accessibility_name",
-"type": 4,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "accessibility_description",
-"type": 4,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Off,Polite,Assertive",
-"name": "accessibility_live",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 31,
-"hint_string": "NodePath",
-"name": "accessibility_controls_nodes",
-"type": 28,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 31,
-"hint_string": "NodePath",
-"name": "accessibility_described_by_nodes",
-"type": 28,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 31,
-"hint_string": "NodePath",
-"name": "accessibility_labeled_by_nodes",
-"type": 28,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 31,
-"hint_string": "NodePath",
-"name": "accessibility_flow_to_nodes",
-"type": 28,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "CanvasItem",
-"name": "CanvasItem",
-"type": 0,
-"usage": 128
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Visibility",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "visible",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "modulate",
-"type": 20,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "self_modulate",
-"type": 20,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "show_behind_parent",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "top_level",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Disabled,Clip Only,Clip + Draw",
-"name": "clip_children",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 7,
-"hint_string": "",
-"name": "light_mask",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 7,
-"hint_string": "",
-"name": "visibility_layer",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Ordering",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-4096,4096,1",
-"name": "z_index",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "z_as_relative",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "y_sort_enabled",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "texture_",
-"name": "Texture",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Nearest,Linear,Nearest Mipmap,Linear Mipmap,Nearest Mipmap Anisotropic,Linear Mipmap Anisotropic",
-"name": "texture_filter",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Disabled,Enabled,Mirror",
-"name": "texture_repeat",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Material",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"CanvasItemMaterial,ShaderMaterial",
-"hint": 17,
-"hint_string": "CanvasItemMaterial,ShaderMaterial",
-"name": "material",
-"type": 24,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "use_parent_material",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "Control",
-"name": "Control",
-"type": 0,
-"usage": 128
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Layout",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "clip_contents",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "suffix:px",
-"name": "custom_minimum_size",
-"type": 5,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherited,Based on Application Locale,Left-to-Right,Right-to-Left,Based on System Locale",
-"name": "layout_direction",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Position,Anchors,Container,Uncontrolled",
-"name": "layout_mode",
-"type": 2,
-"usage": 268435470
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Custom:-1,Full Rect:15,Top Left:0,Top Right:1,Bottom Right:3,Bottom Left:2,Center Left:4,Center Top:5,Center Right:6,Center Bottom:7,Center:8,Left Wide:9,Top Wide:10,Right Wide:11,Bottom Wide:12,VCenter Wide:13,HCenter Wide:14",
-"name": "anchors_preset",
-"type": 2,
-"usage": 14
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "anchor_,1",
-"name": "Anchor Points",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "0,1,0.001,or_less,or_greater",
-"name": "anchor_left",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "0,1,0.001,or_less,or_greater",
-"name": "anchor_top",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "0,1,0.001,or_less,or_greater",
-"name": "anchor_right",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "0,1,0.001,or_less,or_greater",
-"name": "anchor_bottom",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "offset_,1",
-"name": "Anchor Offsets",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-4096,4096,1,or_less,or_greater,suffix:px",
-"name": "offset_left",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-4096,4096,1,or_less,or_greater,suffix:px",
-"name": "offset_top",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-4096,4096,1,or_less,or_greater,suffix:px",
-"name": "offset_right",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-4096,4096,1,or_less,or_greater,suffix:px",
-"name": "offset_bottom",
-"type": 3,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "grow_,1",
-"name": "Grow Direction",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Left,Right,Both",
-"name": "grow_horizontal",
-"type": 2,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Top,Bottom,Both",
-"name": "grow_vertical",
-"type": 2,
-"usage": 2
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Transform",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "suffix:px",
-"name": "size",
-"type": 5,
-"usage": 4
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "suffix:px",
-"name": "position",
-"type": 5,
-"usage": 4
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "suffix:px",
-"name": "global_position",
-"type": 5,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-360,360,0.1,or_less,or_greater,radians_as_degrees",
-"name": "rotation",
-"type": 3,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "rotation_degrees",
-"type": 3,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 5,
-"hint_string": "",
-"name": "scale",
-"type": 5,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "suffix:px",
-"name": "pivot_offset",
-"type": 5,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "size_flags_",
-"name": "Container Sizing",
-"type": 0,
-"usage": 256
-}, {
-"class_name": &"",
-"hint": 6,
-"hint_string": "Fill:1,Expand:2,Shrink Center:4,Shrink End:8",
-"name": "size_flags_horizontal",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 6,
-"hint_string": "Fill:1,Expand:2,Shrink Center:4,Shrink End:8",
-"name": "size_flags_vertical",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "0,20,0.01,or_greater",
-"name": "size_flags_stretch_ratio",
-"type": 3,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Localization",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "localize_numeral_system",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "auto_translate",
-"type": 1,
-"usage": 0
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "tooltip_",
-"name": "Tooltip",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 18,
-"hint_string": "",
-"name": "tooltip_text",
-"type": 4,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherit,Always,Disabled",
-"name": "tooltip_auto_translate_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "focus_",
-"name": "Focus",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_neighbor_left",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_neighbor_top",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_neighbor_right",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_neighbor_bottom",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_next",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 26,
-"hint_string": "Control",
-"name": "focus_previous",
-"type": 22,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "None,Click,All,Accessibility",
-"name": "focus_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherited,Disabled,Enabled",
-"name": "focus_behavior_recursive",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "mouse_",
-"name": "Mouse",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Stop,Pass (Propagate Up),Ignore",
-"name": "mouse_filter",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Inherited,Disabled,Enabled",
-"name": "mouse_behavior_recursive",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "mouse_force_pass_scroll_events",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Arrow,I-Beam,Pointing Hand,Cross,Wait,Busy,Drag,Can Drop,Forbidden,Vertical Resize,Horizontal Resize,Secondary Diagonal Resize,Main Diagonal Resize,Move,Vertical Split,Horizontal Split,Help",
-"name": "mouse_default_cursor_shape",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "Input",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 34,
-"hint_string": "Node",
-"name": "shortcut_context",
-"type": 24,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "theme_",
-"name": "Theme",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"Theme",
-"hint": 17,
-"hint_string": "Theme",
-"name": "theme",
-"type": 24,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 3,
-"hint_string": "",
-"name": "theme_type_variation",
-"type": 4,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "theme_override_",
-"name": "Theme Overrides",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/custom_button_font_highlight",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_hovered_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_hovered_dimmed_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_hovered_selected_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_selected_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_disabled_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/drop_position_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/font_outline_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/guide_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/relationship_line_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/parent_hl_line_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/children_hl_line_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "theme_override_colors/title_button_color",
-"type": 20,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scroll_border",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/parent_hl_line_margin",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/children_hl_line_width",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/parent_hl_line_width",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/relationship_line_width",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/draw_relationship_lines",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/draw_guides",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/outline_size",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/icon_max_width",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/button_margin",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/item_margin",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/inner_item_margin_top",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/inner_item_margin_right",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/inner_item_margin_left",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/inner_item_margin_bottom",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/v_separation",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/h_separation",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scroll_speed",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_margin_top",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_margin_right",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_margin_bottom",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_margin_left",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_v_separation",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "-16384,16384",
-"name": "theme_override_constants/scrollbar_h_separation",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"Font",
-"hint": 17,
-"hint_string": "Font",
-"name": "theme_override_fonts/font",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Font",
-"hint": 17,
-"hint_string": "Font",
-"name": "theme_override_fonts/title_button_font",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "1,256,1,or_greater,suffix:px",
-"name": "theme_override_font_sizes/font_size",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 1,
-"hint_string": "1,256,1,or_greater,suffix:px",
-"name": "theme_override_font_sizes/title_button_font_size",
-"type": 2,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/arrow_collapsed_mirrored",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/arrow_collapsed",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/arrow",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/indeterminate_disabled",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/indeterminate",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/unchecked_disabled",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/checked_disabled",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/unchecked",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/checked",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/select_arrow",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"Texture2D",
-"hint": 17,
-"hint_string": "Texture2D",
-"name": "theme_override_icons/updown",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/custom_button_hover",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/custom_button_pressed",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/title_button_normal",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/title_button_pressed",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/title_button_hover",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/panel",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/focus",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/hovered",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/hovered_dimmed",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/hovered_selected",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/hovered_selected_focus",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/selected",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/selected_focus",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/cursor",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/cursor_unfocused",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/button_hover",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/button_pressed",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"StyleBox",
-"hint": 17,
-"hint_string": "StyleBox",
-"name": "theme_override_styles/custom_button",
-"type": 24,
-"usage": 20
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "Tree",
-"name": "Tree",
-"type": 0,
-"usage": 128
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "columns",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "column_titles_visible",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "allow_reselect",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "allow_rmb_select",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "allow_search",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "hide_folding",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "enable_recursive_folding",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "hide_root",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 6,
-"hint_string": "On Item,In Between",
-"name": "drop_mode_flags",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 2,
-"hint_string": "Single,Row,Multi",
-"name": "select_mode",
-"type": 2,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "scroll_horizontal_enabled",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "scroll_vertical_enabled",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "auto_tooltip",
-"type": 1,
-"usage": 6
-}, {
-"class_name": &"Script",
-"hint": 17,
-"hint_string": "Script",
-"name": "script",
-"type": 24,
-"usage": 1048582
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "res://addons/dictionary_tree/src/DictionaryTree.gd",
-"name": "DictionaryTree.gd",
-"type": 0,
-"usage": 128
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "data",
-"type": 27,
-"usage": 4102
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "key_title",
-"type": 4,
-"usage": 4102
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "value_title",
-"type": 4,
-"usage": 4102
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "json_",
-"name": "JSON",
-"type": 0,
-"usage": 64
-}, {
-"class_name": &"",
-"hint": 18,
-"hint_string": "",
-"name": "json_string",
-"type": 4,
-"usage": 4102
-}, {
-"class_name": &"",
-"hint": 39,
-"hint_string": "Load",
-"name": "json_load",
-"type": 25,
-"usage": 4100
-}, {
-"class_name": &"",
-"hint": 39,
-"hint_string": "Rebuild",
-"name": "rebuild_button",
-"type": 25,
-"usage": 4100
-}, {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "metadata/_custom_type_script",
-"type": 4,
-"usage": 6
-}])
-}
-metadata/_custom_type_script = "uid://bxrpnuiapq4hq"

@@ -5,7 +5,7 @@ extends RichTextLabel
 
 const LogStream := preload("uid://kj2lij0iyp3h")
 
-var print_substream_label := true
+var show_substream_label := true
 
 func _init() -> void:
 	bbcode_enabled = true
@@ -13,7 +13,7 @@ func _init() -> void:
 	subscribe(O2.logger)
 
 func _log(msg: String, stream_name: String = "") -> void:
-	if print_substream_label:
+	if show_substream_label:
 		append_text(
 			"%s%s\n" % [
 				"[%s] " % stream_name if stream_name else "",

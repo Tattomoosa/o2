@@ -28,7 +28,7 @@ func subscribe(stream: LogStream) -> void:
 			handler.subscribe(stream)
 			substream_handlers[stream.name] = handler
 			handler.name = stream.name
-			handler.print_substream_label = false
+			handler.show_substream_label = false
 			add_child(handler, true)
 	main_handler.subscribe(stream)
 	for s in stream.substreams:

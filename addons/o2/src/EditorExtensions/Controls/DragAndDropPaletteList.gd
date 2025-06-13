@@ -50,6 +50,5 @@ func _create_resource_preview(resource: Resource, resource_previewer: TextureRec
 	preview.queue_edited_resource_preview(resource, self, "_on_resource_preview", resource_previewer)
 
 func _on_resource_preview(path: String, preview: Texture2D, thumbnail: Texture2D, user_data_previewer: TextureRect) -> void:
-	print("setting resource preview")
 	user_data_previewer.texture = preview 
 

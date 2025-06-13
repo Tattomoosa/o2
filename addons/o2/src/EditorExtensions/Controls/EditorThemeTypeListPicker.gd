@@ -31,3 +31,7 @@ func _populate() -> void:
 
 func _type_selected(which: int) -> void:
 	type_selected.emit(type_list[which])
+
+func _validate_property(property: Dictionary) -> void:
+	if property.name.begins_with("popup/item"):
+		property.usage = PROPERTY_USAGE_NO_INSTANCE_STATE

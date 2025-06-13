@@ -29,7 +29,7 @@ func parse_property(_object: Object, _type: Variant.Type, name: String, _hint_ty
 		return false
 	return false
 
-func _parse_begin(object: Object) -> void:
+func _parse_begin(_object: Object) -> void:
 	pass
 
 func _parse_end(object: Object) -> void:
