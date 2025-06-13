@@ -74,13 +74,19 @@ func _get_p_setting(setting: String) -> Variant:
 	var plugin_config_prefix := Plugins.get_plugin_config_category(get_script().resource_path)
 	return ProjectSettings.get_setting(plugin_config_prefix.path_join(setting))
 
+func _style_button(button: Button) -> void:
+	for state in ["normal", "pressed", "hover", "hover_pressed"]:
+		button.add_theme_stylebox_override(state, EditorInterface.get_editor_theme().get_stylebox(state, "MainMenuBar"))
+
 func _create_control() -> void:
 	button_parent = HBoxContainer.new()
+	button_parent.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	button_parent.name = "QuickSettings"
 	button_parent.add_child(VSeparator.new())
 
 	if _get_p_setting(WINDOW_MODE_MENU_ENABLE):
-		var viewport_button := H.Controls.icon_menu_button(VIEWPORT_SETTINGS_ICON, false)
+		var viewport_button := MenuButton.new()
+		_style_button(viewport_button)
 		viewport_button.tooltip_text = "Change the gameplay window mode"
 		_create_viewport_popup(viewport_button)
 		button_parent.add_child(viewport_button)
@@ -89,22 +95,24 @@ func _create_control() -> void:
 	if _get_p_setting(EXTERNAL_EDITOR_TOGGLE_ENABLE):
 		var es := EditorInterface.get_editor_settings()
 		var external_button := Button.new()
-		external_button.flat = true
+		_style_button(external_button)
 		external_button.tooltip_text = "Enable/disable external code editing"
 		external_button.pressed.connect(
 			func() -> void:
-				es.set(
-					"text_editor/external/use_external_editor",
-					!es.get("text_editor/external/use_external_editor")
-				)
+				es.set("text_editor/external/use_external_editor", !es.get("text_editor/external/use_external_editor"))
 		)
+		external_button.flat = true
+		external_button.focus_mode = Control.FOCUS_NONE
 		es.settings_changed.connect(_update_external_editor_setting_button.bind(external_button))
 		button_parent.add_child(external_button)
 		external_button.name = "QuickSettingsExternalEditorButton"
 		_update_external_editor_setting_button(external_button)
 
 	if _get_p_setting(PLUGIN_MENU_ENABLE):
-		var plugin_button := H.Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
+		# var plugin_button := H.Controls.icon_menu_button(PLUGIN_SETTINGS_ICON, false)
+		var plugin_button := MenuButton.new()
+		plugin_button.icon = PLUGIN_SETTINGS_ICON
+		_style_button(plugin_button)
 		if _get_p_setting(PLUGIN_MENU_SHOW_TEXT):
 			plugin_button.text = "Plugins"
 		plugin_button.tooltip_text = "Enable/disable EditorPlugins"

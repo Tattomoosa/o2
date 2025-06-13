@@ -16,10 +16,6 @@ config/features=PackedStringArray("4.5")
 
 gdscript/warnings/exclude_addons=false
 
-[display]
-
-window/size/mode=4
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/quick_settings/plugin.cfg")
