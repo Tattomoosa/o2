@@ -8,6 +8,13 @@ const VIEWPORT_SETTINGS_ICON := preload("uid://dgmit4iptr022")
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
 const INTERNAL_EDITOR_ICON := preload("uid://da5t0jkc41bal")
 const EXTERNAL_EDITOR_ICON := preload("uid://q1hy0uael7v6")
+const WINDOW_MODE_ICONS := [
+	preload("uid://fn0eei6p3yjp"),
+	preload("uid://gx6n7a22ff08"),
+	preload("uid://c0n8je0ay0xrr"),
+	preload("uid://dgu6tcm1gipit"),
+	preload("uid://dowhguqwdugdx")
+]
 
 const SHOW_WINDOW_BUTTON_SETTING := "toolbar/window_mode_menu/enable"
 const SHOW_WINDOW_BUTTON_TEXT_SETTING := "toolbar/window_mode_menu/show_button_text"
@@ -16,6 +23,7 @@ const SHOW_PLUGIN_BUTTON_TEXT_SETTING := "toolbar/plugin_menu/show_button_text"
 const PLUGIN_MENU_DISABLE_QUICK_SETTING := "toolbar/plugin_menu/hide_quick_settings_from_menu"
 const SHOW_EDIT_IN_EXTERNAL_EDITOR_SETTING := "toolbar/external_editor/enable"
 const HIDE_RENDERING_BUTTON := "toolbar/renderer/hide_renderer_button"
+
 
 # const EDIT_IN_EXTERNAL_EDITOR_TOGGLE := "text_editor/external/use_external_editor"
 
@@ -29,7 +37,7 @@ func _enable_plugin() -> void:
 
 func _enter_tree() -> void:
 	_get_or_add_setting(SHOW_WINDOW_BUTTON_SETTING, true)
-	_get_or_add_setting(SHOW_WINDOW_BUTTON_TEXT_SETTING, true)
+	_get_or_add_setting(SHOW_WINDOW_BUTTON_TEXT_SETTING, false)
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_SETTING, true)
 	_get_or_add_setting(SHOW_PLUGIN_BUTTON_TEXT_SETTING, false)
 	_get_or_add_setting(PLUGIN_MENU_DISABLE_QUICK_SETTING, true)
@@ -89,16 +97,12 @@ func _create_control() -> void:
 		var on : bool = es.get("text_editor/external/use_external_editor")
 		var external_button := Button.new()
 		external_button.theme_type_variation = "EditorLogFilterButton"
-		# external_button.add_theme_color_override(
-		# 	"icon_pressed_color",
-		# )
 		external_button.flat = true
 		external_button.toggle_mode = true
 		external_button.tooltip_text = "Enable/disable external code editing"
 		external_button.icon = EXTERNAL_EDITOR_ICON if on else INTERNAL_EDITOR_ICON
 		external_button.toggled.connect(
 			func(value: bool) -> void:
-				print(value)
 				es.set("text_editor/external/use_external_editor", value)
 		)
 		es.settings_changed.connect(_update_external_editor_setting.bind(external_button))
@@ -138,8 +142,14 @@ func _create_viewport_popup(viewport_button: MenuButton) -> void:
 		popup.id_pressed,
 		func(index):
 			ProjectSettings.set_setting(setting_string, index)
-			viewport_button.text = names[index]
 			ProjectSettings.save()
+			# viewport_button.text = names[index]
+	)
+	ProjectSettings.settings_changed.connect(
+		func():
+			var window_mode : int = ProjectSettings.get_setting(setting_string)
+			viewport_button.text = names[window_mode]
+			viewport_button.icon = WINDOW_MODE_ICONS[window_mode]
 	)
 
 func _create_plugin_popup(popup: PopupMenu) -> void:

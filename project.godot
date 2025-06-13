@@ -23,3 +23,7 @@ enabled=PackedStringArray("res://addons/plugin_devtools/plugin.cfg", "res://addo
 [o2]
 
 tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
+
+[quick_settings]
+
+toolbar/window_mode_menu/show_button_text=false

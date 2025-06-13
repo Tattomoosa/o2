@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dowhguqwdugdx"
-path="res://.godot/imported/ExclusiveFullscreen.svg-d8e6a675c89ff574d7e7523f8b9fcd15.ctex"
+uid="uid://fn0eei6p3yjp"
+path="res://.godot/imported/Windowed.svg-7672136cfc2b609f6e2963c5c8f3fbfd.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/quick_settings/assets/icons/ExclusiveFullscreen.svg"
-dest_files=["res://.godot/imported/ExclusiveFullscreen.svg-d8e6a675c89ff574d7e7523f8b9fcd15.ctex"]
+source_file="res://addons/quick_settings/assets/icons/Windowed.svg"
+dest_files=["res://.godot/imported/Windowed.svg-7672136cfc2b609f6e2963c5c8f3fbfd.ctex"]
 
 [params]
 

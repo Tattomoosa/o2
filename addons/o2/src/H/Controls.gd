@@ -60,14 +60,14 @@ static func icon_menu_button(icon: Texture2D, flat := false) -> MenuButton:
 	button.flat = flat
 	return button
 
-static func icon_toggle_button(pressed: bool, icon_on: Texture2D, icon_off: Texture2D, flat := false) -> Button:
-	var button := icon_button(icon_off, flat)
-	button.toggle_mode = true
-	button.button_pressed = pressed
-	var on_toggle := func(v: bool) -> void: button.icon = icon_on if v else icon_off
-	on_toggle.call(pressed)
-	button.toggled.connect(on_toggle)
-	return button
+# static func icon_toggle_button(pressed: bool, icon_on: Texture2D, icon_off: Texture2D, flat := false) -> Button:
+# 	var button := icon_button(icon_off, flat)
+# 	button.toggle_mode = true
+# 	button.button_pressed = pressed
+# 	var on_toggle := func(v: bool) -> void: button.icon = icon_on if v else icon_off
+# 	on_toggle.call(pressed)
+# 	button.toggled.connect(on_toggle)
+# 	return button
 
 static func create_vbox(
 	separation: int = -1,
