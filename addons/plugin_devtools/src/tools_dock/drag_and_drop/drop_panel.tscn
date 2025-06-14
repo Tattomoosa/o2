@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://chjj7l2etwi1d"]
 
-[ext_resource type="Script" uid="uid://c2tsu71qqorwo" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop_tools/DropPanel.gd" id="1_tvggi"]
+[ext_resource type="Script" uid="uid://c2tsu71qqorwo" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop/DropPanel.gd" id="1_tvggi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikugc"]
 bg_color = Color(1, 1, 1, 0.07450981)

@@ -1,12 +1,20 @@
-extends HBoxContainer
+extends PanelContainer
+
+var hbox := HBoxContainer.new()
 
 func _init() -> void:
 	size_flags_vertical = SIZE_SHRINK_CENTER
 	name = "Quick Settings"
-	add_child(VSeparator.new(), false, INTERNAL_MODE_FRONT)
-	add_child(VSeparator.new(), false, INTERNAL_MODE_BACK)
+	add_child(hbox)
 
 func _ready() -> void:
+	add_theme_stylebox_override(
+		"panel",
+		EditorInterface.get_inspector().get_theme_stylebox(
+			"PanelForeground",
+			&"EditorStyles"
+		)
+	)
 	for child in _get_descendents():
 		if child is Button:
 			_style_button(child)
@@ -22,10 +30,13 @@ func _style_panel(panel: PanelContainer) -> void:
 	panel.add_theme_stylebox_override(
 		"panel",
 		EditorInterface.get_inspector().get_theme_stylebox(
-			"PanelForeground",
+			"Background",
 			&"EditorStyles"
 		)
 	)
+
+func add(c : Control) -> void:
+	hbox.add_child(c)
 
 func _get_descendents() -> Array[Node]:
 	var arr : Array[Node]

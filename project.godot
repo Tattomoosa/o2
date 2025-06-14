@@ -8,13 +8,13 @@
 
 config_version=5
 
+[O₂]
+
+tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
+
 [application]
 
 config/features=PackedStringArray("4.5")
-
-[autoload]
-
-o2="*res://addons/o2/src/O2.gd"
 
 [debug]
 
@@ -22,24 +22,49 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdterm/plugin.cfg", "res://addons/inspector_tabs/plugin.cfg", "res://addons/load_control_into_dock/plugin.cfg", "res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/namespacer/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
-[o2]
+[gui]
 
-tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
-
-[quick_settings]
-
-settings/plugin_toggle_buttons/toggle_plugin_list={
+theme/plugin_toggle_buttons/toggle_plugin_list={
+"res://addons/dialogue_manager/plugin.cfg": false,
+"res://addons/dock_slot_expander/plugin.cfg": false,
 "res://addons/gdterm/plugin.cfg": false,
+"res://addons/hide_stuff/plugin.cfg": false,
+"res://addons/inspector_tabs/plugin.cfg": false,
+"res://addons/kanban_tasks/plugin.cfg": false,
 "res://addons/load_control_into_dock/plugin.cfg": false,
 "res://addons/o2/addons/metadata_scripts/plugin.cfg": false,
 "res://addons/o2/addons/namespacer/plugin.cfg": false,
 "res://addons/o2/addons/variant_resources/plugin.cfg": false,
 "res://addons/o2/plugin.cfg": false,
-"res://addons/plugin_devtools/plugin.cfg": true,
+"res://addons/plugin_devtools/plugin.cfg": false,
 "res://addons/quick_settings/plugin.cfg": false,
+"res://addons/super_spector/plugin.cfg": false,
+"res://addons/zylann.editor_debugger/plugin.cfg": true
+}
+
+[quick_settings]
+
+settings/window_mode_menu/hide_fullscreen=true
+settings/plugins_menu/hide_nested_plugins=true
+settings/plugin_toggle_buttons/toggle_plugin_list={
+"res://addons/dialogue_manager/plugin.cfg": false,
+"res://addons/dock_slot_expander/plugin.cfg": false,
+"res://addons/gdterm/plugin.cfg": false,
+"res://addons/hide_stuff/plugin.cfg": false,
+"res://addons/inspector_tabs/plugin.cfg": false,
+"res://addons/kanban_tasks/plugin.cfg": false,
+"res://addons/load_control_into_dock/plugin.cfg": false,
+"res://addons/o2/addons/metadata_scripts/plugin.cfg": false,
+"res://addons/o2/addons/namespacer/plugin.cfg": false,
+"res://addons/o2/addons/variant_resources/plugin.cfg": false,
+"res://addons/o2/plugin.cfg": false,
+"res://addons/plugin_devtools/plugin.cfg": false,
+"res://addons/plugin_devtools/src/load_control_into_dock/plugin.cfg": false,
+"res://addons/quick_settings/plugin.cfg": false,
+"res://addons/super_spector/plugin.cfg": false,
 "res://addons/zylann.editor_debugger/plugin.cfg": false
 }
-settings/window_mode_menu/hide_fullscreen=true
-settings/plugins_menu/hide_nested_plugins=false
+toolbar/window_mode_menu_enabled=false
+toolbar/external_editor_toggle_enabled=false

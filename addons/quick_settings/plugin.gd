@@ -15,7 +15,7 @@ const QuickSettings := preload("uid://cec8h75dbk681")
 
 # default plugins
 const WindowModeMenu := preload("uid://daxjeylx3yryg")
-const ExternalEditorToggle := preload("uid://286bb2mh7ial")
+const ExternalEditorToggle := preload("uid://cq6ukaydjf1y")
 const PluginMenu := preload("uid://cogh04pjlu874")
 const PluginToggleButtons := preload("uid://c0l3gsehyq221")
 
@@ -47,7 +47,7 @@ func _startup() -> void:
 		var toolbar_setting := _get_toolbar_setting(plugin_name)
 		if _get_or_add_setting(toolbar_setting + "_" + ENABLED, true):
 			var plugin : Node = plugin_script.new()
-			quick_settings_toolbar.add_child(plugin)
+			quick_settings_toolbar.add(plugin)
 			var plugin_settings := _get_items_settings(plugin_name)
 			# register plugin requested settings
 			if "settings" in plugin:
@@ -72,7 +72,6 @@ func _get_toolbar_setting(script_name: String) -> String:
 func _get_items_settings(script_name: String) -> String:
 	return SETTINGS_PREFIX.path_join(SETTINGS).path_join(script_name)
 
-# TODO allow property info
 func _get_or_add_setting(
 	setting: String,
 	default_value: Variant,

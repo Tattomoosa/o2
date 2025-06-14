@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqb7yk1c07dt5"]
 
 [ext_resource type="Script" uid="uid://cgmkhgex28eyb" path="res://addons/plugin_devtools/src/controls/DragAndDropPaletteList.gd" id="1_4gy73"]
-[ext_resource type="Script" uid="uid://b2npoi6yw6qaa" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop_tools/DropPrinter.gd" id="2_jlrab"]
-[ext_resource type="PackedScene" uid="uid://chjj7l2etwi1d" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop_tools/drop_panel.tscn" id="2_xy0qc"]
+[ext_resource type="Script" uid="uid://b2npoi6yw6qaa" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop/DropPrinter.gd" id="2_jlrab"]
+[ext_resource type="PackedScene" uid="uid://chjj7l2etwi1d" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop/drop_panel.tscn" id="2_xy0qc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw7ms"]
 content_margin_left = 6.0
@@ -24,6 +24,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 0
 split_offset = -300
+metadata/_edit_lock_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

@@ -13,11 +13,6 @@ const SHOW_MOUSE_COMMAND := "show_mouse"
 
 const EditorSceneRootChangeNotifier := preload("uid://q222j6y6bix6")
 
-const PLUGINS : PackedStringArray = [
-	"metadata_scripts",
-	"variant_resources",
-]
-
 var scene_change_notifier : EditorSceneRootChangeNotifier
 var subplugin_roots : PackedStringArray
 var inspector_context_menu : InspectorContextMenu

@@ -29,6 +29,10 @@ static func get_subplugin_root_dir(plugin: EditorPlugin, subplugin_name: String)
 	var subplugin_root_dir := path.path_join("addons")
 	return subplugin_root_dir.path_join(subplugin_name)
 
+static func get_plugin_exists(plugin_path: String) -> bool:
+	var config_path := get_plugin_config_file_path(plugin_path)
+	return FileAccess.file_exists(config_path)
+
 # static func add_missing_subplugin_enable_settings(plugin: EditorPlugin) -> void:
 # 	for subplugin_name in get_subplugin_names(plugin):
 # 		var setting := get_subplugin_enabled_setting_name(plugin, subplugin_name)
@@ -89,7 +93,7 @@ static func get_plugin_display_name(plugin_path: String) -> String:
 	if config_file.has_section_key("plugin", "name"):
 		return config_file.get_value("plugin", "name")
 	# try to handle the bad case anyway
-	return H.Strings.to_title_cased_spaced(plugin_path.get_file())
+	return plugin_path.get_file().capitalize()
 
 static func get_plugin_icon(plugin_path: String) -> Texture2D:
 	var config_file := get_plugin_config_file(plugin_path)
@@ -98,7 +102,6 @@ static func get_plugin_icon(plugin_path: String) -> Texture2D:
 		return load(icon_path)
 	# Otherwise, have to guess	
 	var img_files := Files.get_all_files(plugin_path, ["svg", "png", "tga", "webp"])
-	print(img_files)
 	var plugin_name := plugin_path.get_file()
 	for file_path in img_files:
 		var filename := Files.get_file_without_extension(file_path) 

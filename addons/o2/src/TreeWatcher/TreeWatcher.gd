@@ -5,7 +5,7 @@ const Settings := H.Settings
 const Nodes := H.Nodes
 
 const TreeWatcherPlugin := preload("uid://jdhkmwip1txo")
-const TREE_WATCHER_PLUGINS_SETTING := "o2/tree_watcher/tree_watcher_plugins"
+const TREE_WATCHER_PLUGINS_SETTING := "O₂/tree_watcher/tree_watcher_plugins"
 
 var plugins : Array[TreeWatcherPlugin] = []
 var l := O2.logger.add_substream(

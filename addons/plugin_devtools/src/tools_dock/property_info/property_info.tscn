@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://dh6b4o5wvviu0"]
 
-[ext_resource type="Script" uid="uid://bs0o7nivlx6bc" path="res://addons/plugin_devtools/src/tools_dock/PropertyListTree.gd" id="1_k7j3a"]
+[ext_resource type="Script" uid="uid://bs0o7nivlx6bc" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyListTree.gd" id="1_k7j3a"]
 [ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/plugin_devtools/src/controls/EditorIconButton.gd" id="2_v6nks"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="3_afeo8"]
-[ext_resource type="Script" uid="uid://cgayqbdimevbw" path="res://addons/plugin_devtools/src/tools_dock/PropertyInfoPrinter.gd" id="4_bgk1f"]
+[ext_resource type="Script" uid="uid://cgayqbdimevbw" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyInfoPrinter.gd" id="4_bgk1f"]
 
 [sub_resource type="SVGTexture" id="SVGTexture_16pao"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#fff\" d=\"M8 1a7 7 0 0 0 0 14A7 7 0 0 0 8 1zM7 4h2v2H7zm0 3h2v5H7z\"/></svg>

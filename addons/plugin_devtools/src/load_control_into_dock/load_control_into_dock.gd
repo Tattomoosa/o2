@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-const LoadControlIntoDockPlugin := preload("load_control_into_dock.gd")
+# const LoadControlIntoDockPlugin := preload("load_control_into_dock.gd")
 const IconGrabber := preload("uid://bqm5oyuqkkn2r")
 const PLUGIN_ICON := preload("uid://d173jdavljnfr")
 
@@ -77,7 +77,7 @@ class LoadPackedSceneIntoDockContextMenuPlugin extends LoadControlIntoDockContex
 
 # Loads a Control from a scene into a dock
 class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
-	var _editor_plugin : LoadControlIntoDockPlugin
+	var _editor_plugin : EditorPlugin
 
 	func _init(editor_plugin: EditorPlugin) -> void:
 		_editor_plugin = editor_plugin

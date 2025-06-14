@@ -13,7 +13,7 @@ extends LineEdit
 
 func _ready() -> void:
 	if text.is_empty() or text not in options:
-		text = options[0]
+		text = options[0] if !options.is_empty() else ""
 	popup.hide()
 	focus_entered.connect(_focused)
 	text_changed.connect(_focused.unbind(1))
