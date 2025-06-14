@@ -12,6 +12,7 @@ Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
 [resource]
+resource_local_to_scene = true
 resource_name = "Transparent Background"
 content_margin_left = 10.0
 content_margin_top = 10.0

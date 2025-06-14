@@ -4,8 +4,6 @@ extends Container
 @export var item_size := 100.0
 signal drop_data_button_pressed(data: Variant)
 
-var l := O2.logger.add_substream(O2.logger.LogLevel.DEBUG, "drag_palette")
-
 func _ready() -> void:
 	pass
 
@@ -45,7 +43,8 @@ func add_item(drop_data: Variant) -> void:
 
 		add_child(item)
 	else:
-		l.warn("Dunno what to do lol")
+		push_error("Can't handle dropped data! %s" % drop_data)
+
 
 func _create_resource_preview(resource: Resource, resource_previewer: Button) -> void:
 	var preview := EditorInterface.get_resource_previewer()

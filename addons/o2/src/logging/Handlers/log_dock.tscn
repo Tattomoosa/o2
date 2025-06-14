@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://nya34ciqb5ms"]
 
-[ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/o2/src/EditorExtensions/Controls/EditorIconButton.gd" id="1_7g00j"]
+[ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/plugin_devtools/src/controls/EditorIconButton.gd" id="1_7g00j"]
 [ext_resource type="Script" uid="uid://b6ugv1l23k5o6" path="res://addons/o2/src/Logging/Handlers/LogToMultiStream.gd" id="1_m1wcw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_votwl"]

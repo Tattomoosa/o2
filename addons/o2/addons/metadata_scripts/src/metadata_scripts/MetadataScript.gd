@@ -61,10 +61,6 @@ func attach_to(p_node : Node) -> void:
 
 func detach() -> void:
 	if !_node: return
-	# for s in _node.get_signal_list():
-	# 	print(s)
-	# 	if s.callable.get_object() == self:
-	# 		s.signal.disconnect(s.callable)
 	if node.tree_entered.is_connected(_enter_tree):
 		node.tree_entered.disconnect(_enter_tree)
 	if node.tree_exiting.is_connected(_exit_tree):

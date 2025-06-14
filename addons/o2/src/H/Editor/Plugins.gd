@@ -3,6 +3,8 @@
 const Files := H.Files
 const Strings := H.Strings
 
+const FILE_EXTENSIONS := ["gd", "cfg", "cs"]
+
 # TODO get_all_plugins or something, recursive version of this
 # that returns a dictionary or something?
 static func get_subplugin_roots(plugin: EditorPlugin) -> PackedStringArray:
@@ -71,7 +73,7 @@ static func get_all_plugin_paths() -> PackedStringArray:
 	return plugin_dirs
 
 static func get_plugin_enable_string_from_path(path: String) -> String:
-	if path.get_extension() in ["gd", "cfg"]:
+	if path.get_extension() in FILE_EXTENSIONS:
 		path = path.get_base_dir()
 	return path.replace("res://addons/", "")
 
@@ -80,7 +82,7 @@ static func is_enabled(plugin_path: String) -> bool:
 	return EditorInterface.is_plugin_enabled(enable_string)
 
 static func get_plugin_display_name(plugin_path: String) -> String:
-	if plugin_path.get_extension():
+	if plugin_path.get_extension() in FILE_EXTENSIONS:
 		plugin_path = plugin_path.get_base_dir()
 	var config_file := get_plugin_config_file(plugin_path)
 	# hm I think they have to have a name, actually
@@ -96,6 +98,7 @@ static func get_plugin_icon(plugin_path: String) -> Texture2D:
 		return load(icon_path)
 	# Otherwise, have to guess	
 	var img_files := Files.get_all_files(plugin_path, ["svg", "png", "tga", "webp"])
+	print(img_files)
 	var plugin_name := plugin_path.get_file()
 	for file_path in img_files:
 		var filename := Files.get_file_without_extension(file_path) 
@@ -142,6 +145,8 @@ static func get_plugin_script(plugin_path: String) -> Script:
 	var script : GDScript = load(plugin_path.path_join(script_name))
 	return script
 
+# Godot does not signal when a plugin is enabled or disabled...
+# So this does.
 class Watcher extends RefCounted:
 	signal plugin_entered(plugin_path: String)
 	signal plugin_exiting(plugin_path: String)

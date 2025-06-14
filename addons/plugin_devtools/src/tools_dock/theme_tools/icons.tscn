@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://o0a54e1hegug"]
+[gd_scene load_steps=6 format=3 uid="uid://o0a54e1hegug"]
 
 [ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeTypeListPicker.gd" id="1_bxo5q"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="2_6hgjt"]
 [ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeIconFlowContainer.gd" id="2_p7fwl"]
+[ext_resource type="Script" uid="uid://bepnqbb46wygl" path="res://addons/plugin_devtools/src/controls/EditorStylesPanelContainer.gd" id="3_6hgjt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kgr5"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
+corner_detail = 1
+anti_aliasing = false
 
 [node name="Icons" type="VBoxContainer"]
 anchors_preset = 15
@@ -127,6 +137,9 @@ value = 32.0
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5kgr5")
+script = ExtResource("3_6hgjt")
+panel_style = "Background"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
 layout_mode = 2

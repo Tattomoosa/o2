@@ -12,13 +12,17 @@ config_version=5
 
 config/features=PackedStringArray("4.5")
 
+[autoload]
+
+o2="*res://addons/o2/src/O2.gd"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdterm/plugin.cfg", "res://addons/inspector_tabs/plugin.cfg", "res://addons/load_control_into_dock/plugin.cfg", "res://addons/o2/addons/metadata_scripts/plugin.cfg", "res://addons/o2/addons/namespacer/plugin.cfg", "res://addons/o2/addons/variant_resources/plugin.cfg", "res://addons/o2/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [o2]
 
@@ -27,6 +31,7 @@ tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
 [quick_settings]
 
 settings/plugin_toggle_buttons/toggle_plugin_list={
+"res://addons/gdterm/plugin.cfg": false,
 "res://addons/load_control_into_dock/plugin.cfg": false,
 "res://addons/o2/addons/metadata_scripts/plugin.cfg": false,
 "res://addons/o2/addons/namespacer/plugin.cfg": false,
@@ -36,3 +41,5 @@ settings/plugin_toggle_buttons/toggle_plugin_list={
 "res://addons/quick_settings/plugin.cfg": false,
 "res://addons/zylann.editor_debugger/plugin.cfg": false
 }
+settings/window_mode_menu/hide_fullscreen=true
+settings/plugins_menu/hide_nested_plugins=false
