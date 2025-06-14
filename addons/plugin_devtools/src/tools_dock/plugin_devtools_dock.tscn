@@ -1,9 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bagj2x3qnhgkh"]
+[gd_scene load_steps=7 format=3 uid="uid://bagj2x3qnhgkh"]
 
-[ext_resource type="PackedScene" uid="uid://o0a54e1hegug" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/icons.tscn" id="1_elnbm"]
-[ext_resource type="PackedScene" uid="uid://c46faudajs5p6" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/styles.tscn" id="2_jf543"]
+[ext_resource type="Script" uid="uid://cj0mikwtggy50" path="res://addons/plugin_devtools/src/controls/TabDataFromMetadata.gd" id="1_16pao"]
+[ext_resource type="PackedScene" uid="uid://cowdqp6wx8dl0" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/theme_tool.tscn" id="2_wat77"]
+[ext_resource type="PackedScene" uid="uid://dh6b4o5wvviu0" path="res://addons/plugin_devtools/src/tools_dock/property_info_tools/property_info.tscn" id="3_ib2jp"]
+[ext_resource type="PackedScene" uid="uid://d0sxhc6l66egc" path="res://addons/zylann.editor_debugger/dock.tscn" id="5_elnbm"]
+[ext_resource type="PackedScene" uid="uid://dqb7yk1c07dt5" path="res://addons/plugin_devtools/src/tools_dock/drag_and_drop_tools/drag_&_drop_palette.tscn" id="7_wat77"]
 
-[node name="Plugin DevTools" type="MarginContainer"]
+[sub_resource type="SVGTexture" id="SVGTexture_r8oys"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><g fill=\"#def\"><circle cx=\"4\" cy=\"3\" r=\"2\"/><circle cx=\"4\" cy=\"8\" r=\"2\"/><circle cx=\"4\" cy=\"13\" r=\"2\"/><circle cx=\"12\" cy=\"3\" r=\"2\"/><circle cx=\"12\" cy=\"8\" r=\"2\"/><circle cx=\"12\" cy=\"13\" r=\"2\"/></g></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[node name="Plugin Dev Tools" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,18 +27,29 @@ metadata/_edit_lock_ = true
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
-current_tab = 0
+current_tab = 3
 drag_to_rearrange_enabled = true
+tabs_rearrange_group = 0
+script = ExtResource("1_16pao")
 metadata/_edit_lock_ = true
 
-[node name="Theme" type="TabContainer" parent="TabContainer"]
-layout_mode = 2
-current_tab = 1
-metadata/_tab_index = 0
-
-[node name="Icons" parent="TabContainer/Theme" instance=ExtResource("1_elnbm")]
+[node name="Theme" parent="TabContainer" instance=ExtResource("2_wat77")]
 visible = false
 layout_mode = 2
 
-[node name="Styles" parent="TabContainer/Theme" instance=ExtResource("2_jf543")]
+[node name="PropertyInfo" parent="TabContainer" instance=ExtResource("3_ib2jp")]
+visible = false
+layout_mode = 2
+
+[node name="Drag & Drop Palette" parent="TabContainer" instance=ExtResource("7_wat77")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+metadata/icon = SubResource("SVGTexture_r8oys")
+
+[node name="Editor Debugger" type="PanelContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="EditorDebugger" parent="TabContainer/Editor Debugger" instance=ExtResource("5_elnbm")]
 layout_mode = 2

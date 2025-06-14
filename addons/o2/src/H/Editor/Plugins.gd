@@ -3,8 +3,8 @@
 const Files := H.Files
 const Strings := H.Strings
 
-# TODO should support nested folders like godot does
-# eg o2/addons/foo/bar/plugin.cfg
+# TODO get_all_plugins or something, recursive version of this
+# that returns a dictionary or something?
 static func get_subplugin_roots(plugin: EditorPlugin) -> PackedStringArray:
 	var path := get_plugin_root_dir(plugin)
 	var subplugin_root_dir := path.path_join("addons")
@@ -71,11 +71,17 @@ static func get_all_plugin_paths() -> PackedStringArray:
 	return plugin_dirs
 
 static func get_plugin_enable_string_from_path(path: String) -> String:
-	if path.ends_with(".gd"):
+	if path.get_extension() in ["gd", "cfg"]:
 		path = path.get_base_dir()
 	return path.replace("res://addons/", "")
 
+static func is_enabled(plugin_path: String) -> bool:
+	var enable_string := get_plugin_enable_string_from_path(plugin_path)
+	return EditorInterface.is_plugin_enabled(enable_string)
+
 static func get_plugin_display_name(plugin_path: String) -> String:
+	if plugin_path.get_extension():
+		plugin_path = plugin_path.get_base_dir()
 	var config_file := get_plugin_config_file(plugin_path)
 	# hm I think they have to have a name, actually
 	if config_file.has_section_key("plugin", "name"):
@@ -124,8 +130,52 @@ static func get_plugin_config_file(plugin_path: String) -> ConfigFile:
 	config_file.load(plugin_path.path_join("plugin.cfg"))
 	return config_file
 
+static func get_plugin_config_file_path(plugin_path: String) -> String:
+	return plugin_path.path_join("plugin.cfg")
+
+static func get_plugin_path_from_config_path(config_path: String) -> String:
+	return config_path.get_base_dir()
+
 static func get_plugin_script(plugin_path: String) -> Script:
 	var config_file := get_plugin_config_file(plugin_path)
 	var script_name : String = config_file.get_value("plugin", "script", "")
 	var script : GDScript = load(plugin_path.path_join(script_name))
 	return script
+
+class Watcher extends RefCounted:
+	signal plugin_entered(plugin_path: String)
+	signal plugin_exiting(plugin_path: String)
+
+	func _init() -> void:
+		var root := EditorInterface.get_base_control().get_window().get_child(0)
+		root.child_entered_tree.connect(_on_root_child_entered)
+		root.child_exiting_tree.connect(_on_root_child_exiting)
+
+	# no need to disconnect, already cleaned up by predelete time!
+
+	func subscribe(enter_callback: Callable, exit_callback: Callable) -> void:
+		if !plugin_entered.is_connected(enter_callback):
+			plugin_entered.connect(enter_callback)
+		if !plugin_exiting.is_connected(exit_callback):
+			plugin_exiting.connect(exit_callback)
+
+	func unsubscribe(enter_callback: Callable, exit_callback: Callable) -> void:
+		if plugin_entered.is_connected(enter_callback):
+			plugin_entered.disconnect(enter_callback)
+		if plugin_exiting.is_connected(exit_callback):
+			plugin_exiting.disconnect(exit_callback)
+	
+	func _on_root_child_entered(node: Node) -> void:
+		var script : Script = node.get_script()
+		if script:
+			var plugin_path := script.resource_path.get_base_dir()
+			plugin_entered.emit(plugin_path)
+	
+	func _on_root_child_exiting(node: Node) -> void:
+		var script : Script = node.get_script()
+		var tree := node.get_tree()
+		await node.tree_exited
+		await tree.process_frame
+		if script:
+			var plugin_path := script.resource_path.get_base_dir()
+			plugin_exiting.emit(plugin_path)

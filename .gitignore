@@ -8,3 +8,4 @@ export_credentials.cfg
 addons/inspector_tabs
 addons/signal_lens
 addons/gdterm
+addons/zylann.editor_debugger

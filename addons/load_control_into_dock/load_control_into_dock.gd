@@ -75,7 +75,6 @@ class LoadPackedSceneIntoDockContextMenuPlugin extends LoadControlIntoDockContex
 		_editor_plugin.add_control_to_dock(dock_index, editor_control)
 		_editor_plugin.set_dock_tab_icon(editor_control, _get_icon(control))
 
-
 # Loads a Control from a scene into a dock
 class LoadControlIntoDockContextMenuPlugin extends EditorContextMenuPlugin:
 	var _editor_plugin : LoadControlIntoDockPlugin

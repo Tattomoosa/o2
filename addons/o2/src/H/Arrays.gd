@@ -30,6 +30,19 @@ static func get_first_dictionary_matching_property(array: Array, key: String, va
 	if dict == null: return {}
 	return dict
 
+static func intersection(a: Variant, b: Variant) -> Array:
+	if !is_array(a):
+		if is_array(b):
+			push_warning(a, " is not an array")
+			return b
+	if !is_array(b):
+		return []
+	var both := []
+	for item in a:
+		if item in b:
+			both.push_back(item)
+	return both
+
 static func is_array(array: Variant) -> bool:
 	if array is Array\
 	or array is PackedByteArray\

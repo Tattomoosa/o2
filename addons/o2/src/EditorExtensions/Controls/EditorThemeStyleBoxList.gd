@@ -1,7 +1,9 @@
 @tool
 extends Container
 
-signal mouse_hovered_button(icon_name: String)
+const COPY_TEXT := 'EditorInterface.get_inspector().get_theme_stylebox("%s", "%s")'
+
+signal mouse_hovered_button(item_name: String)
 signal button_pressed
 
 @export var item_size : float = 32.0
@@ -36,13 +38,12 @@ func _populate() -> void:
 				else:
 					hover_style.bg_color = Color.TRANSPARENT
 				btn.add_theme_stylebox_override("hover", hover_style)
-		btn.name = item_name
 		btn.custom_minimum_size.y = item_size
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.text = item_name
 		btn.mouse_entered.connect(mouse_hovered_button.emit.bind(item_name))
 		btn.mouse_exited.connect(mouse_hovered_button.emit.bind(""))
-		btn.pressed.connect(DisplayServer.clipboard_set.bind(item_name))
+		btn.pressed.connect(DisplayServer.clipboard_set.bind(COPY_TEXT % [item_name, theme_type]))
 		btn.pressed.connect(button_pressed.emit)
 		btn.set_drag_forwarding(
 			_get_item_drag_data.bindv([btn, style]),
@@ -50,6 +51,7 @@ func _populate() -> void:
 			Callable()
 		)
 		add_child(btn)
+		btn.name = item_name
 		loaded += 1
 		if loaded >= load_count:
 			await get_tree().process_frame

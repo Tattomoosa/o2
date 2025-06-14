@@ -18,7 +18,7 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [o2]
 
@@ -26,5 +26,13 @@ tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
 
 [quick_settings]
 
-toolbar/plugins_menu/settings/hide_nested_plugins=false
-toolbar/window_mode_menu/settings/hide_fullscreen=true
+settings/plugin_toggle_buttons/toggle_plugin_list={
+"res://addons/load_control_into_dock/plugin.cfg": false,
+"res://addons/o2/addons/metadata_scripts/plugin.cfg": false,
+"res://addons/o2/addons/namespacer/plugin.cfg": false,
+"res://addons/o2/addons/variant_resources/plugin.cfg": false,
+"res://addons/o2/plugin.cfg": false,
+"res://addons/plugin_devtools/plugin.cfg": true,
+"res://addons/quick_settings/plugin.cfg": false,
+"res://addons/zylann.editor_debugger/plugin.cfg": false
+}

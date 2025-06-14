@@ -101,5 +101,12 @@ static func get_nth_parent(node: Node, n := 1) -> Node:
 		node = node.get_parent()
 	return node
 
+static func get_all_ancestors(node: Node) -> Array[Node]:
+	var ancestors : Array[Node] = []
+	while node:
+		node = node.get_parent()
+		if node: ancestors.push_back(node)
+	return ancestors
+
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

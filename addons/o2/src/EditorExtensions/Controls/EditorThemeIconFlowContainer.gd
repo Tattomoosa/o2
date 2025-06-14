@@ -3,7 +3,7 @@ extends Container
 
 const COPY_TEXT := 'EditorInterface.get_inspector().get_theme_icon("%s", "%s")'
 
-signal mouse_hovered_button(icon_name: String)
+signal mouse_hovered_button(item_name: String)
 signal button_pressed
 
 @export_tool_button("Reload") var reload_button := _populate

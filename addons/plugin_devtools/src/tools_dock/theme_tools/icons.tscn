@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://o0a54e1hegug"]
 
 [ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeTypeListPicker.gd" id="1_bxo5q"]
-[ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/copy_notifier.gd" id="2_6hgjt"]
+[ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="2_6hgjt"]
 [ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeIconFlowContainer.gd" id="2_p7fwl"]
 
 [node name="Icons" type="VBoxContainer"]

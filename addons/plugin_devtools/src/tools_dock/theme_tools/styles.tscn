@@ -4,11 +4,11 @@
 [ext_resource type="Script" uid="uid://dlbfpgvtclufx" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript_IfHasFeatureTag.gd" id="2_h36eb"]
 [ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeTypeListPicker.gd" id="3_vdx1s"]
 [ext_resource type="Script" uid="uid://da2vp20fitmmd" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeStyleBoxList.gd" id="4_a2cmt"]
-[ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/copy_notifier.gd" id="4_h36eb"]
+[ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="4_h36eb"]
 [ext_resource type="StyleBox" uid="uid://c421eudbhrev3" path="res://addons/plugin_devtools/src/tools_dock/theme_tools/styleboxes/transparency_checkerboard.tres" id="5_vdx1s"]
 
-[sub_resource type="Resource" id="Resource_h36eb"]
-resource_path = "res://addons/plugin_devtools/src/tools_dock/theme_tools/styles.tscn::Resource_h36eb"
+[sub_resource type="Resource" id="Resource_vdx1s"]
+resource_path = "res://addons/plugin_devtools/src/tools_dock/theme_tools/styles.tscn::Resource_vdx1s"
 resource_name = "IfHasFeatureTag"
 script = ExtResource("2_h36eb")
 feature = ""
@@ -26,12 +26,13 @@ metadata/_tab_index = 1
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
 columns = 2
-metadata/metadata_scripts = Array[ExtResource("1_sl6ky")]([SubResource("Resource_h36eb")])
+metadata/metadata_scripts = Array[ExtResource("1_sl6ky")]([SubResource("Resource_vdx1s")])
 
 [node name="LineEdit" type="LineEdit" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Filter StyleBoxes"
+metadata/metadata_scripts = Array[ExtResource("1_sl6ky")]([])
 
 [node name="OptionButton" type="OptionButton" parent="GridContainer"]
 layout_mode = 2
@@ -205,15 +206,12 @@ popup/item_81/id = 81
 script = ExtResource("3_vdx1s")
 type = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GridContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GridContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 clip_text = true
 
-[node name="Copied" type="TextureRect" parent="GridContainer/HBoxContainer"]
+[node name="Copied" type="TextureRect" parent="GridContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -240,3 +238,5 @@ item_size = 120.0
 
 [connection signal="text_changed" from="GridContainer/LineEdit" to="ScrollContainer/PanelContainer/Styles" method="filter"]
 [connection signal="type_selected" from="GridContainer/OptionButton" to="ScrollContainer/PanelContainer/Styles" method="set_theme_type"]
+[connection signal="button_pressed" from="ScrollContainer/PanelContainer/Styles" to="GridContainer/Copied" method="show_and_fade"]
+[connection signal="mouse_hovered_button" from="ScrollContainer/PanelContainer/Styles" to="GridContainer/Label" method="set_text"]

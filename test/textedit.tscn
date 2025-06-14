@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcmblxcmfr16r"]
+
+[sub_resource type="GDScriptSyntaxHighlighter" id="GDScriptSyntaxHighlighter_u6mfq"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_u6mfq"]
+clip_count = 1
+clip_0/name = &""
+clip_0/auto_advance = 0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="CodeEdit" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+syntax_highlighter = SubResource("GDScriptSyntaxHighlighter_u6mfq")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AnimatableBody2D"]
+stream = SubResource("AudioStreamInteractive_u6mfq")

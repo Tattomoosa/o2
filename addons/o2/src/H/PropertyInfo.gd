@@ -161,33 +161,33 @@ static func prettify(property: Dictionary) -> String:
 		return "%s" % property
 	var prop_str := "{\n"
 	if "name" in property:
-		prop_str += '\t&"name": "%s"\n' % property.name
+		prop_str += '\t&"name": "%s",\n' % property.name
 	if "class_name" in property:
-		prop_str += '\t&"class_name": "%s"\n' % property.class_name
+		prop_str += '\t&"class_name": "%s",\n' % property.class_name
 	if "type" in property:
-		prop_str += '\t&"type": %s\n' % TYPE_STRINGS[property.type]
+		prop_str += '\t&"type": %s, # (%d)\n' % [TYPE_STRINGS[property.type], property.type]
 	if "hint" in property:
-		prop_str += '\t&"hint": %s # (%s)\n' % [
+		prop_str += '\t&"hint": %s, # (%s)\n' % [
 			PROPERTY_HINT_STRINGS[property.hint],
 			property.hint,
 		]
 	if "hint_string" in property:
 		prop_str += '\t&"hint_string": '
 		if property.hint == PROPERTY_HINT_TYPE_STRING:
-			prop_str += '"%s" (%s)\n' % [
+			prop_str += '"%s", # (%s)\n' % [
 				property.hint_string,
 				parse_hint_type_string(property.hint_string),
 			]
 		else:
-			prop_str += "\"%s\"\n" % property.hint_string
+			prop_str += "\"%s\",\n" % property.hint_string
 	if "usage" in property:
-		prop_str += '\t&"usage": %s # (%s)\n' % [
+		prop_str += '\t&"usage": %s, # (%s)\n' % [
 			", ".join(get_usage_flag_names(property.usage)),
 			property.usage,
 		]
 	for key in property:
 		if key not in ["name", "class_name", "type", "hint", "hint_string", "usage"]:
-			prop_str += '\t&"%s": %s\n' % [key, property[key]] 
+			prop_str += '\t&"%s": %s,\n' % [key, property[key]] 
 	prop_str += "}"
 	return prop_str
 

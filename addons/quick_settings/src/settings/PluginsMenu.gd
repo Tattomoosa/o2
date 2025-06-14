@@ -1,10 +1,12 @@
 extends MenuButton
 
 const Plugins := H.Editor.Plugins
-const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
 
 const SETTING_HIDE_QUICK_SETTINGS := "hide_quick_settings"
 const SETTING_HIDE_NESTED_PLUGINS := "hide_nested_plugins"
+
+const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
+const PLUGIN_DEFAULT_ICON := preload("uid://obguu32af2v")
 
 # Will be added to SETTINGS and updated by quick_settings
 var settings := {
@@ -55,7 +57,7 @@ func _get_icon(plugin_path: String) -> Texture2D:
 		return _plugin_icon_cache[plugin_path]
 	var plugin_icon := Plugins.get_plugin_icon(plugin_path)
 	if !plugin_icon:
-		plugin_icon = PLUGIN_SETTINGS_ICON
+		plugin_icon = PLUGIN_DEFAULT_ICON
 	plugin_icon = Plugins.ensure_icon_16x16_at_editor_scale(plugin_icon)
 	_plugin_icon_cache[plugin_path] = plugin_icon
 	return plugin_icon
