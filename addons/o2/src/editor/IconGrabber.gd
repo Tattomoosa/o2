@@ -4,7 +4,7 @@
 
 extends RefCounted
 
-var UNKNOWN_ICON:Texture2D = EditorInterface.get_base_control().get_theme_icon("", "EditorIcons")
+var UNKNOWN_ICON: Texture2D = EditorInterface.get_base_control().get_theme_icon("", "EditorIcons")
 
 var script_editor
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_sl6ky"]
 [ext_resource type="Script" uid="uid://dlbfpgvtclufx" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript_IfHasFeatureTag.gd" id="2_h36eb"]
-[ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeTypeListPicker.gd" id="3_vdx1s"]
-[ext_resource type="Script" uid="uid://da2vp20fitmmd" path="res://addons/o2/src/EditorExtensions/Controls/EditorThemeStyleBoxList.gd" id="4_a2cmt"]
+[ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/editor/Controls/EditorThemeTypeListPicker.gd" id="3_vdx1s"]
+[ext_resource type="Script" uid="uid://da2vp20fitmmd" path="res://addons/o2/src/editor/Controls/EditorThemeStyleBoxList.gd" id="4_a2cmt"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="4_h36eb"]
 [ext_resource type="StyleBox" uid="uid://c421eudbhrev3" path="res://addons/plugin_devtools/assets/styleboxes/transparency_checkerboard.tres" id="5_vdx1s"]
 
