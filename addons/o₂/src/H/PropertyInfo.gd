@@ -1,7 +1,5 @@
 @tool
 
-const _BitMasks := H.BitMasks
-
 ## Converts from a usage flag bit to the corresponding string
 ## Note that PROPERTY_USAGE_DEFAULT is just PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR
 const SPECIAL_USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
@@ -193,8 +191,8 @@ static func prettify(property: Dictionary) -> String:
 
 ## PROPERTY_HINT_TYPE_STRING is especially hairy, this tells you what it's doing and is... 
 ## probably mostly correct?
-# TODO Needs a lot of testing I haven't done
-# TODO doesn't do dictionaries right
+# TODO Needs a lot of testing I haven't done!
+# TODO doesn't do dictionaries right, I misunderstood the format!
 # should be able to just split at ;
 # and parse from there tho!
 static func parse_hint_type_string(t_string: String) -> String:
@@ -303,7 +301,7 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 static func property_is_bitflags(property: Dictionary) -> bool:
 		return (
 			"usage" in property\
-			and _BitMasks.get_bit_value(property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD)\
+			and has_flag(property.usage, PROPERTY_USAGE_CLASS_IS_BITFIELD)\
 			or property.hint in [
 				PROPERTY_HINT_FLAGS,
 				PROPERTY_HINT_LAYERS_2D_RENDER,
