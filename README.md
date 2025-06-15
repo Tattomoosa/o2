@@ -130,6 +130,8 @@ Further, the editor tooling I've been doing for them depends on a lot of common 
 
 Is it perfect? No. Is it great? No. Is it ok? I think so. I want to spend more time building cool stuff and less time writing boilerplate. I think that's what plugins are for. Certainly open to ideas about how to do it better, but this seems ok to me.
 
+That said, you can see in the repo some of the plugins are not inside the `o2` folder, but out in the root plugin directory. This doesn't mean they don't depend on something from `o2` (probably `H`, everything uses `H` lol). These are plugins which are likely to be released separately down the line.
+
 ## The Future
 
 Godot, unfortunately, doesn't let plugins define dependencies yet.
