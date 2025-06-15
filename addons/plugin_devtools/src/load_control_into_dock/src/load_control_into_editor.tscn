@@ -87,6 +87,7 @@ icon_name = "Reload"
 button_type = "InspectorActionButton"
 
 [node name="InspectButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
 theme_override_icons/icon = SubResource("SVGTexture_ynlpv")
@@ -95,6 +96,7 @@ icon_name = "FileList"
 button_type = "InspectorActionButton"
 
 [node name="InspectButton2" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
 theme_override_icons/icon = SubResource("SVGTexture_iwisl")

@@ -58,6 +58,39 @@ Everyone's made a quick plugin toggler, but quick settings does so much more.
 	* Very useful for plugin development since Godot doesn't!
 * A dropdown to toggle any plugin, or give a plugin its own dedicated button
 
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/plugin_devtools/assets/icons/PluginDevTools.svg" width="18"/>&nbsp;&nbsp; Plugin DevTools
+
+Host of tools which aid with plugin development.
+
+* Property Info 
+	* Live property info on inspected properties
+	* Tree for selecting properties hidden from the inspector
+* 
+* Load Control - any Control node, in the editor
+	* Only tool scripts are functional
+* Theme Explorer (*very* WIP)
+* Editor Debugger
+	* Zylann's classic Editor Debugger plugin, just integrated
+* Drag & Drop tool
+	* Prints raw drop and drop data about anything
+	* Very WIP "palette" for storing and re-dragging data
+
+All of these tools come up inside one dock but they can be split up by dragging and dropping the tabs onto other docks
+
+### <img src="https://raw.githubusercontent.com/godotengine/godot/refs/heads/master/editor/icons/GuiVisibilityHidden.svg" width="18"/>&nbsp;&nbsp; Hide Stuff
+
+* Hides main screen button names (2D/3D/Script/etc)
+* Hides the rendering selector
+
+Not configurable... yet.
+
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/dock_splitter/assets/icon/DockSplitter.svg" width="18"/>&nbsp;&nbsp; Dock Splitter
+
+*Very* WIP. Modifies the docks so they can be split
+horizontally and vertically as many times as you'd like. Godot doesn't like this much, lots of edge cases to handle, very experimental.
+
+Also adds one to the bottom panel, so you can dock anything there.
+
 ### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/assets/icons/o2.svg" width="18"/>&nbsp;&nbsp; Core
 
 ##### TreeWatcher
@@ -72,7 +105,7 @@ Probably capable of other really cool things too! Has its own plugin system.
 
 ##### H
 
-Ever-growing list of generic utlity functions. See [the list](addons/o2/src/H).
+Ever-growing list of generic utlity functions. See [the list](addons/o%E2%82%82/src/H).
 
 ## Project Goals
 

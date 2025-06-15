@@ -26,7 +26,7 @@ gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/o₂/addons/metadata_scripts/plugin.cfg", "res://addons/o₂/addons/namespacer/plugin.cfg", "res://addons/o₂/addons/variant_resources/plugin.cfg", "res://addons/o₂/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/o₂/addons/metadata_scripts/plugin.cfg", "res://addons/o₂/addons/namespacer/plugin.cfg", "res://addons/o₂/addons/variant_resources/plugin.cfg", "res://addons/o₂/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [gui]
 

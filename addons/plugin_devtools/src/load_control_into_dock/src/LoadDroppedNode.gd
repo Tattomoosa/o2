@@ -67,13 +67,28 @@ func _add_node(node: Node) -> void:
 		node.visible = true
 
 func _dropped_data(data: Variant) -> void:
-	if data is Dictionary and "type" in data and data.type == "nodes":
-		var node_paths := data.nodes as Array #[NodePath]
-		# for node_path in node_paths:
-		var original_node := get_node(node_paths[0])
-		var node := original_node.duplicate()
-		_add_node(node)
-		tab_bar.set_tab_metadata(node.get_index(), original_node)
+	if data is Dictionary and "type" in data:
+		if data.type == "nodes":
+			var node_paths := data.nodes as Array # NodePath[]
+			var original_node := get_node(node_paths[0])
+			var node := original_node.duplicate()
+			_add_node(node)
+			tab_bar.set_tab_metadata(node.get_index(), original_node)
+		if data.type == "files":
+			var paths : Array = data.files # String[]
+			if paths.size() > 1:
+				push_error("Can only drop a single scene file")
+			var path : String = paths[0]
+			if path.get_extension() not in ["tscn", "scn"]:
+				push_error("Can only drop scene files!")
+			var control_classes := PackedStringArray(["Control"])
+			control_classes.append_array(ClassDB.get_inheriters_from_class(&"Control"))
+			var scene_file : PackedScene = load(path)
+			if scene_file.get_state().get_node_type(0) not in control_classes:
+				push_error("Root node must be Control!")
+			var node := scene_file.instantiate()
+			_add_node(node)
+
 		# prints(
 		# 	"added node to index",
 		# 	node.get_index(),
