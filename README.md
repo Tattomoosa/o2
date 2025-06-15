@@ -5,7 +5,7 @@
 
 <div align="center">
 	<br/>
-	<img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" width="100"/>
+	<img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/assets/icons/o2.svg" width="100"/>
 	<br/>
 	<br/>
 		The plugin suite that does the impossible, for <a href="https://godotengine.org/">Godot</a>
@@ -25,7 +25,7 @@
 
 ## Included Plugins
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/metadata_scripts/assets/icons/MetadataScript.svg" width="18"/>&nbsp;&nbsp; Metadata Scripts
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/addons/metadata_scripts/assets/icons/MetadataScript.svg" width="18"/>&nbsp;&nbsp; Metadata Scripts
 
 Run scripts from metadata. As many as you'd like per node.
 
@@ -34,11 +34,11 @@ Simple uses include ensuring a node is hidden when play mode begins or freeing i
 Complex uses... well, they can do pretty much anything, actually! See Variant Resources for one
 example of a more complex use-case.
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/variant_resources/assets/icons/Variant.svg" width="18"/>&nbsp;&nbsp; [Variant Resources](addons/o2/addons/variant_resources/README.md)
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/addons/variant_resources/assets/icons/Variant.svg" width="18"/>&nbsp;&nbsp; [Variant Resources](addons/o%E2%82%82/addons/variant_resources/README.md)
 
 Override almost every non-Object Variant type with a resource that syncs its value back to the node, either through a PropertySyncNode in the scene tree or the much easier to use metadata script and its associated editor tooling.
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/addons/namespacer/icon/Namespacer.svg" width="18"/>&nbsp;&nbsp; Namespacer
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/addons/namespacer/icon/Namespacer.svg" width="18"/>&nbsp;&nbsp; Namespacer
 
 GDScript [doesn't have namespaces](https://github.com/godotengine/godot-proposals/issues/1566)! Well... it kind of can, actually!
 
@@ -47,7 +47,7 @@ Mark a directory as a namespace root and Namespacer hooks every file up from tha
 One `class_name`, unlimited statically accessible classes.
 
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/b7ea26b7a4a5a170568850199b29d77aff40f7d5/addons/o2/addons/quick_settings/assets/icons/ProjectList.svg" width="18"/>&nbsp;&nbsp; Quick Settings
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/quick_settings/assets/icons/ProjectList.svg" width="18"/>&nbsp;&nbsp; Quick Settings
 
 Everyone's made a quick plugin toggler, but quick settings does so much more.
 
@@ -58,7 +58,7 @@ Everyone's made a quick plugin toggler, but quick settings does so much more.
 	* Very useful for plugin development since Godot doesn't!
 * A dropdown to toggle any plugin, or give a plugin its own dedicated button
 
-### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o2/assets/icons/o2.svg" width="18"/>&nbsp;&nbsp; Core
+### <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/assets/icons/o2.svg" width="18"/>&nbsp;&nbsp; Core
 
 ##### TreeWatcher
 
