@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Vector4Resource" load_steps=2 format=3 uid="uid://bo2hrym872lei"]
+
+[ext_resource type="Script" uid="uid://bkht4w38jl5dh" path="res://addons/o₂/addons/variant_resources/src/variant_resources/Vector4Resource.gd" id="1_8v8u2"]
+
+[resource]
+script = ExtResource("1_8v8u2")
+value = Vector4(0, 0, 0, 0)
+type = 12
+_override_property_info = {}
+metadata/_custom_type_script = "uid://bkht4w38jl5dh"

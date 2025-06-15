@@ -3,11 +3,18 @@ extends CodeEdit
 
 var property_info : String
 var property_editor_code : String
+var inspector : EditorInspector
 
 func _ready() -> void:
-	EditorInterface.get_inspector().property_selected.connect(_print_selected)
+	inspector = EditorInterface.get_inspector()
+	inspector.property_selected.connect(_print_selected)
+	inspector.edited_object_changed.connect(_edited_object_changed)
 	symbol_lookup.connect(_on_symbol_lookup)
 	symbol_validate.connect(_on_symbol_validate)
+
+func _edited_object_changed() -> void:
+	if inspector.get_edited_object() == null:
+		clear()
 
 func _print_selected(property: String) -> void:
 	var object := EditorInterface.get_inspector().get_edited_object()

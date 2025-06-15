@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://o0a54e1hegug"]
 
-[ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o2/src/editor/Controls/EditorThemeTypeListPicker.gd" id="1_bxo5q"]
+[ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o₂/src/editor/Controls/EditorThemeTypeListPicker.gd" id="1_bxo5q"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="2_6hgjt"]
-[ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o2/src/editor/Controls/EditorThemeIconFlowContainer.gd" id="2_p7fwl"]
+[ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o₂/src/editor/Controls/EditorThemeIconFlowContainer.gd" id="2_p7fwl"]
 [ext_resource type="Script" uid="uid://bepnqbb46wygl" path="res://addons/plugin_devtools/src/controls/EditorStylesPanelContainer.gd" id="3_6hgjt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kgr5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k76i8"]
 content_margin_left = 6.0
 content_margin_top = 6.0
 content_margin_right = 6.0
@@ -132,12 +132,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 20.0
 max_value = 44.0
+step = 0.010000000009313226
 value = 32.0
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_5kgr5")
+theme_override_styles/panel = SubResource("StyleBoxFlat_k76i8")
 script = ExtResource("3_6hgjt")
 panel_style = "Background"
 

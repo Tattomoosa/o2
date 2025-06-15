@@ -33,7 +33,7 @@ selecting_enabled = false
 deselect_on_focus_loss_enabled = false
 right_icon = SubResource("SVGTexture_y220a")
 script = ExtResource("1_256fh")
-options = PackedStringArray()
+options = PackedStringArray("one", "two", "three")
 popup_panel_style = SubResource("StyleBoxFlat_udcms")
 
 [node name="PopupPanel" type="PopupPanel" parent="."]
@@ -66,6 +66,7 @@ right_icon = SubResource("SVGTexture_y220a")
 [node name="PopupScroll" type="ScrollContainer" parent="PopupPanel/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="PopupPanel/PanelContainer/VBoxContainer/PopupScroll"]
 layout_mode = 2

@@ -6,14 +6,17 @@ signal property_selected(property_name: String)
 var selected_property : String = ""
 
 func _ready() -> void:
-	EditorInterface.get_inspector().edited_object_changed.connect(_build_tree)
+	EditorInterface.get_inspector().edited_object_changed.connect(_build_inspector_edited_property_tree)
 	EditorInterface.get_inspector().property_selected.connect(_find_property)
 	item_mouse_selected.connect(_on_item_selected.unbind(2))
 
-# TODO pretty sure this will break for bad input pretty bad lol
-func _build_tree() -> void:
-	clear()
+func _build_inspector_edited_property_tree() -> void:
 	var object := EditorInterface.get_inspector().get_edited_object()
+	_build_tree(object)
+
+# TODO this is a mess lol
+func _build_tree(object: Object) -> void:
+	clear()
 	if !object:
 		return
 	var root := create_item()
@@ -24,7 +27,8 @@ func _build_tree() -> void:
 		var item : TreeItem
 		if p.usage == PROPERTY_USAGE_CATEGORY:
 			item = create_item(root)
-			item.set_custom_font_size(0, 45)
+			# item.set_icon(0, EditorInterface.get_editor_theme().get_icon(p.name, &"EditorIcons"))
+			item.set_icon(0, H.Editor.IconGrabber.get_class_icon(p.name))
 			item.set_custom_bg_color(0, Color(Color.WHITE, 0.05))
 			parent = item
 			group_parent = null
@@ -35,7 +39,8 @@ func _build_tree() -> void:
 			if group_parent:
 				parent = parent.get_parent()
 			item = create_item(parent)
-			item.set_custom_font_size(0, 35)
+			item.set_icon(0, EditorInterface.get_editor_theme().get_icon("Folder", &"EditorIcons"))
+			# item.set_custom_font_size(0, 35)
 			item.set_custom_bg_color(0, Color(Color.WHITE, 0.02))
 			group_parent = parent
 			subgroup_parent = null
@@ -44,13 +49,31 @@ func _build_tree() -> void:
 			if subgroup_parent:
 				parent = parent.get_parent()
 			item = create_item(parent)
+			item.set_icon(0, EditorInterface.get_editor_theme().get_icon("Folder", &"EditorIcons"))
 			item.set_custom_bg_color(0, Color(Color.WHITE, 0.01))
 			item.set_custom_font_size(0, 30)
 			subgroup_parent = parent
 			parent = item
 		else:
 			item = create_item(parent)
+			var icon : Texture2D
+			if p.type != TYPE_OBJECT:
+				icon = H.Editor.IconGrabber.get_variant_icon(p.type)
+			elif "hint" in p:
+				if p.hint == PROPERTY_HINT_RESOURCE_TYPE:
+					var type_hint : String = p.hint_string.split(",")[0]
+					icon = H.Editor.IconGrabber.get_class_icon(type_hint)
+					if type_hint == "shortcut_context":
+						icon = EditorInterface.get_inspector().get_theme_icon("Node", &"EditorIcons")
+
+					if icon == H.Editor.IconGrabber.UNKNOWN_ICON:
+						icon = EditorInterface.get_editor_theme().get_icon("ObjectDark", &"EditorIcons")
+			else:
+				icon = EditorInterface.get_inspector().get_theme_icon("MemberProperty", &"EditorIcons")
+			item.set_icon(0, icon)
+
 		item.set_text(0, p.name)
+		item.collapsed = true
 
 func _find_property(property: String, root = null) -> void:
 	if !root:

@@ -11,25 +11,39 @@ func _ready() -> void:
 	tab_bar.set_tab_hidden(0, true)
 	tab_bar.close_with_middle_mouse = true
 	tab_bar.tab_close_pressed.connect(_close_tab)
+	child_entered_tree.connect(_child_entered)
+	child_exiting_tree.connect(_child_exiting)
 
-func _reload() -> void:
+func reload() -> void:
 	var node := get_child(current_tab)
 	var data : Variant = get_tab_metadata(current_tab)
+	# prints(
+	# 	"reload",
+	# 	"current tab",
+	# 	current_tab,
+	# 	"current tab metadata",
+	# 	tab_bar.get_tab_metadata(current_tab)
+	# )
 	if data is Node:
-		var new_node = node.duplicate()
-		add_child(new_node)
-		move_child(new_node, current_tab)
+		var new_node = data.duplicate()
+		var idx := current_tab
 		remove_child(node)
+		add_child(new_node, true)
+		move_child(new_node, idx)
+		current_tab = idx
+		set_tab_metadata(current_tab, data)
 		node.queue_free()
 	elif data is PackedScene:
 		pass
 	else:
 		push_error("Can't reload %s" % data)
 
-func _child_entered() -> void:
+func _child_entered(_node: Node) -> void:
 	if get_child_count() > 1:
-		deselect_enabled = false
 		set_buttons_enabled.emit(true)
+	await get_tree().process_frame
+	if get_child_count() > 1 and current_tab == 0: 
+		current_tab = 1
 
 func _child_exiting(node: Node) -> void:
 	await node.tree_exited
@@ -40,7 +54,11 @@ func _close_tab(idx: int) -> void:
 	if idx == 0:
 		push_error("Tab 0 cannot be closed!")
 		return
-	current_tab = get_previous_tab()
+	# hmm
+	if idx > 1:
+		current_tab = get_previous_tab()
+	else:
+		current_tab = 0
 	get_child(idx).queue_free()
 
 func _add_node(node: Node) -> void:
@@ -56,4 +74,15 @@ func _dropped_data(data: Variant) -> void:
 		var node := original_node.duplicate()
 		_add_node(node)
 		tab_bar.set_tab_metadata(node.get_index(), original_node)
+		# prints(
+		# 	"added node to index",
+		# 	node.get_index(),
+		# 	"current tab",
+		# 	current_tab,
+		# 	"node index metadata",
+		# 	tab_bar.get_tab_metadata(node.get_index()),
+		# 	"current tab metadata",
+		# 	tab_bar.get_tab_metadata(current_tab)
+		# )
 
+# func _on_replacing_by() -> void:

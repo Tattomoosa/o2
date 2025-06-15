@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://t582vwvx6nfi"]
 
-[ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_hrq6i"]
-[ext_resource type="Script" uid="uid://piw4qgb7fmfe" path="res://addons/o2/addons/metadata_scripts/src/metadata_scripts/MetadataScript_SetVisibilityOnPlay.gd" id="2_tbfq4"]
-[ext_resource type="Script" uid="uid://trvh1785sr8p" path="res://addons/o2/addons/variant_resources/src/variant_resources/IntResource.gd" id="3_s3n3v"]
-[ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o2/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="4_kgdm3"]
+[ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o₂/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_hrq6i"]
+[ext_resource type="Script" uid="uid://piw4qgb7fmfe" path="res://addons/o₂/addons/metadata_scripts/src/metadata_scripts/MetadataScript_SetVisibilityOnPlay.gd" id="2_tbfq4"]
+[ext_resource type="Script" uid="uid://trvh1785sr8p" path="res://addons/o₂/addons/variant_resources/src/variant_resources/IntResource.gd" id="3_s3n3v"]
+[ext_resource type="Script" uid="uid://bg6uuo8a02hw3" path="res://addons/o₂/addons/variant_resources/src/sync_metadata/MetadataScript_SyncVariantResource.gd" id="4_kgdm3"]
 
 [sub_resource type="Resource" id="Resource_aeque"]
 resource_path = "res://test/test.tscn::Resource_aeque"

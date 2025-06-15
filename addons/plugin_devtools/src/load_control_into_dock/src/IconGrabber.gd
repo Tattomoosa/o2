@@ -4,7 +4,7 @@
 
 extends RefCounted
 
-var UNKNOWN_ICON:Texture2D = EditorInterface.get_base_control().get_theme_icon("", "EditorIcons")
+var UNKNOWN_ICON:Texture2D = EditorInterface.get_base_control().get_theme_icon("FileBroken", "EditorIcons")
 
 var script_editor
 
@@ -22,7 +22,7 @@ var finish = false
 
 # Get icon
 func get_icon(_class:String) -> ImageTexture:
-	if icon_list.has(_class):
+	if _class in icon_list:
 		return icon_list[_class]
 	else:
 		return null
@@ -107,7 +107,6 @@ func get_class_icon(c_name:String) -> Texture2D:
 		return load_icon
 	load_icon = UNKNOWN_ICON
 	
-	
 	if c_name.ends_with(".gd"):# GDScript Icon
 		load_icon = base_control.get_theme_icon("GDScript", "EditorIcons")
 	if c_name == "RefCounted":# RefCounted Icon
@@ -128,6 +127,9 @@ func get_class_icon(c_name:String) -> Texture2D:
 
 	if load_icon != UNKNOWN_ICON:
 		return load_icon # Return if icon is not unknown
+	
+	# built in resources
+	# if base_control.get_theme_icon(c_name)
 	
 	# if icon not found just use the node disabled icon
 	return base_control.get_theme_icon("NodeDisabled", "EditorIcons")
