@@ -4,12 +4,12 @@
 @icon("uid://cducmivcy7t15")
 extends Control
 
-const Util = preload("util.gd")
+# const Util = preload("util.gd")
 
 signal node_selected(node)
 
 @onready var _popup_menu : PopupMenu = get_node("PopupMenu")
-@onready var _inspection_checkbox : CheckBox = get_node("VBoxContainer/ShowInInspectorCheckbox")
+@onready var _inspection_checkbox : CheckBox = %ShowInInspectorCheckbox
 @onready var _label : Label = get_node("VBoxContainer/Label")
 @onready var _tree_view : Tree = get_node("VBoxContainer/Tree")
 @onready var _save_branch_file_dialog : FileDialog = get_node("SaveBranchFileDialog")
@@ -42,15 +42,8 @@ const _update_interval = 1.0
 var _time_before_next_update := 0.0
 var _control_highlighter: ColorRect = null
 
-# The default "icon not found" texture. Captured so it can be compared against when trying to
-# find a specific icon.
-# @see _update_node_view
-var _no_texture := get_theme_icon("", "EditorIcons")
-
-
 func get_tree_view() -> Tree:
 	return _tree_view
-
 
 func _ready() -> void:
 	_popup_menu.clear()
@@ -60,22 +53,22 @@ func _ready() -> void:
 		_popup_menu.set_item_tooltip(index, _popup_action_names[id].tooltip)
 
 func _enter_tree() -> void:
-	if Util.is_in_edited_scene(self):
+	# if Util.is_in_edited_scene(self):
+	if is_part_of_edited_scene():
 		return
 	_control_highlighter = ColorRect.new()
-	_control_highlighter.color = Color(1, 1, 0, 0.2)
+	# _control_highlighter.color = Color(1, 1, 0, 0.2)
+	_control_highlighter.color = Color(EditorInterface.get_editor_theme().get_color("accent_color", &"Editor"), 0.1)
 	_control_highlighter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_control_highlighter.hide()
 	get_viewport().call_deferred("add_child", _control_highlighter)
-
 
 func _exit_tree() -> void:
 	if _control_highlighter != null:
 		_control_highlighter.queue_free()
 
-
 func _process(delta: float) -> void:
-	if Util.is_in_edited_scene(self):
+	if is_part_of_edited_scene():
 		set_process(false)
 		return
 		
@@ -132,7 +125,6 @@ func _update_branch(root: Node, root_view: TreeItem) -> void:
 
 
 func _create_node_view(node: Node, parent_view: TreeItem) -> TreeItem:
-	#print("Create view for ", node)
 	assert(node is Node)
 	assert(parent_view == null or parent_view is TreeItem)
 	var view := _tree_view.create_item(parent_view)
@@ -145,15 +137,14 @@ func _update_node_view(node: Node, view: TreeItem) -> void:
 	assert(node is Node)
 	assert(view is TreeItem)
 	
-	var icon_texture := get_theme_icon(node.get_class(), "EditorIcons")
-	if (icon_texture == null or icon_texture == _no_texture):
-		icon_texture = get_theme_icon("Node", "EditorIcons")
+	var icon_texture := H.Editor.IconGrabber.get_class_icon(H.Scripts.get_class_name_or_script_name(node), "Node")
 	
 	view.set_icon(0, icon_texture)
-	view.set_text(0, str(node.get_class(), ": ", node.name))
+	view.set_text(0, H.Scripts.get_class_name_or_script_name(node))
+	view.set_text(1, node.name)
+	view.set_custom_color(1, Color(Color.WHITE, 0.5))
 	
 	view.set_metadata(METADATA_NODE_NAME, node.name)
-
 
 func _select_node() -> void:
 	var node_view := _tree_view.get_selected()
@@ -169,13 +160,13 @@ func _select_node() -> void:
 func _on_Tree_item_selected() -> void:
 	_select_node()
 
-
-func _on_Tree_item_mouse_selected(position: Vector2, mouse_button_index: int) -> void:
+func _on_Tree_item_mouse_selected(_position: Vector2, mouse_button_index: int) -> void:
+	var item := _tree_view.get_selected()
+	item.collapsed = !item.collapsed
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		_select_node()
 		_popup_menu.popup()
 		_popup_menu.set_position(get_viewport().get_mouse_position())
-
 
 func _highlight_node(node: Node) -> void:
 	if node is Control:
@@ -348,11 +339,6 @@ static func restore_ownership(root: Node, owners: Dictionary, include_internal: 
 		else:
 			child.set_owner(null)
 		restore_ownership(child, owners, include_internal)
-
-
-func _on_ShowInInspectorCheckbox_toggled(_button_pressed: bool) -> void:
-	pass
-
 
 func _on_popup_menu_id_pressed(id: int) -> void:
 	_popup_menu.hide()

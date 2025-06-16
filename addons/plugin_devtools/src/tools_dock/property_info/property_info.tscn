@@ -18,7 +18,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_ngycd"]
+[sub_resource type="SVGTexture" id="SVGTexture_tr21w"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M7 4v9h2v-3h1a3 3 0 0 0 0-6zm2 2h1a1 1 0 0 1 0 2H9zm-5 5a1 1 0 0 0 0 2 1 1 0 0 0 0-2z\"/></svg>
 "
 saturation = 2.0
@@ -28,7 +28,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inqcu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3w4ua"]
 content_margin_left = 3.0
 content_margin_top = 3.0
 content_margin_right = 3.0
@@ -37,7 +37,7 @@ bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
 corner_detail = 1
 anti_aliasing = false
 
-[sub_resource type="SVGTexture" id="SVGTexture_tr21w"]
+[sub_resource type="SVGTexture" id="SVGTexture_ygmkk"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#54ed9e\" d=\"M3 2v2a3 3 0 0 0 0 6h2V2zm3 0v2h2V2zm7 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2zm-2 2a3 3 0 0 0 0 6h1V8h-1a1 1 0 0 1 0-2h1V4zM8 7V6H6v4h2zM3 6v2a1 1 0 0 1 0-2z\"/></svg>
 "
 saturation = 2.0
@@ -47,7 +47,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_ygmkk"]
+[sub_resource type="SVGTexture" id="SVGTexture_ofgxn"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><linearGradient id=\"a\"><stop offset=\".25\" stop-color=\"#ffe345\"/><stop offset=\".75\" stop-color=\"#919191\"/></linearGradient><path fill=\"#45d7ff\" d=\"m5.914 4-2 2H9.01V4z\"/><path fill=\"#ff4596\" d=\"M11 4v2h4V4Z\"/><path fill=\"#ff4545\" d=\"M1 8v2h3V8z\"/><path fill=\"url(#a)\" d=\"M6 8v2h7V8z\"/><path fill=\"#919191\" d=\"M1 12v2h5v-2zm7 0v2h6v-2z\"/><path fill=\"#e0e0e0\" d=\"M2 1 1 2l1.5 1.5L1 5l1 1 2.5-2.5z\"/></svg>
 "
 saturation = 2.0
@@ -83,9 +83,14 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+[node name="FuzzySearchLineEdit" type="LineEdit" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_ngycd")
+placeholder_text = "Filter Properties"
+
+[node name="Button" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_icons/icon = SubResource("SVGTexture_tr21w")
 text = "Select Property"
 script = ExtResource("1_ssl5k")
 
@@ -102,7 +107,7 @@ script = ExtResource("1_k7j3a")
 [node name="PanelContainer" type="PanelContainer" parent="VSplitContainer/MarginContainer"]
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_inqcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_3w4ua")
 script = ExtResource("3_ngycd")
 
 [node name="CenterContainer" type="CenterContainer" parent="VSplitContainer/MarginContainer/PanelContainer"]
@@ -123,7 +128,7 @@ layout_mode = 2
 [node name="PropertyInfoButton" type="Button" parent="VSplitContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_tr21w")
+theme_override_icons/icon = SubResource("SVGTexture_ygmkk")
 text = "Copy Text"
 script = ExtResource("2_v6nks")
 icon_name = "Dictionary"
@@ -132,7 +137,7 @@ button_type = "InspectorActionButton"
 [node name="PropertyEditorButton" type="Button" parent="VSplitContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_ygmkk")
+theme_override_icons/icon = SubResource("SVGTexture_ofgxn")
 text = "Copy Editor Property Code"
 script = ExtResource("2_v6nks")
 icon_name = "CodeHighlighter"
@@ -150,26 +155,6 @@ script = ExtResource("3_afeo8")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "# Property Info (_validate_property, _get_property_list):
-{
-	&\"name\": \"icon\",
-	&\"class_name\": \"Texture2D\",
-	&\"type\": TYPE_OBJECT, # (24)
-	&\"hint\": PROPERTY_HINT_RESOURCE_TYPE, # (17)
-	&\"hint_string\": \"Texture2D\",
-	&\"usage\": PROPERTY_USAGE_DEFAULT, # (6)
-}
-
-# Instantiate EditorProperty (EditorInspectorPlugin)
-var property_editor := EditorInspector.instantiate_property_editor(
-	get_edited_object(),
-	TYPE_OBJECT,
-	\"icon\",
-	PROPERTY_HINT_RESOURCE_TYPE,
-	\"Texture2D\",
-	PROPERTY_USAGE_DEFAULT,
-)
-add_property_editor(\"icon\", property_editor)"
 placeholder_text = "# Select an object to edit in the inspector,
 # then select a property in the inspector
 # or the tree to the right."
@@ -182,6 +167,7 @@ gutters_draw_line_numbers = true
 gutters_zero_pad_line_numbers = true
 script = ExtResource("4_bgk1f")
 
+[connection signal="text_changed" from="VSplitContainer/MarginContainer/VBoxContainer2/FuzzySearchLineEdit" to="VSplitContainer/MarginContainer/VBoxContainer2/Tree" method="filter"]
 [connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Button" to="VSplitContainer/MarginContainer/VBoxContainer2/Tree" method="_find_property"]
 [connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Button" to="VSplitContainer/VBoxContainer/CodeEdit" method="_print_selected"]
 [connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Tree" to="VSplitContainer/VBoxContainer/CodeEdit" method="_print_selected"]

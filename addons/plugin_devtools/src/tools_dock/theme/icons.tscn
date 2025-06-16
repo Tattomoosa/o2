@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o₂/src/editor/Controls/EditorThemeTypeListPicker.gd" id="1_bxo5q"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="2_6hgjt"]
-[ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o₂/src/editor/Controls/EditorThemeIconFlowContainer.gd" id="2_p7fwl"]
+[ext_resource type="Script" uid="uid://dg52ydkn8cb5v" path="res://addons/o₂/src/editor/Controls/EditorThemeIconList.gd" id="2_p7fwl"]
 [ext_resource type="Script" uid="uid://bepnqbb46wygl" path="res://addons/plugin_devtools/src/controls/EditorStylesPanelContainer.gd" id="3_6hgjt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k76i8"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxltf"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
 bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
 corner_detail = 1
 anti_aliasing = false
@@ -132,13 +132,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 20.0
 max_value = 44.0
-step = 0.010000000009313226
-value = 32.0
+step = 0.01000000000931322
+value = 32.000000011175864
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_k76i8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_cxltf")
 script = ExtResource("3_6hgjt")
 panel_style = "Background"
 
@@ -149,7 +149,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
+last_wrap_alignment = 1
 script = ExtResource("2_p7fwl")
+theme_type = "EditorIcons"
 
 [connection signal="text_changed" from="GridContainer/LineEdit" to="PanelContainer/ScrollContainer/Icons" method="filter"]
 [connection signal="type_selected" from="GridContainer/OptionButton" to="PanelContainer/ScrollContainer/Icons" method="set_theme_type"]

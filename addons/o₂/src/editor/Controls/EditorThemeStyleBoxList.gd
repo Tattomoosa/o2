@@ -1,63 +1,39 @@
 @tool
-extends Container
+extends EditorThemeExplorerList
 
-const COPY_TEXT := 'EditorInterface.get_base_control().get_theme_stylebox("%s", "%s")'
+const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
+const COPY_TEXT := 'EditorInterface.get_base_control().theme.get_stylebox("%s", "%s")'
 
-signal mouse_hovered_button(item_name: String)
-signal button_pressed
-
-@export var item_size : float = 32.0
-@export var load_count := 100
-var theme_type : String = "Panel"
-
-func _ready() -> void:
-	_populate()
-
-func set_theme_type(type: String) -> void:
-	theme_type = type
-	_populate()
-
-func _populate() -> void:
-	for child in get_children():
-		child.queue_free()
+func _build_item(stylebox_name: String) -> Button:
 	var t := EditorInterface.get_editor_theme()
-	var stylebox_names := t.get_stylebox_list(theme_type)
-	var loaded := 0
-	for item_name in stylebox_names:
-		var btn := Button.new()
-		var style := t.get_stylebox(item_name, theme_type)
-		if true: # styles
-			for state in ["normal", "pressed", "hover"]:
-				btn.add_theme_stylebox_override(state, style)
-			if false: # hover style
-				var hover_style := StyleBoxFlat.new()
-				hover_style.border_color = Color.WHITE
-				hover_style.set_border_width_all(5)
-				if "bg_color" in style:
-					hover_style.bg_color = style.bg_color
-				else:
-					hover_style.bg_color = Color.TRANSPARENT
-				btn.add_theme_stylebox_override("hover", hover_style)
-		btn.custom_minimum_size.y = item_size
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.text = item_name
-		btn.mouse_entered.connect(mouse_hovered_button.emit.bind(item_name))
-		btn.mouse_exited.connect(mouse_hovered_button.emit.bind(""))
-		btn.pressed.connect(DisplayServer.clipboard_set.bind(COPY_TEXT % [item_name, theme_type]))
-		btn.pressed.connect(button_pressed.emit)
-		btn.set_drag_forwarding(
-			_get_item_drag_data.bindv([btn, style]),
-			Callable(),
-			Callable()
-		)
-		add_child(btn)
-		btn.name = item_name
-		loaded += 1
-		if loaded >= load_count:
-			await get_tree().process_frame
-			loaded = 0
+	var btn := Button.new()
+	var style := t.get_stylebox(stylebox_name, theme_type)
+	if true: # styles
+		for state in ["normal", "pressed", "hover"]:
+			btn.add_theme_stylebox_override(state, style)
+		if false: # hover style
+			var hover_style := StyleBoxFlat.new()
+			hover_style.border_color = Color.WHITE
+			hover_style.set_border_width_all(5)
+			if "bg_color" in style:
+				hover_style.bg_color = style.bg_color
+			else:
+				hover_style.bg_color = Color.TRANSPARENT
+			btn.add_theme_stylebox_override("hover", hover_style)
+	btn.custom_minimum_size.y = item_size * EditorInterface.get_editor_scale()
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.text = stylebox_name
+	btn.set_meta("stylebox", style)
+	return btn
 
-func _get_item_drag_data(_pos: Vector2, button: Button, style: StyleBox) -> Variant:
+func _get_item_names() -> PackedStringArray:
+	var t := EditorInterface.get_editor_theme()
+	return t.get_stylebox_list(theme_type)
+
+func _get_copy_format_string() -> String:
+	return COPY_TEXT
+
+func _get_item_drag_data(_pos: Vector2, button: Button) -> Variant:
 	var d_offset := Control.new()
 	var d_preview := button.duplicate()
 	d_preview.size.x = item_size * H.Editor.Settings.scale
@@ -66,13 +42,5 @@ func _get_item_drag_data(_pos: Vector2, button: Button, style: StyleBox) -> Vari
 	set_drag_preview(d_offset)
 	return {
 		"type": "resource",
-		"resource": style
+		"resource": button.meta("stylebox")
 	}
-	
-func filter(text: String) -> void:
-	if text:
-		for child in get_children():
-			child.visible = text.to_lower() in child.name.to_lower()
-	else:
-		for child in get_children():
-			child.show()

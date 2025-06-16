@@ -99,7 +99,7 @@ static func _grab_gdextension_icon(from_item:TreeItem):
 			# Go deeper into the tree
 			_grab_gdextension_icon(item)
 
-static func get_class_icon(c_name: String) -> Texture2D:
+static func get_class_icon(c_name: String, fallback := "Object") -> Texture2D:
 	if UNKNOWN_ICON == null:
 		UNKNOWN_ICON = EditorInterface.get_base_control().get_theme_icon("", "EditorIcons")
 
@@ -126,7 +126,7 @@ static func get_class_icon(c_name: String) -> Texture2D:
 		# Return if icon is not unknown
 		return load_icon
 	# If nothing found, it's still an object
-	return base_control.get_theme_icon("Object", "EditorIcons")
+	return base_control.get_theme_icon(fallback, "EditorIcons")
 
 static func get_variant_icon(type: int) -> Texture2D:
 	var base_control = EditorInterface.get_base_control()

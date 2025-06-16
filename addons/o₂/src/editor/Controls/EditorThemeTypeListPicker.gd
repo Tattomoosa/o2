@@ -6,6 +6,9 @@ signal type_selected(type_name: String)
 enum Type {
 	ICON,
 	STYLE_BOX,
+	COLOR,
+	FONT,
+	CONSTANT,
 }
 @export var type : Type
 
@@ -26,6 +29,12 @@ func _populate() -> void:
 			type_list = t.get_icon_type_list()
 		Type.STYLE_BOX:
 			type_list = t.get_stylebox_type_list()
+		Type.COLOR:
+			type_list = t.get_color_type_list()
+		Type.FONT:
+			type_list = t.get_font_type_list()
+		Type.CONSTANT:
+			type_list = t.get_constant_type_list()
 	for option in type_list:
 		add_item(option)
 

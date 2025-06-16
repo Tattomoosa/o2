@@ -9,12 +9,12 @@ func _ready() -> void:
 	inspector = EditorInterface.get_inspector()
 	inspector.property_selected.connect(_print_selected)
 	inspector.edited_object_changed.connect(_edited_object_changed)
-	symbol_lookup.connect(_on_symbol_lookup)
-	symbol_validate.connect(_on_symbol_validate)
+	# symbol_lookup.connect(_on_symbol_lookup)
+	# symbol_validate.connect(_on_symbol_validate)
 
 func _edited_object_changed() -> void:
-	if inspector.get_edited_object() == null:
-		clear()
+	if !inspector.get_edited_object():
+		text = ""
 
 func _print_selected(property: String) -> void:
 	var object := EditorInterface.get_inspector().get_edited_object()
@@ -33,10 +33,9 @@ func _property_info_button_pressed() -> void:
 
 func _property_editor_code_button_pressed() -> void:
 	DisplayServer.clipboard_set(property_editor_code)
-	# sym
 
-func _on_symbol_lookup(string: String, line: int, column: int) -> void:
-	pass
+# func _on_symbol_lookup(string: String, line: int, column: int) -> void:
+# 	pass
 
-func _on_symbol_validate(string: String) -> void:
-	pass
+# func _on_symbol_validate(string: String) -> void:
+# 	pass

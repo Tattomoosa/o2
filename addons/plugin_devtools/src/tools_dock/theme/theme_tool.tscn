@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cowdqp6wx8dl0"]
+[gd_scene load_steps=13 format=3 uid="uid://cowdqp6wx8dl0"]
 
 [ext_resource type="PackedScene" uid="uid://dwscxxwhwxkmt" path="res://addons/plugin_devtools/src/controls/SearchMenuButton.tscn" id="1_xviqr"]
 [ext_resource type="Script" uid="uid://cj0mikwtggy50" path="res://addons/plugin_devtools/src/controls/TabDataFromMetadata.gd" id="1_y220a"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://o0a54e1hegug" path="res://addons/plugin_devtools/src/tools_dock/theme/icons.tscn" id="2_xviqr"]
 [ext_resource type="Script" uid="uid://48mpdvirpc71" path="res://addons/plugin_devtools/src/controls/TypeVariationsSearchButton.gd" id="3_78oem"]
 [ext_resource type="PackedScene" uid="uid://c46faudajs5p6" path="res://addons/plugin_devtools/src/tools_dock/theme/styles.tscn" id="3_qnip2"]
+[ext_resource type="PackedScene" uid="uid://girnjo3kex01" path="res://addons/plugin_devtools/src/tools_dock/theme/colors.tscn" id="7_wxbfa"]
+[ext_resource type="PackedScene" uid="uid://dbblg6h6rqrkk" path="res://addons/plugin_devtools/src/tools_dock/theme/constants.tscn" id="9_cbrw0"]
+[ext_resource type="PackedScene" uid="uid://cek7ids6yldml" path="res://addons/plugin_devtools/src/tools_dock/theme/fonts.tscn" id="11_ixii8"]
 
 [sub_resource type="SVGTexture" id="SVGTexture_ib2jp"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><linearGradient id=\"a\" x2=\"0\" y2=\"16\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".188\" stop-color=\"#ff4545\"/><stop stop-color=\"#ffe345\"/><stop offset=\".313\" stop-color=\"#ffe345\"/><stop stop-color=\"#80ff45\"/><stop offset=\".438\" stop-color=\"#80ff45\"/><stop stop-color=\"#45ffa2\"/><stop offset=\".563\" stop-color=\"#45ffa2\"/><stop stop-color=\"#45d7ff\"/><stop offset=\".688\" stop-color=\"#45d7ff\"/><stop stop-color=\"#8045ff\"/><stop offset=\".813\" stop-color=\"#8045ff\"/><stop stop-color=\"#ff4596\"/></linearGradient><path fill=\"url(#a)\" d=\"M8 1c-.75 1.305-1.654 2.427-2.5 3.5-1 1.208-1.865 2.349-2.346 3.5-.24.57-.404 1.148-.404 1.75s.126 1.2.322 1.75C3.795 13.535 5.718 15 8 15s4.205-1.465 4.928-3.5c.196-.55.322-1.148.322-1.75s-.164-1.18-.404-1.75C12.365 6.849 11.5 5.708 10.5 4.5 9.654 3.427 8.753 2.305 8 1Z\"/></svg>
@@ -63,6 +66,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Control"
 script = ExtResource("2_sca8y")
+options = PackedStringArray("Control", "BaseButton", "Button", "Label", "Range", "ScrollBar", "HScrollBar", "VScrollBar", "ProgressBar", "Slider", "HSlider", "VSlider", "CheckBox", "CheckButton", "LinkButton", "Panel", "TextureRect", "ColorRect", "NinePatchRect", "ReferenceRect", "Container", "AspectRatioContainer", "TabContainer", "TabBar", "Separator", "HSeparator", "VSeparator", "TextureButton", "BoxContainer", "HBoxContainer", "VBoxContainer", "GridContainer", "CenterContainer", "ScrollContainer", "PanelContainer", "FlowContainer", "HFlowContainer", "VFlowContainer", "MarginContainer", "TextureProgressBar", "ItemList", "LineEdit", "VideoStreamPlayer", "Tree", "TextEdit", "CodeEdit", "MenuBar", "MenuButton", "OptionButton", "SpinBox", "ColorPicker", "ColorPickerButton", "RichTextLabel", "SubViewportContainer", "SplitContainer", "HSplitContainer", "VSplitContainer", "GraphElement", "GraphNode", "GraphFrame", "GraphEdit", "FoldableContainer", "GDTerm", "EditorToaster", "ScriptEditor", "ScriptEditorBase", "EditorInspector", "EditorProperty", "EditorSpinSlider", "EditorResourcePicker", "EditorScriptPicker", "FileSystemDock", "OpenXRInteractionProfileEditorBase", "OpenXRInteractionProfileEditor", "OpenXRBindingModifierEditor", "ProgressDialog", "EditorTitleBar", "SplitContainerDragger", "DockSplitContainer", "EditorSceneTabs", "EditorMainScreen", "EditorPropertyPath", "EditorInspectorCategory", "ProjectExportTextureFormatError", "SectionedInspector", "EventListenerLineEdit", "EditorVariantTypeOptionButton", "ActionMapEditor", "LocalizationEditor", "EditorAutoloadSettings", "ShaderGlobalsEditor", "GroupSettingsEditor", "EditorValidationPanel", "EditorPluginSettings", "ImportDefaultsEditor", "SpinBoxLineEdit", "EditorHelpBit", "EditorVersionButton", "EditorRunNative", "EditorRunBar", "BackgroundProgress", "SceneTreeEditor", "SceneTreeDock", "FileSystemList", "EditorObjectSelector", "InspectorDock", "ImportDock", "ConnectionsDock", "GroupsEditor", "NodeDock", "HistoryDock", "EditorBottomPanel", "EditorLog", "EditorDebuggerInspector", "EditorExpressionEvaluator", "EditorProfiler", "EditorVisualProfiler", "EditorPerformanceProfiler", "ScriptEditorDebugger", "EditorDebuggerTree", "EditorDebuggerNode", "AnimationTimelineEdit", "AnimationMarkerEdit", "AnimationBezierTrackEdit", "AnimationTrackEditor", "AnimationPlayerEditor", "EditorZoomWidget", "EditorTranslationPreviewButton", "CanvasItemEditorViewport", "CanvasItemEditor", "Node3DEditorViewportContainer", "ViewportNavigationControl", "ViewportRotationControl", "Node3DEditorViewport", "Node3DEditor", "WindowWrapper", "FindReplaceBar", "ScreenSelect", "FindInFilesPanel", "LayerHost", "EmbeddedProcessBase", "EmbeddedProcessMacOS", "GameView", "EditorAudioBuses", "EditorAssetLibrary", "GraphEditFilter", "GraphEditMinimap", "AnimationTreeNodeEditorPlugin", "AnimationNodeBlendTreeEditor", "AnimationNodeBlendSpace1DEditor", "AnimationNodeBlendSpace2DEditor", "AnimationNodeStateMachineEditor", "AnimationTreeEditor", "ControlEditorPopupButton", "ControlEditorPresetPicker", "AnchorPresetPicker", "SizeFlagPresetPicker", "ControlEditorToolbar", "MeshInstance3DEditor", "MeshLibraryEditor", "MultiMeshEditor", "Polygon3DEditor", "ResourcePreloaderEditor", "ShaderFileEditor", "SpriteFramesEditor", "ThemeTypeEditor", "ThemeItemImportTree", "ThemeEditorPreview", "DefaultThemeEditorPreview", "ThemeEditor", "Camera2DEditor", "AbstractPolygon2DEditor", "CollisionPolygon2DEditor", "CollisionShape2DEditor", "LightOccluder2DEditor", "Line2DEditor", "Path2DEditor", "Polygon2DEditor", "Cast2DEditor", "Skeleton2DEditor", "Sprite2DEditor", "EditorPropertyInteger", "EditorPropertyVectorN", "EditorPropertyVector2i", "TileAtlasView", "TileSetAtlasSourceEditor", "TileSetScenesCollectionSourceEditor", "TileSetEditor", "TileMapLayerEditor", "CSGShapeEditor", "ReplicationEditor", "NavigationLink2DEditor", "NavigationRegion2DEditor", "NavigationObstacle2DEditor", "NavigationRegion3DEditor", "QuickOpenResultContainer", "GridMapEditor", "EditorNetworkProfiler", "EditorAudioMeterNotches", "EditorAudioBus", "EditorPropertyText", "EditorPropertyResource", "EditorPropertyCheck", "EditorPropertyLocalizableString", "EditorPropertyMultilineText", "EditorPropertyEnum", "EditorInspectorSection", "ControlPositioningWarning", "EditorPropertyVector2", "EditorPropertyAnchorsPreset", "EditorPropertyFloat", "EditorPropertySizeFlags", "EditorPropertyNodePath", "EditorPropertyTextEnum", "EditorPropertyColor", "EditorPropertyLayersGrid", "EditorPropertyLayers", "EditorPropertyArray", "EditorInspectorArray", "ArrayPanelContainer", "EditorPaginator", "EditorPropertyFlags", "EditorPropertyLocale", "HighlightedLabel", "QuickOpenResultListItem", "QuickOpenResultGridItem", "QuickOpenResultItem")
 popup_panel_style = null
 
 [node name="TypeVariationLabel" type="Label" parent="HBoxContainer"]
@@ -80,10 +84,11 @@ popup_panel_style = null
 [node name="ResourceType" type="TabContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 script = ExtResource("1_y220a")
 
 [node name="Icons" parent="ResourceType" instance=ExtResource("2_xviqr")]
+visible = false
 layout_mode = 2
 metadata/icon = SubResource("SVGTexture_wat77")
 
@@ -91,5 +96,17 @@ metadata/icon = SubResource("SVGTexture_wat77")
 visible = false
 layout_mode = 2
 metadata/icon = SubResource("SVGTexture_bb7lm")
+
+[node name="Colors" parent="ResourceType" instance=ExtResource("7_wxbfa")]
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="Fonts" parent="ResourceType" instance=ExtResource("11_ixii8")]
+visible = false
+layout_mode = 2
+
+[node name="Constants" parent="ResourceType" instance=ExtResource("9_cbrw0")]
+layout_mode = 2
+metadata/_edit_lock_ = true
 
 [connection signal="text_submitted" from="HBoxContainer/ControlTypeSearchButton" to="HBoxContainer/TypeVariationsSearchButton" method="_on_control_type_text_changed"]
