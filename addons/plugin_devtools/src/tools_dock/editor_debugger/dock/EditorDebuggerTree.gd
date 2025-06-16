@@ -1,11 +1,16 @@
 @tool
 extends Tree
 
-signal updated_entries(entries: int)
+signal updated_entries(entries: int, time: int)
 
 @export var updates_per_frame := 500
 @export var wait_between_updates := 2.0
 const METADATA_NODE_NAME = 0
+
+enum {
+	VISIBILITY_BUTTON,
+	INTERNAL_INDICATOR,
+}
 
 var all_nodes := PackedStringArray()
 var search_match_highlight : Color
@@ -16,6 +21,19 @@ var updating := false
 var filtering := false
 
 @onready var update_progress := %UpdateProgress
+@onready var only_controls_checkbox := %OnlyControlsCheckbox
+
+var parent_list : Array[Node] = []
+
+func _enter_tree() -> void:
+	parent_list.clear()
+	var parent := get_parent()
+	while parent:
+		parent_list.push_back(parent)
+		parent = parent.get_parent()
+
+# func _exit_tree() -> void:
+# 	parent_list.clear()
 
 func _ready() -> void:
 	search_match_highlight = EditorInterface.get_editor_theme().get_color("accent_color", "Editor")
@@ -28,6 +46,7 @@ func update() -> void:
 	if filtering: return
 	if !visible: return
 	if is_part_of_edited_scene(): return
+	var stopwatch := H.Timing.Stopwatch.new()
 	updating = true
 	updated_this_update = 0
 	update_progress.modulate.a = 0.2
@@ -39,13 +58,15 @@ func update() -> void:
 		return
 	var root_view := get_root()
 	if root_view == null:
-		root_view = _create_node_view(root, null, false)
+		root_view = _create_tree_item(root, null, false)
 	await _update_branch(root, root_view)
-	updating = false
 
+	updating = false
 	updated_last_update = updated_this_update
-	updated_entries.emit(updated_this_update)
 	update_progress.modulate.a = 0.0
+
+	updated_entries.emit(updated_this_update, stopwatch.get_elapsed())
+
 	await get_tree().create_timer(wait_between_updates).timeout
 	update.call_deferred()
 
@@ -77,13 +98,13 @@ func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 		var internal := child not in non_internal_children
 		var child_item: TreeItem
 		if i >= len(child_items):
-			child_item = _create_node_view(child, root_item, internal)
+			child_item = _create_tree_item(child, root_item, internal)
 			child_items.append(child_item)
 		else:
 			child_item = child_items[i]
 			var child_view_name: String = child_item.get_metadata(METADATA_NODE_NAME)
 			if child.name != child_view_name:
-				_update_node_view(child, child_item, internal)
+				_update_tree_item(child, child_item, internal)
 		await _update_branch(child, child_item)
 	
 	# Remove excess tree items
@@ -91,29 +112,48 @@ func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 		for i in range(root_node.get_child_count(true), len(child_items)):
 			child_items[i].free()
 
-func _create_node_view(node: Node, parent_view: TreeItem, internal: bool) -> TreeItem:
+func _create_tree_item(node: Node, parent_item: TreeItem, internal: bool) -> TreeItem:
 	assert(node is Node)
-	assert(parent_view == null or parent_view is TreeItem)
-	var view := create_item(parent_view)
-	view.collapsed = true
-	_update_node_view(node, view, internal)
-	return view
+	assert(parent_item == null or parent_item is TreeItem)
+	var item := create_item(parent_item)
+	item.collapsed = true
+	_update_tree_item(node, item, internal)
+	return item
 
-func _update_node_view(node: Node, view: TreeItem, internal: bool) -> void:
+func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 	assert(node is Node)
-	assert(view is TreeItem)
+	assert(item is TreeItem)
 	
 	var icon_texture := H.Editor.IconGrabber.get_class_icon(H.Scripts.get_class_name_or_script_name(node), "Node")
 	
-	view.set_icon(0, icon_texture)
+	item.set_icon(0, icon_texture)
 	var c_name := H.Scripts.get_class_name_or_script_name(node)
 	var node_name := &"" if "@" in node.name else node.name
 	var display_text := '"%s" (%s)' % [node_name, c_name] if node_name else c_name
-	view.set_text(0, display_text)
+
+	item.clear_buttons()
+	item.set_text(0, display_text)
+
 	if internal:
-		view.set_custom_color(0, Color(Color.WHITE, 0.4))
-	
-	view.set_metadata(METADATA_NODE_NAME, node.name)
+		item.set_custom_color(0, Color(Color.WHITE, 0.4))
+		item.add_button(0, _theme_icon("GuiSliderGrabber"), -1, true, "Internal Child")
+
+
+	# last
+	_update_visibility_button(node, item)
+
+	item.set_metadata(METADATA_NODE_NAME, node.name)
+
+func _theme_icon(icon_name: String) -> Texture2D:
+	return EditorInterface.get_inspector().get_theme_icon(icon_name, "EditorIcons")
+
+func _update_visibility_button(node: Node, item: TreeItem) -> void:
+	if "visible" in node:
+		var is_parent := node in parent_list
+		var icon_name := "GuiVisibilityVisible" if node.visible else "GuiVisibilityHidden"
+		var icon := _theme_icon(icon_name)
+		var tooltip := "Toggle Visibility" if !is_parent else "Cannot Toggle Visibility of Parents"
+		item.add_button(0, icon, VISIBILITY_BUTTON, is_parent, tooltip)
 
 func focus_node(node: Node) -> void:
 	var parent: Node = get_tree().root
@@ -179,3 +219,40 @@ func collapse_except_selected() -> void:
 	if selected:
 		selected.uncollapse_tree()
 		set_selected(selected, 0)
+
+func _reset_tree(root: TreeItem = null) -> void:
+	if !root:
+		root = get_root()
+	root.set_collapsed_recursive(true)
+	for item in root.get_children():
+		item.visible = true
+		item.set_custom_bg_color(0, Color.TRANSPARENT)
+		_reset_tree(item)
+
+func filter(text: String, root : TreeItem = null, data := PackedStringArray([""])) -> void:
+	if !text:
+		_reset_tree()
+		return
+	if !root:
+		root = get_root()
+	for item in root.get_children():
+		var item_text := item.get_text(0)
+		data[0] = item_text
+		var item_matches := false
+		if false: # TODO allow selecting fuzzy search option
+			var matches := H.Search.FuzzySearch.search(text, data)
+			item_matches = item_text in matches
+		else:
+			item_matches = text.to_lower() in item_text.to_lower()
+		if item_matches:
+			item.visible = true
+			item.set_custom_bg_color(0, search_match_highlight, true)
+			item.uncollapse_tree()
+			var parent := item.get_parent()
+			while parent:
+				parent.visible = true
+				parent = parent.get_parent()
+			continue
+		item.visible = false
+		item.set_custom_bg_color(0, Color.TRANSPARENT)
+		filter(text, item, data)

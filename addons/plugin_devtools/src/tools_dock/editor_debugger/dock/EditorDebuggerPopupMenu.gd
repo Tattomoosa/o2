@@ -6,7 +6,7 @@ signal copy_path_to_clipboard
 signal copy_node_types_to_clipboard
 
 const EditorDebuggerTree := preload("EditorDebuggerTree.gd")
-@onready var _tree : EditorDebuggerTree = %Tree
+@onready var _tree : EditorDebuggerTree = %EditorDebuggerTree
 
 enum POPUP_ACTIONS {
 	SAVE_BRANCH_AS_SCENE,
@@ -41,7 +41,6 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 	hide()
 	match id:
 		POPUP_ACTIONS.SAVE_BRANCH_AS_SCENE:
-			# _save_branch_file_dialog.popup_centered_ratio()
 			save_branch_as_scene.emit()
 		
 		POPUP_ACTIONS.COPY_PATH_TO_CLIPBOARD:

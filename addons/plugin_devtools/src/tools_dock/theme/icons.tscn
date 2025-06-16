@@ -28,32 +28,6 @@ metadata/_tab_index = 0
 layout_mode = 2
 columns = 2
 
-[node name="LabelAndCopiedLine" type="HBoxContainer" parent="GridContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GridContainer/LabelAndCopiedLine"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-clip_text = true
-text_overrun_behavior = 1
-
-[node name="Copied" type="TextureRect" parent="GridContainer/LabelAndCopiedLine"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-stretch_mode = 5
-script = ExtResource("2_6hgjt")
-
-[node name="HSlider" type="HSlider" parent="GridContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-min_value = 20.0
-max_value = 44.0
-step = 0.01000000000931322
-value = 32.000000011175864
-
 [node name="LineEdit" type="LineEdit" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -131,6 +105,32 @@ popup/item_31/text = "CodeEdit"
 popup/item_31/id = 31
 script = ExtResource("1_bxo5q")
 
+[node name="LabelAndCopiedLine" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GridContainer/LabelAndCopiedLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Copied" type="TextureRect" parent="GridContainer/LabelAndCopiedLine"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+script = ExtResource("2_6hgjt")
+
+[node name="HSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 20.0
+max_value = 44.0
+step = 0.01000000000931322
+value = 32.000000011175864
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
@@ -150,8 +150,8 @@ last_wrap_alignment = 1
 script = ExtResource("2_p7fwl")
 theme_type = "EditorIcons"
 
-[connection signal="value_changed" from="GridContainer/HSlider" to="PanelContainer/ScrollContainer/Icons" method="set_item_size"]
 [connection signal="text_changed" from="GridContainer/LineEdit" to="PanelContainer/ScrollContainer/Icons" method="filter"]
 [connection signal="type_selected" from="GridContainer/OptionButton" to="PanelContainer/ScrollContainer/Icons" method="set_theme_type"]
+[connection signal="value_changed" from="GridContainer/HSlider" to="PanelContainer/ScrollContainer/Icons" method="set_item_size"]
 [connection signal="button_pressed" from="PanelContainer/ScrollContainer/Icons" to="GridContainer/LabelAndCopiedLine/Copied" method="show_and_fade"]
 [connection signal="mouse_hovered_button" from="PanelContainer/ScrollContainer/Icons" to="GridContainer/LabelAndCopiedLine/Label" method="set_text"]

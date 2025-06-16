@@ -41,6 +41,7 @@ metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -59,6 +60,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 metadata/icon = SubResource("SVGTexture_wat77")
+metadata/_edit_lock_ = true
 
 [node name="Drag & Drop" parent="VBoxContainer/TabContainer" instance=ExtResource("7_wat77")]
 visible = false

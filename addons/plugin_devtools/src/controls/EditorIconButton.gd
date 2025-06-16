@@ -21,7 +21,10 @@ func _update_panel() -> void:
 
 func _update_icon() -> void:
 	var c := EditorInterface.get_base_control()
-	add_theme_icon_override("icon", c.get_theme_icon(icon_name, &"EditorIcons"))
+	if icon_name:
+		add_theme_icon_override("icon", c.get_theme_icon(icon_name, &"EditorIcons"))
+	else:
+		remove_theme_icon_override("icon")
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "icon":

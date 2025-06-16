@@ -11,7 +11,7 @@ signal node_selected(node: Node)
 @onready var _popup_menu : PopupMenu = get_node("PopupMenu")
 @onready var _inspection_checkbox : CheckBox = %ShowInInspectorCheckbox
 @onready var _highlight_checkbox : CheckBox = %HighlightNodeCheckbox
-@onready var _tree : Tree = %Tree
+@onready var _tree : Tree = %EditorDebuggerTree
 # @onready var _save_branch_file_dialog : FileDialog = get_node("SaveBranchFileDialog")
 
 const METADATA_NODE_NAME = 0
