@@ -2,7 +2,6 @@
 extends EditorPlugin
 
 const dock_splitter_scene : PackedScene = preload("src/dock_splitter.tscn")
-const Splitter := preload("src/Splitter.gd")
 
 const LEFT_SPLITTER := 0
 const RIGHT_SPLITTER := 1
@@ -16,6 +15,7 @@ var docks_parent : Node
 var _docks : Dictionary[int, Node] = {}
 
 func _enter_tree() -> void:
+	name = "DockSplitter"
 	if !get_parent().is_node_ready():
 		await get_parent().ready
 	_register_commands()

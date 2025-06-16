@@ -2,7 +2,7 @@
 extends EditorThemeExplorerList
 
 const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
-const COPY_TEXT := 'EditorInterface.get_base_control().theme.get_stylebox("%s", "%s")'
+const COPY_TEXT := 'EditorInterface.get_editor_theme().get_stylebox("%s", "%s")'
 
 func _build_item(stylebox_name: String) -> Button:
 	var t := EditorInterface.get_editor_theme()

@@ -3,7 +3,7 @@ extends TabContainer
 
 var tab_bar : TabBar
 
-signal set_buttons_enabled(value: bool)
+signal set_buttons_disabled(value: bool)
 
 func _ready() -> void:
 	tab_bar = get_tab_bar()
@@ -17,13 +17,6 @@ func _ready() -> void:
 func reload() -> void:
 	var node := get_child(current_tab)
 	var data : Variant = get_tab_metadata(current_tab)
-	# prints(
-	# 	"reload",
-	# 	"current tab",
-	# 	current_tab,
-	# 	"current tab metadata",
-	# 	tab_bar.get_tab_metadata(current_tab)
-	# )
 	if data is Node:
 		var new_node = data.duplicate()
 		var idx := current_tab
@@ -40,7 +33,7 @@ func reload() -> void:
 
 func _child_entered(_node: Node) -> void:
 	if get_child_count() > 1:
-		set_buttons_enabled.emit(true)
+		set_buttons_disabled.emit(false)
 	await get_tree().process_frame
 	if get_child_count() > 1 and current_tab == 0: 
 		current_tab = 1
@@ -49,6 +42,7 @@ func _child_exiting(node: Node) -> void:
 	await node.tree_exited
 	if get_child_count() == 1:
 		get_child(0).visible = true
+		set_buttons_disabled.emit(true)
 
 func _close_tab(idx: int) -> void:
 	if idx == 0:
@@ -88,16 +82,3 @@ func _dropped_data(data: Variant) -> void:
 				push_error("Root node must be Control!")
 			var node := scene_file.instantiate()
 			_add_node(node)
-
-		# prints(
-		# 	"added node to index",
-		# 	node.get_index(),
-		# 	"current tab",
-		# 	current_tab,
-		# 	"node index metadata",
-		# 	tab_bar.get_tab_metadata(node.get_index()),
-		# 	"current tab metadata",
-		# 	tab_bar.get_tab_metadata(current_tab)
-		# )
-
-# func _on_replacing_by() -> void:

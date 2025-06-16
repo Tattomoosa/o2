@@ -22,6 +22,7 @@ func _get_plugin_icon() -> Texture2D:
 	return ICON
 
 func _enable_plugin() -> void:
+	name = "O₂"
 	var path := (get_script() as Script).resource_path.get_base_dir()
 	var o2_path := path.path_join(O2_PATH)
 	add_autoload_singleton(O2_INSTANCE, o2_path)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://byretu1meehd2"]
 
-[ext_resource type="Script" uid="uid://cjt4pic7fglfi" path="res://addons/dock_splitter/src/Splitter.gd" id="1_g5oi2"]
+[ext_resource type="Script" uid="uid://cjt4pic7fglfi" path="res://addons/o₂/src/node/control/Splitter.gd" id="1_g5oi2"]
 [ext_resource type="Script" uid="uid://dpk3iwvo2acqc" path="res://addons/dock_splitter/src/TakesDroppedTabsWhenEmpty.gd" id="2_2tn1u"]
 [ext_resource type="Script" uid="uid://bkxoefiwrnqv2" path="res://addons/dock_splitter/src/TabBarSplitterPopupMenu.gd" id="3_ugv7b"]
 

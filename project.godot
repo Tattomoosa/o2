@@ -30,7 +30,7 @@ window/size/mode=4
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/o₂/addons/metadata_scripts/plugin.cfg", "res://addons/o₂/addons/namespacer/plugin.cfg", "res://addons/o₂/addons/variant_resources/plugin.cfg", "res://addons/o₂/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdterm/plugin.cfg", "res://addons/hide_stuff/plugin.cfg", "res://addons/inspector_tabs/plugin.cfg", "res://addons/o₂/addons/metadata_scripts/plugin.cfg", "res://addons/o₂/addons/variant_resources/plugin.cfg", "res://addons/o₂/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [gui]
 
@@ -55,19 +55,19 @@ theme/plugin_toggle_buttons/toggle_plugin_list={
 [quick_settings]
 
 settings/window_mode_menu/hide_fullscreen=true
-settings/plugins_menu/hide_nested_plugins=true
 toolbar/window_mode_menu_enabled=true
 toolbar/external_editor_toggle_enabled=true
 settings/plugin_toggle_buttons/toggle_plugin_list={
 "res://addons/dock_splitter/plugin.cfg": true,
 "res://addons/gdterm/plugin.cfg": false,
-"res://addons/hide_stuff/plugin.cfg": true,
+"res://addons/hide_stuff/plugin.cfg": false,
 "res://addons/inspector_tabs/plugin.cfg": false,
-"res://addons/o₂/addons/metadata_scripts/plugin.cfg": true,
-"res://addons/o₂/addons/namespacer/plugin.cfg": true,
-"res://addons/o₂/addons/variant_resources/plugin.cfg": true,
+"res://addons/o₂/addons/metadata_scripts/plugin.cfg": false,
+"res://addons/o₂/addons/namespacer/plugin.cfg": false,
+"res://addons/o₂/addons/variant_resources/plugin.cfg": false,
 "res://addons/o₂/plugin.cfg": true,
 "res://addons/plugin_devtools/plugin.cfg": true,
 "res://addons/plugin_devtools/src/load_control_into_dock/plugin.cfg": false,
 "res://addons/quick_settings/plugin.cfg": false
 }
+settings/plugins_menu/hide_nested_plugins=false

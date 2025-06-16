@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 # const LoadControlIntoDockPlugin := preload("load_control_into_dock.gd")
-const IconGrabber := preload("uid://bqm5oyuqkkn2r")
+const IconGrabber := H.Editor.IconGrabber
 const PLUGIN_ICON := preload("uid://d173jdavljnfr")
 
 # Scene Dock

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c46faudajs5p6"]
+[gd_scene load_steps=9 format=3 uid="uid://c46faudajs5p6"]
 
 [ext_resource type="Script" uid="uid://dlnr7fechymbf" path="res://addons/o₂/addons/metadata_scripts/src/metadata_scripts/MetadataScript.gd" id="1_sl6ky"]
 [ext_resource type="Script" uid="uid://dlbfpgvtclufx" path="res://addons/o₂/addons/metadata_scripts/src/metadata_scripts/MetadataScript_IfHasFeatureTag.gd" id="2_h36eb"]
@@ -6,9 +6,10 @@
 [ext_resource type="Script" uid="uid://da2vp20fitmmd" path="res://addons/o₂/src/editor/Controls/EditorThemeStyleBoxList.gd" id="4_a2cmt"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="4_h36eb"]
 [ext_resource type="StyleBox" uid="uid://c421eudbhrev3" path="res://addons/plugin_devtools/assets/styleboxes/transparency_checkerboard.tres" id="5_vdx1s"]
+[ext_resource type="Script" uid="uid://bhcff4uhe14kb" path="res://addons/plugin_devtools/src/tools_dock/theme/EditorScaledMarginContainer.gd" id="6_ded64"]
 
-[sub_resource type="Resource" id="Resource_4q140"]
-resource_path = "res://addons/plugin_devtools/src/tools_dock/theme/styles.tscn::Resource_4q140"
+[sub_resource type="Resource" id="Resource_ty8hl"]
+resource_path = "res://addons/plugin_devtools/src/tools_dock/theme/styles.tscn::Resource_ty8hl"
 resource_name = "IfHasFeatureTag"
 script = ExtResource("2_h36eb")
 feature = ""
@@ -26,7 +27,7 @@ metadata/_tab_index = 1
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
 columns = 2
-metadata/metadata_scripts = Array[ExtResource("1_sl6ky")]([SubResource("Resource_4q140")])
+metadata/metadata_scripts = Array[ExtResource("1_sl6ky")]([SubResource("Resource_ty8hl")])
 
 [node name="LineEdit" type="LineEdit" parent="GridContainer"]
 layout_mode = 2
@@ -232,7 +233,17 @@ theme_override_styles/panel = ExtResource("5_vdx1s")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Styles" type="HFlowContainer" parent="MarginContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("6_ded64")
+
+[node name="Styles" type="HFlowContainer" parent="MarginContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -242,7 +253,7 @@ script = ExtResource("4_a2cmt")
 theme_type = "EditorStyles"
 item_size = 60.0
 
-[connection signal="text_changed" from="GridContainer/LineEdit" to="MarginContainer/ScrollContainer/Styles" method="filter"]
-[connection signal="type_selected" from="GridContainer/OptionButton" to="MarginContainer/ScrollContainer/Styles" method="set_theme_type"]
-[connection signal="button_pressed" from="MarginContainer/ScrollContainer/Styles" to="GridContainer/Copied" method="show_and_fade"]
-[connection signal="mouse_hovered_button" from="MarginContainer/ScrollContainer/Styles" to="GridContainer/Label" method="set_text"]
+[connection signal="text_changed" from="GridContainer/LineEdit" to="MarginContainer/ScrollContainer/MarginContainer/Styles" method="filter"]
+[connection signal="type_selected" from="GridContainer/OptionButton" to="MarginContainer/ScrollContainer/MarginContainer/Styles" method="set_theme_type"]
+[connection signal="button_pressed" from="MarginContainer/ScrollContainer/MarginContainer/Styles" to="GridContainer/Copied" method="show_and_fade"]
+[connection signal="mouse_hovered_button" from="MarginContainer/ScrollContainer/MarginContainer/Styles" to="GridContainer/Label" method="set_text"]

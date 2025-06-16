@@ -50,7 +50,7 @@ func _create_popup() -> void:
 		# dim disabled icons
 		if !enabled:
 			_popup.set_item_icon_modulate(item_index, Color(Color.WHITE, 0.6))
-		if settings[SETTING_HIDE_NESTED_PLUGINS]:
+		if !settings[SETTING_HIDE_NESTED_PLUGINS]:
 			# indent nested plugins
 			var indent_amount := int(plugin_enable_string.count("/") * EditorInterface.get_editor_scale() / 2.0)
 			_popup.set_item_indent(item_index, indent_amount)

@@ -1,8 +1,6 @@
 @tool
 extends MenuButton
 
-const Splitter := preload("Splitter.gd")
-
 @export var splitter : Splitter
 
 var _popup : PopupMenu

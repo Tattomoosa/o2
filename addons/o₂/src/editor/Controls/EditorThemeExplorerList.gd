@@ -18,8 +18,8 @@ func set_theme_type(type: String) -> void:
 	_populate()
 
 func _populate() -> void:
-	print("populate")
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 	item_names = _get_item_names()
 	var loaded := 0
@@ -62,6 +62,10 @@ func _get_item_drag_data(_pos: Vector2, _button: Button) -> Variant:
 
 func _get_copy_format_string() -> String:
 	return "%s,%s"
+
+func set_item_size(new_size: float) -> void:
+	for child in get_children():
+		child.custom_minimum_size = Vector2.ONE * new_size * EditorInterface.get_editor_scale()
 
 func filter(text: String) -> void:
 	if text:

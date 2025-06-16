@@ -30,7 +30,8 @@ func _validate_property(property: Dictionary) -> void:
 		property.hint = PROPERTY_HINT_ENUM_SUGGESTION
 		property.hint_string = ",".join(EditorInterface.get_editor_theme().get_icon_list("EditorIcons"))
 	if property.name == "button_type":
-		var button_types := EditorInterface.get_editor_theme().get_type_variation_list("Button")
+		var button_types := PackedStringArray([""])
+		button_types.append_array(EditorInterface.get_editor_theme().get_type_variation_list("Button"))
 		property.hint = PROPERTY_HINT_ENUM_SUGGESTION
 		property.hint_string = ",".join(button_types)
 		

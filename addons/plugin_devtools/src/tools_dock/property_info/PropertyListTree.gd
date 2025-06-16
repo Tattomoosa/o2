@@ -107,19 +107,6 @@ func filter(text: String) -> void:
 		child.set_collapsed_recursive(true)
 	_filter_recurse(matches, root)
 
-func _reset_tree(root: TreeItem = null) -> void:
-	if !root:
-		root = get_root()
-		root.set_collapsed(false)
-		for child in root.get_children():
-			child.set_collapsed_recursive(true)
-	for item in root.get_children():
-		item.set_custom_bg_color(0, Color.TRANSPARENT)
-		item.clear_custom_color(0)
-		item.visible = true
-		_reset_tree(item)
-
-
 func _filter_recurse(matches: PackedStringArray, root: TreeItem) -> void:
 	for item : TreeItem in root.get_children():
 		if item.get_text(0) in matches:
@@ -139,6 +126,19 @@ func _filter_recurse(matches: PackedStringArray, root: TreeItem) -> void:
 			item.set_custom_bg_color(0, Color.TRANSPARENT)
 			item.visible = false
 		_filter_recurse(matches, item)
+
+func _reset_tree(root: TreeItem = null) -> void:
+	if !root:
+		root = get_root()
+		root.set_collapsed(false)
+		for child in root.get_children():
+			child.set_collapsed_recursive(true)
+	for item in root.get_children():
+		item.set_custom_bg_color(0, Color.TRANSPARENT)
+		item.clear_custom_color(0)
+		item.visible = true
+		_reset_tree(item)
+
 
 func _on_item_selected() -> void:
 	var item := get_selected()

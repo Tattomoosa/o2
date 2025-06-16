@@ -30,6 +30,7 @@ var quick_settings_toolbar : Control
 var watched_settings : Dictionary[String, Variant]
 
 func _enter_tree() -> void:
+	name = "QuickSettings"
 	# TODO make sure this means it'll be to the left of the spinner if the spinner is showing
 	await get_tree().process_frame
 	_startup()

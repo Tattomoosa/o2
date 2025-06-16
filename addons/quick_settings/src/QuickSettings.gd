@@ -28,12 +28,6 @@ func _style_button(button: Button) -> void:
 		button.add_theme_stylebox_override(state, EditorInterface.get_editor_theme().get_stylebox(state, "MainMenuBar"))
 	button.focus_mode = Control.FOCUS_NONE
 	button.icon = _size_icon(button.icon)
-	# if button is MenuButton:
-	# 	var popup : PopupMenu = button.get_popup()
-	# 	for i in popup.item_count:
-	# 		print(popup.get_item_text(i))
-	# 		var icon := popup.get_item_icon(i)
-	# 		popup.set_item_icon(i, _size_icon(icon))
 
 func _style_panel(panel: PanelContainer) -> void:
 	panel.add_theme_stylebox_override(
@@ -48,6 +42,9 @@ func _get_desired_icon_size() -> Vector2i:
 	return Vector2.ONE * 16 * EditorInterface.get_editor_scale()
 
 func _size_icon(tex: Texture2D) -> Texture2D:
+	# ???
+	if !tex:
+		return null
 	var tex_size := tex.get_size()
 	var desired_size : Vector2i = Vector2.ONE * 16 * EditorInterface.get_editor_scale()
 	if tex_size.is_equal_approx(desired_size):

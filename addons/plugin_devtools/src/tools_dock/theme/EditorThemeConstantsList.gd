@@ -14,7 +14,7 @@ func _build_item(constant_name: String) -> Button:
 	var constant := t.get_constant(constant_name, theme_type)
 	btn.text = "%s (%s)" % [constant_name, constant]
 	btn.custom_minimum_size.y = item_size * EditorInterface.get_editor_scale()
-	# btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	btn.set_meta("constant", constant)
 	return btn
 

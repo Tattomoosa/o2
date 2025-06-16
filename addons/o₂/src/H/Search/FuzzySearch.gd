@@ -160,28 +160,29 @@ static func score_fuzzy(str1: String, str2: String) -> Array:
 		if positions.size() < str1.length() - 1:
 			return [0, []]
 
-	return [dp[most_south_west_idx], tidy_positions(str2, positions)]
+	# return [dp[most_south_west_idx], tidy_positions(str2, positions)]
+	return [dp[most_south_west_idx], positions]
 
 
-static func tidy_positions(string: String, positions):
-	return positions
-	var positions_new := []
+# static func tidy_positions(string: String, positions):
+# 	return positions
+# 	var positions_new := []
 	
-	for p in positions:
-		var from = 0 if positions_new.is_empty() else positions_new.back() + 1
+# 	for p in positions:
+# 		var from = 0 if positions_new.is_empty() else positions_new.back() + 1
 		
-		for s in range(from, string.length()):
-			if string[s] == string[p]:
-				positions_new.append(s)
-				break
+# 		for s in range(from, string.length()):
+# 			if string[s] == string[p]:
+# 				positions_new.append(s)
+# 				break
 				
-	return positions_new
+# 	return positions_new
 
-static func score_fuzzy_path_(query:String, path:String):
+static func score_fuzzy_path_(query: String, path: String) -> Array:
 	var split_path = path.split("/")
 	var offset = 0
 	
-	var max = [0, []]
+	var max_ = [0, []]
 
 	for path_idx in split_path.size():
 		var end_of_path = path_idx == split_path.size() -1
@@ -191,8 +192,8 @@ static func score_fuzzy_path_(query:String, path:String):
 		if end_of_path:
 			res[0] *= 100
 
-		if res[0] > max[0]:
-			max = res
+		if res[0] > max_[0]:
+			max_ = res
 			
 			for i in res[1].size():
 				res[1][i] = res[1][i] + offset
@@ -201,10 +202,10 @@ static func score_fuzzy_path_(query:String, path:String):
 
 	#print(max)
 
-	return max
+	return max_
 
 static func _score_fuzzy_path(query:String, path:String):
-	var regex_pattern := " | /"
+	# var regex_pattern := " | /"
 	
 	var regex = RegEx.new()
 	regex.compile("[^\\/\\s]+")
@@ -217,26 +218,26 @@ static func _score_fuzzy_path(query:String, path:String):
 		var res = score_fuzzy_path_(token.strings[0], path)
 		if res[0] > 0:
 			r[0] += res[0]
-			r[1] = _mergeArrays(r[1], res[1])
+			r[1] = _merge_arrays(r[1], res[1])
 
 	r[1].sort()
 
 	return r
 
-static func _mergeArrays(arr1: Array, arr2: Array) -> Array:
-	var mergedArray = []
+static func _merge_arrays(arr1: Array, arr2: Array) -> Array:
+	var merged_array = []
 
 	# Add elements from the first array
 	for item in arr1:
-		if item not in mergedArray:
-			mergedArray.append(item)
+		if item not in merged_array:
+			merged_array.append(item)
 
 	# Add elements from the second array
 	for item in arr2:
-		if item not in mergedArray:
-			mergedArray.append(item)
+		if item not in merged_array:
+			merged_array.append(item)
 
-	return mergedArray
+	return merged_array
 
 static func search(text:String, data: PackedStringArray) -> PackedStringArray:
 	var scores := []

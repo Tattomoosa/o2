@@ -6,21 +6,8 @@ const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
 const COPY_TEXT := 'EditorInterface.get_editor_theme().get_color("%s", "%s")'
 
 func _ready() -> void:
-	_populate()
 	theme_type = EditorInterface.get_editor_theme().get_color_type_list()[0]
-
-func set_theme_type(type: String) -> void:
-	theme_type = type
 	_populate()
-
-func _populate() -> void:
-	super()
-	await get_tree().process_frame
-	var max_size_x = 0
-	for child in get_children():
-		max_size_x = max(max_size_x, child.size.x)
-	for child in get_children():
-		child.custom_minimum_size.x = max_size_x
 
 func _get_item_names() -> PackedStringArray:
 	var t := EditorInterface.get_editor_theme()
@@ -48,7 +35,7 @@ func _build_item(color_name: String) -> Button:
 	b.text = color_name
 	b.tooltip_text = color_name
 	b.name = color_name
-	# b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return b
 
 func _load_icon(icon_name: String) -> Texture2D:

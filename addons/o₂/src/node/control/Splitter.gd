@@ -1,4 +1,5 @@
 @tool
+class_name Splitter
 extends SplitContainer
 
 signal can_close(value: bool)

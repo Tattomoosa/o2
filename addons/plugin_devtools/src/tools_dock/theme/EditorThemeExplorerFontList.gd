@@ -2,7 +2,7 @@
 extends EditorThemeExplorerList
 
 const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
-const COPY_TEXT := 'EditorInterface.get_base_control().theme.get_font("%s", "%s")'
+const COPY_TEXT := 'EditorInterface.get_editor_theme().get_font("%s", "%s")'
 
 func _build_item(font_name: String) -> Button:
 	var t := EditorInterface.get_editor_theme()
@@ -19,7 +19,7 @@ func _build_item(font_name: String) -> Button:
 		btn.add_theme_font_size_override("font_size", font_size)
 	btn.add_theme_font_override("font", font)
 	btn.custom_minimum_size.y = item_size * EditorInterface.get_editor_scale()
-	# btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	btn.text = font_name
 	btn.set_meta("font", font)
 	return btn

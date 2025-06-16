@@ -1,8 +1,6 @@
-# Stolen shamelessly from
+# Taken from
 # https://github.com/PiCode9560/Godot-Inspector-Tabs/blob/main/addons/inspector_tabs/icon_grabber.gd
-# and modified to be self-contained and refcounted
-
-# extends RefCounted
+# and modified to be self-contained and static and handle a couple edge cases differently
 
 static var UNKNOWN_ICON: Texture2D = EditorInterface.get_base_control().get_theme_icon("", "EditorIcons")
 
