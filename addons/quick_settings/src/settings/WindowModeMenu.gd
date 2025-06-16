@@ -55,6 +55,7 @@ func _create_popup() -> void:
 		popup.add_icon_radio_check_item(WINDOW_MODE_ICONS[4], WINDOW_MODE_NAMES[4], DisplayServer.WindowMode.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	var value : int = ProjectSettings.get_setting(WINDOW_MODE_PROJECT_SETTING)
 	for i in popup.item_count:
+		popup.set_item_icon_max_width(i, int(16 * EditorInterface.get_editor_scale()))
 		if popup.get_item_id(i) == value:
 			popup.set_item_checked(i, true)
 	_update()

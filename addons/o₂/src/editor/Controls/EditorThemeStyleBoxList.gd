@@ -1,7 +1,7 @@
 @tool
 extends Container
 
-const COPY_TEXT := 'EditorInterface.get_inspector().get_theme_stylebox("%s", "%s")'
+const COPY_TEXT := 'EditorInterface.get_base_control().get_theme_stylebox("%s", "%s")'
 
 signal mouse_hovered_button(item_name: String)
 signal button_pressed

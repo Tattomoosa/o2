@@ -24,6 +24,8 @@ func _update_icon() -> void:
 	add_theme_icon_override("icon", c.get_theme_icon(icon_name, &"EditorIcons"))
 
 func _validate_property(property: Dictionary) -> void:
+	if property.name == "icon":
+		property.usage = PROPERTY_USAGE_NONE
 	if property.name == "icon_name":
 		property.hint = PROPERTY_HINT_ENUM_SUGGESTION
 		property.hint_string = ",".join(EditorInterface.get_editor_theme().get_icon_list("EditorIcons"))

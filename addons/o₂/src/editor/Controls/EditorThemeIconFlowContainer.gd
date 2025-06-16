@@ -60,7 +60,8 @@ func _get_item_drag_data(_pos: Vector2, button: Button) -> Variant:
 	d_preview.texture = button.icon
 	d_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	d_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	d_preview.position -= Vector2(50,50)
+	d_preview.position -= Vector2(25,25) * EditorInterface.get_editor_scale()
+	d_preview.modulate = Color(Color.WHITE, 0.5)
 	d_preview.size = button.size
 	d_offset.add_child(d_preview)
 	set_drag_preview(d_offset)
