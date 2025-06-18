@@ -1,5 +1,5 @@
 ## Gets the bit value of a mask/flag int at a specific index
-static func get_bit_value(mask: int, bit_index: int) -> bool:
+static func get_bit_value_at(mask: int, bit_index: int) -> bool:
 	return mask & (1 << bit_index) != 0
 
 ## Returns a copy of a mask/flag with a bit set
@@ -12,6 +12,12 @@ static func without_bit_at(mask: int, bit_index: int) -> int:
 
 static func has_flag(mask: int, flag: int) -> bool:
 	return mask & flag != 0
+
+static func set_flag(mask: int, flag: int) -> bool:
+	return mask | flag
+
+static func unset_flag(mask: int, flag: int) -> bool:
+	return mask & ~flag
 
 static func has_any(mask: int, bits: Array[int]) -> bool:
 	for bit in bits:

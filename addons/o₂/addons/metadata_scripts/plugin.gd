@@ -16,6 +16,7 @@ func _disable_plugin() -> void:
 	pass
 
 func _enter_tree() -> void:
+	name = "Metadata Scripts"
 	TreeWatcher.register_plugin(MetadataScriptTreeWatcherPlugin.new())
 	add_inspector_plugin(editor_inspector_plugin)
 

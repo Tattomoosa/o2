@@ -114,7 +114,6 @@ func _filter_recurse(matches: PackedStringArray, root: TreeItem) -> void:
 			item.set_custom_bg_color(0, search_match_highlight, true)
 			if matches.size() == 1:
 				# huh. says its doing it but its not...
-				print("SELECTING")
 				item.select(0)
 			while parent:
 				parent.collapsed = false

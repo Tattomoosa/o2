@@ -1,11 +1,21 @@
-[gd_scene load_steps=15 format=3 uid="uid://dh6b4o5wvviu0"]
+[gd_scene load_steps=68 format=3 uid="uid://dh6b4o5wvviu0"]
 
 [ext_resource type="Script" uid="uid://bs0o7nivlx6bc" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyListTree.gd" id="1_k7j3a"]
 [ext_resource type="Script" uid="uid://biow85b306t1r" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertySelectorButton.gd" id="1_ssl5k"]
+[ext_resource type="Script" uid="uid://cj0mikwtggy50" path="res://addons/plugin_devtools/src/controls/TabDataFromMetadata.gd" id="1_tr21w"]
 [ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/plugin_devtools/src/controls/EditorIconButton.gd" id="2_v6nks"]
+[ext_resource type="Texture2D" uid="uid://lepe3o8ycs32" path="res://addons/plugin_devtools/assets/icons/ExploreProperties.svg" id="2_ygmkk"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="3_afeo8"]
 [ext_resource type="Script" uid="uid://bywp3i4x7sw0v" path="res://addons/plugin_devtools/src/tools_dock/property_info/NoObjectSelectedNotice.gd" id="3_ngycd"]
 [ext_resource type="Script" uid="uid://cgayqbdimevbw" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyInfoPrinter.gd" id="4_bgk1f"]
+[ext_resource type="Texture2D" uid="uid://dv583l6t0pm2u" path="res://addons/plugin_devtools/assets/icons/PropertyBuilder.svg" id="9_omp2c"]
+[ext_resource type="Script" uid="uid://yavv35xcxv1h" path="res://addons/plugin_devtools/src/tools_dock/property_info/VariantOptionButton.gd" id="11_bgdqn"]
+[ext_resource type="Script" uid="uid://bmbvnu24fet4c" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyInfoHintOptionButton.gd" id="11_s868t"]
+[ext_resource type="Script" uid="uid://bpt78jmykjfya" path="res://addons/plugin_devtools/src/tools_dock/property_info/EditorPropertyParent.gd" id="12_0xa5m"]
+[ext_resource type="Script" uid="uid://bepnqbb46wygl" path="res://addons/plugin_devtools/src/controls/EditorStylesPanelContainer.gd" id="12_3pd7g"]
+[ext_resource type="Script" uid="uid://30wjvqtpww4e" path="res://addons/plugin_devtools/src/tools_dock/property_info/PropertyUsageSelector.gd" id="12_5nohi"]
+[ext_resource type="Script" uid="uid://dobkh7g5dcvwy" path="res://addons/plugin_devtools/src/tools_dock/property_info/HintStringEditor.gd" id="12_s868t"]
+[ext_resource type="Script" uid="uid://cmmjx18rtghu3" path="res://addons/plugin_devtools/src/tools_dock/property_info/UsagePrinter.gd" id="15_omp2c"]
 
 [sub_resource type="SVGTexture" id="SVGTexture_16pao"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#fff\" d=\"M8 1a7 7 0 0 0 0 14A7 7 0 0 0 8 1zM7 4h2v2H7zm0 3h2v5H7z\"/></svg>
@@ -18,7 +28,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_inqcu"]
+[sub_resource type="SVGTexture" id="SVGTexture_omp2c"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M6.021 3A3 3 0 0 0 3 6v7h2v-3h2V8H5V6a1 1 0 0 1 1.707-.707l1.414-1.414A3 3 0 0 0 6.021 3zM9 6c-1.326 2.659-1.34 4.325 0 7h2c-1.34-2.675-1.326-4.341 0-7zm4 0c1.326 2.659 1.34 4.325 0 7h2c1.34-2.675 1.326-4.341 0-7zM1 11a1 1 0 0 0 0 2 1 1 0 0 0 0-2z\"/></svg>
 "
 base_scale = 2.0
@@ -29,7 +39,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_ngycd"]
+[sub_resource type="SVGTexture" id="SVGTexture_s868t"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M7 4v9h2v-3h1a3 3 0 0 0 0-6zm2 2h1a1 1 0 0 1 0 2H9zm-5 5a1 1 0 0 0 0 2 1 1 0 0 0 0-2z\"/></svg>
 "
 base_scale = 2.0
@@ -40,7 +50,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_ofgxn"]
+[sub_resource type="SVGTexture" id="SVGTexture_d6fji"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M6 1a1 1 0 0 0 0 2 8 8 0 0 1 8 8 1 1 0 0 0 2 0A10 10 0 0 0 6 1zm0 4a1 1 0 0 0 0 2 4 4 0 0 1 4 4 1 1 0 0 0 2 0 6 6 0 0 0-6-6zm0 4a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm-5 2a1 1 0 0 0 0 2 1 1 0 0 0 0-2z\"/></svg>
 "
 base_scale = 2.0
@@ -51,7 +61,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inqcu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w531k"]
 content_margin_left = 6.0
 content_margin_top = 6.0
 content_margin_right = 6.0
@@ -60,7 +70,7 @@ bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
 corner_detail = 1
 anti_aliasing = false
 
-[sub_resource type="SVGTexture" id="SVGTexture_tr21w"]
+[sub_resource type="SVGTexture" id="SVGTexture_grh4j"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#54ed9e\" d=\"M3 2v2a3 3 0 0 0 0 6h2V2zm3 0v2h2V2zm7 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2zm-2 2a3 3 0 0 0 0 6h1V8h-1a1 1 0 0 1 0-2h1V4zM8 7V6H6v4h2zM3 6v2a1 1 0 0 1 0-2z\"/></svg>
 "
 base_scale = 2.0
@@ -71,7 +81,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_ygmkk"]
+[sub_resource type="SVGTexture" id="SVGTexture_k2jkx"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><linearGradient id=\"a\"><stop offset=\".25\" stop-color=\"#ffe345\"/><stop offset=\".75\" stop-color=\"#919191\"/></linearGradient><path fill=\"#45d7ff\" d=\"m5.914 4-2 2H9.01V4z\"/><path fill=\"#ff4596\" d=\"M11 4v2h4V4Z\"/><path fill=\"#ff4545\" d=\"M1 8v2h3V8z\"/><path fill=\"url(#a)\" d=\"M6 8v2h7V8z\"/><path fill=\"#919191\" d=\"M1 12v2h5v-2zm7 0v2h6v-2z\"/><path fill=\"#e0e0e0\" d=\"M2 1 1 2l1.5 1.5L1 5l1 1 2.5-2.5z\"/></svg>
 "
 base_scale = 2.0
@@ -84,7 +94,465 @@ Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 
 [sub_resource type="GDScriptSyntaxHighlighter" id="GDScriptSyntaxHighlighter_tjilw"]
 
-[node name="PropertyInfo" type="VBoxContainer"]
+[sub_resource type="SVGTexture" id="SVGTexture_skqjv"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M8 2v2h2V2zm3 0v5a3 3 0 0 0 3 3h1V8h-1a1 1 0 0 1-1-1V2zM1 4v6h2V6h1a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3zm7 2v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_0q4af"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#6f91f0\" d=\"M0 4v8h2a3 3 0 0 0 2.5-1.346 3 3 0 0 0 4.5.578 3 3 0 0 0 4.5-.578A3 3 0 0 0 16 12v-2a1 1 0 0 1-1-1V4h-2v2.77a3 3 0 0 0-4 0 3 3 0 0 0-4.5.578A3 3 0 0 0 2 6V4zm2 4a1 1 0 0 1 0 2zm5 0a1 1 0 0 1 0 2 1 1 0 0 1 0-2zm4 0a1 1 0 0 1 0 2 1 1 0 0 1 0-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_lqo84"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#5abbef\" d=\"m1 2v2h2v-2zm11 0v5a3 3 0 0 0 3 3h1v-2h-1a1 1 0 0 1 -1-1v-1h2v-2h-2v-2zm-8 2v6h2v-4h1a1 1 0 0 1 1 1v3h2v-3a3 3 0 0 0 -3-3h-1zm-3 2v4h2v-4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_xdh8l"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#35d4f4\" d=\"M3 4a3 3 0 0 0-3 3v5h2v-2h2V8H2V7a1 1 0 0 1 1-1h1V4zm3 0v5a3 3 0 0 0 3 3h1v-2H9a1 1 0 0 1-1-1V4zm6 0v5a3 3 0 0 0 3 3h1v-2h-1a1 1 0 0 1-1-1V8h2V6h-2V4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_p2q5o"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#4593ec\" d=\"M7 2H4a2.5 2.5 0 0 0 0 5 .5.5 0 0 1 0 1H1v2h3a2.5 2.5 0 0 0 0-5 .5.5 0 0 1 0-1h3zm1 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2zm4 8h2V7a1 1 0 0 1 1-1V4a3 3 0 0 0-3 3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_tnu4l"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#ac73f1\" d=\"M12 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8h-3a3 3 0 0 0 0-6zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4zm9 6V8H9a1 1 0 0 1 0-2h1V4H9a3 3 0 0 0 0 6z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M12 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8h-3a3 3 0 0 0 0-6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_hqf37"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#ac73f1\" d=\"M8 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8H9a3 3 0 0 0 0-6zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M8 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8H9a3 3 0 0 0 0-6z\"/><path fill=\"#5abbef\" d=\"M13 2v2h2V2zm0 4v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_uorlr"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f1738f\" d=\"M13 2v2h-1a3 3 0 0 0-2.5 1.346A3 3 0 1 0 7 10h1V8H7a1 1 0 0 1-1-1h3a3 3 0 0 0 3 3h1V8h-1a1 1 0 0 1 0-2h1v1a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2zM3 4a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_1u8j8"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f1738f\" d=\"M9 2v2H8a3 3 0 0 0 0 6h1V8H8a1 1 0 0 1 0-2h1v1a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2zM4 4a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4z\"/><path fill=\"#5abbef\" d=\"M13 2v2h2V2zm0 4v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_458hd"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#de66f0\" d=\"M11 2v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2h-1v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 15 4V2zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4zm9 6V8H9a1 1 0 0 1 0-2h1V4H9a3 3 0 0 0 0 6z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M11 2v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2h-1v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 15 4V2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_vnwy6"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#de66f0\" d=\"M8 2v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2H8v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 12 4V2zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M8 2v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2H8v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 12 4V2z\"/><path fill=\"#5abbef\" d=\"M13 2v2h2V2zm0 4v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_nwnl4"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#b9ec41\" d=\"M0 2v2h2v6h2V4h3a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h7a4 4 0 0 0 0-8h-2v6H7a3 3 0 0 0 0-6zm12 2a2 2 0 0 1 0 4z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M6.5 2v2H7a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8H7a3 3 0 0 0 0-6h-.5z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_mi7i4"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f066bd\" d=\"M11 3v5h3v3h2V2h-2v4h-1V3zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4zm9 6V8H9a1 1 0 0 1 0-2h1V4H9a3 3 0 0 0 0 6z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M11 3v5h3v3h2V2h-2v4h-1V3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_72f2y"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f066bd\" d=\"M7 3v5h3v3h2V2h-2v4H9V3zM1 4v6h2a3 3 0 0 0 3-3V4H4v3a1 1 0 0 1-1 1V4z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M7 3v5h3v3h2V2h-2v4H9V3z\"/><path fill=\"#5abbef\" d=\"M13 2v2h2V2zm0 4v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_i667t"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f74949\" d=\"M1 2v8h2V8a3 3 0 0 0 0-6zm6 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V2zM3 4a1 1 0 0 1 0 2zm8 0v6h2V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_adaqe"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#ec418e\" d=\"M3 3a3 3 0 0 0 0 6v2h2V8.236A3 3 0 0 0 7 9h2v-.764A3 3 0 0 0 11 9h2V6a3 3 0 0 0 3 3V7a1 1 0 0 1-1-1V5h1V3h-1V1h-2v2h-2a3 3 0 0 0-2 .764V3H7v4a1 1 0 0 1-1-1V3zm0 4a1 1 0 0 1 0-2zm8 0a1 1 0 0 1 0-2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M4 3v3a3 3 0 0 0 3 3h2V3H7v4a1 1 0 0 1-1-1V3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_1db0g"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#ee5677\" d=\"M5 1a3 3 0 0 0-2.223 5.012A3 3 0 0 0 3 12h2V7h2V1H5zm6 0v5.174A3 3 0 0 0 10 6V4H8v8h2a3 3 0 0 0 3-3 3 3 0 0 0 0-6V1h-2zM5 3v2a1 1 0 0 1 0-2zm8 2a1 1 0 0 1 0 2zM3 8v2a1 1 0 0 1 0-2zm7 0a1 1 0 0 1 0 2z\"/><path fill=\"#fff\" fill-opacity=\".235\" d=\"M8 4v8h2a3 3 0 0 0 0-6V4zM3 6a3 3 0 0 0 0 6h2V6zm0 2v2a1 1 0 0 1 0-2zm7 0a1 1 0 0 1 0 2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_tlfj0"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e1ec41\" d=\"M0 2v8h2a3 3 0 0 0 0-6V2zm10 0v2h2V2zM7 4a2 2 0 0 0 0 4H5v2h2a2 2 0 0 0 0-4h2V4zm7 0a2 2 0 0 0 0 4h-2V6h-2v4h4a2 2 0 0 0 0-4h2V4zM2 6a1 1 0 0 1 1 1 1 1 0 0 1-1 1z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M10 2v2h2V2zm0 4v4h2V6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_odepe"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#f68f45\" d=\"M4 4h3.349a1 1.267 0 0 1-1 1.267v1a.866.866 0 0 1 0 1.732h-1v2h1a2.81 2.81 0 0 0 2.232-4.734A1.32 1.32 0 0 0 9.345 4V2H0v2h2v6h2zm6 6h2a4 4 0 0 0 0-8h-2zm2-6a2 2 0 0 1 0 4z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M5.5 4h1.849a1 1.267 0 0 1-1 1.267v1a.866.866 0 0 1 0 1.732h-1v2h1a2.81 2.81 0 0 0 2.232-4.734A1.32 1.32 0 0 0 9.345 4V2H5.5z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_gq1ya"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#44bd44\" d=\"M0 2v8h2V8a3 3 0 0 0 2-.779V10h2V7a1 1 0 0 1 1-1h1V4H7a3 3 0 0 0-2.02.795A3 3 0 0 0 2 2zm8 4v2a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2zm6-4v2h2V2zM2 4a1 1 0 0 1 0 2zm8 2h1v2h-1zm4 0v3a1 1 0 0 1-1 1h-1v2h1a3 3 0 0 0 3-3V6z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M7 4a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_nxgff"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#ff5f5f\" d=\"M4 4a3 3 0 0 0 0 6h1V8H4a1 1 0 0 1 0-2h1V4z\"/><path fill=\"#5fff97\" d=\"M6 2v5a3 3 0 0 0 3 3h1V8H9a1 1 0 0 1-1-1V2z\"/><path fill=\"#5fb2ff\" d=\"M14 4a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_34fqx"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#4593ec\" d=\"M3 2a2.5 2.5 0 0 0 0 5 .5.5 0 0 1 0 1H0v2h3a2.5 2.5 0 0 0 0-5 .5.5 0 0 1 0-1h3v3a3 3 0 0 0 3 3h3V6a2 2 0 0 1 2 2v2h2V8a4 4 0 0 0-4-4H8V2zm7 4v2H9a1 1 0 0 1-1-1V6z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M6 2v5a3 3 0 0 0 3 3h1V8H9a1 1 0 0 1-1-1V6h2V4H8V2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_8n106"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#417aec\" d=\"M0 2v8h2V8a3 3 0 0 0 0-6zm6 0v5a3 3 0 0 0 3 3h1V8H9a1 1 0 0 1-1-1V6h2V4H8V2zm5 0v8h2V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3V2zM2 4a1 1 0 0 1 0 2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_c8smr"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#41ec80\" d=\"M7 2v2h2V2zm7 0v2h-1a3 3 0 0 0 0 6h3V2zM4 4a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4zm3 2v4h2V6zm6 0h1v2h-1a1 1 0 0 1 0-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_pkj03"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M1.553 4.104A1 1 0 0 0 1 5v6a1 1 0 0 0 .553.895l6 3a1 1 0 0 0 .894 0l6-3A1 1 0 0 0 15 11V5a1 1 0 0 0-.553-.894l-6-3a1 1 0 0 0-.894 0zm6.447-1 3.764 1.882L8 6.868 4.236 4.986zm-5 3.5 4 2v3.766l-4-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_nueok"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m12 1c-2 2-4 4-7 4h-4v5h4c3 0 5 2 7 4zm1 4v5c2.59-.016 2.59-4.985 0-5zm-11 6v4h2l1-4z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_1wmy3"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5f5f\" d=\"m1 3v10h2 4v-2h-4v-6h4v-2h-4zm9 1v3h-5v2h5v3l2.5-2 2.5-2-2.5-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_poac6"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M4 4a3 3 0 0 0 0 6h2V4zm6 0a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4zm4 0a3 3 0 0 0-3 3v3h2V7a1 1 0 0 1 1-1h1V4zM4 6v2a1 1 0 0 1 0-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_1dji8"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#5fff97\" d=\"M5 3a3 3 0 0 0-3 3v3h2V6a1 1 0 0 1 1-1h1v4h2a3 3 0 0 0 1-.176V9h2a3 3 0 0 0 3-3V3h-2v3a1 1 0 0 1-1 1V3H9v3a1 1 0 0 1-1 1V3z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M6 9V3h2v4a1 1 0 0 0 1-1V3h2v4a1 1 0 0 0 1-1V3h2v3a3 3 0 0 1-3 3H9v-.176A3 3 0 0 1 8 9z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_j5am5"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#5abbef\" d=\"M3 2v2h2V2zm2 2v2H3v4h4V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3zm5 3a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2h-2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M5 4v6h2V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_yrmjo"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#5abbef\" d=\"M3 2v2h2V2zm2 2v2H3v4h4V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3zm5 3a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2h-2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M5 4v6h2V6a1 1 0 0 1 1 1v3h2V7a3 3 0 0 0-3-3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_07bap"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#35d4f4\" d=\"M6 2a3 3 0 0 0-3 3v5h2V8h1V6H5V5a1 1 0 0 1 1-1zm1 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V2zm3 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M7 2v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_pbrqy"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#35d4f4\" d=\"M6 2a3 3 0 0 0-3 3v5h2V8h1V6H5V5a1 1 0 0 1 1-1zm1 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V2zm3 0v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M7 2v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_82s1f"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#4593ec\" d=\"M5 2a2.5 2.5 0 0 0 0 5 .5.5 0 0 1 0 1H2v2h3a2.5 2.5 0 0 0 0-5 .5.5 0 0 1 0-1h3v3a3 3 0 0 0 3 3h2V7a1 1 0 0 1 1-1V4a3 3 0 0 0-3 3v1a1 1 0 0 1-1-1V6h1V4h-1V2z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M8 2v5a3 3 0 0 0 3 3V8a1 1 0 0 1-1-1V6h1V4h-1V2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_r12pj"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#ac73f1\" d=\"M9 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8h-3a3 3 0 0 0 0-6zM3 3v6h2a3 3 0 0 0 3-3V3H6v3a1 1 0 0 1-1 1V3z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M9 2v2h1a1 1 0 0 1 0 2 2 2 0 0 0-2 2v2h5V8h-3a3 3 0 0 0 0-6z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_iqc1k"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#de66f0\" d=\"M8 1v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2H8v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 12 3V1zm0 2H6v3a1 1 0 0 1-1 1V3H3v6h2a3 3 0 0 0 3-3z\"/><path fill=\"#fff\" fill-opacity=\".4\" d=\"M8 1v2h2a1 1 0 0 1-1 1v2a1 1 0 0 1 0 2H8v2h1a3 3 0 0 0 2.232-5A3 3 0 0 0 12 3V1z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_wwbdi"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"M0 0v12h4v-2H2V2h2V0zm12 0v2h2v8h-2v2h4V0z\"/><path fill=\"#ff4545\" d=\"M6 3.5a3 3 0 0 0 0 6h1v-2H6a1 1 0 0 1 0-2h1v-2z\"/><path fill=\"#80ff45\" d=\"M7 1.5v5a3 3 0 0 0 3 3v-2a1 1 0 0 1-1-1v-5z\"/><path fill=\"#45d7ff\" d=\"M13 3.5a3 3 0 0 0-3 3v3h2v-3a1 1 0 0 1 1-1z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_coa3p"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"12\"><path fill=\"#e0e0e0\" d=\"m0 0v12h4v-2h-2v-8h2v-2zm12 0v2h2v8h-2v2h4v-12z\"/><path fill=\"#ac73f1\" d=\"M8 3h2v2h1v-3h2v8h-2v-3h-3zM3 3v6h2a3 3 0 003-3v-3h-2v3a1 1 0 01-1 1v-4z\"/><path fill=\"#fff\" fill-opacity=\".392\" d=\"M8 3h2v2h1v-3h2v8h-2v-3h-3z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="GDScript" id="GDScript_s868t"]
+script/source = "@tool
+extends Label
+
+func _ready() -> void:
+	custom_minimum_size.x = EditorInterface.get_editor_scale() * 100
+"
+
+[sub_resource type="SVGTexture" id="SVGTexture_o4t5j"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m2 2v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3x0ji"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+border_color = Color(0.145098, 0.145098, 0.145098, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4t5j"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="GDScriptSyntaxHighlighter" id="GDScriptSyntaxHighlighter_ofgxn"]
+
+[node name="Property Info" type="VBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -95,59 +563,69 @@ size_flags_vertical = 3
 metadata/_tab_index = 1
 metadata/icon = SubResource("SVGTexture_16pao")
 
-[node name="VSplitContainer" type="HSplitContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+script = ExtResource("1_tr21w")
+
+[node name="Explorer" type="HSplitContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 split_offset = -200
+metadata/_tab_index = 0
+metadata/icon = ExtResource("2_ygmkk")
 
-[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Explorer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="VSplitContainer/MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Explorer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2"]
 visible = false
 layout_mode = 2
 
-[node name="MethodsOnly" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2/HBoxContainer"]
+[node name="MethodsOnly" type="Button" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_inqcu")
+theme_type_variation = &"InspectorActionbutton"
+theme_override_icons/icon = SubResource("SVGTexture_omp2c")
 flat = true
 script = ExtResource("2_v6nks")
 icon_name = "MemberMethod"
 
-[node name="PropertiesOnly" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2/HBoxContainer"]
+[node name="PropertiesOnly" type="Button" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_ngycd")
+theme_override_icons/icon = SubResource("SVGTexture_s868t")
 flat = true
 script = ExtResource("2_v6nks")
 icon_name = "MemberProperty"
 
-[node name="SignalsOnly" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2/HBoxContainer"]
+[node name="SignalsOnly" type="Button" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_ofgxn")
+theme_override_icons/icon = SubResource("SVGTexture_d6fji")
 flat = true
 script = ExtResource("2_v6nks")
 icon_name = "MemberSignal"
 
-[node name="FuzzySearchLineEdit" type="LineEdit" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+[node name="FuzzySearchLineEdit" type="LineEdit" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Filter Properties"
 
-[node name="Button" type="Button" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+[node name="Button" type="Button" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2"]
 visible = false
 layout_mode = 2
-theme_override_icons/icon = SubResource("SVGTexture_ngycd")
+theme_override_icons/icon = SubResource("SVGTexture_s868t")
 text = "Select Property"
 script = ExtResource("1_ssl5k")
 
-[node name="Tree" type="Tree" parent="VSplitContainer/MarginContainer/VBoxContainer2"]
+[node name="Tree" type="Tree" parent="TabContainer/Explorer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -157,46 +635,45 @@ hide_root = true
 select_mode = 1
 script = ExtResource("1_k7j3a")
 
-[node name="PanelContainer" type="PanelContainer" parent="VSplitContainer/MarginContainer"]
-visible = false
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Explorer/MarginContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_inqcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_w531k")
 script = ExtResource("3_ngycd")
 
-[node name="CenterContainer" type="CenterContainer" parent="VSplitContainer/MarginContainer/PanelContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="TabContainer/Explorer/MarginContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VSplitContainer/MarginContainer/PanelContainer/CenterContainer"]
+[node name="Label" type="Label" parent="TabContainer/Explorer/MarginContainer/PanelContainer/CenterContainer"]
 modulate = Color(1, 1, 1, 0.43529412)
 layout_mode = 2
 text = "No Object Selected"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Explorer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Explorer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PropertyInfoButton" type="Button" parent="VSplitContainer/VBoxContainer/HBoxContainer"]
+[node name="PropertyInfoButton" type="Button" parent="TabContainer/Explorer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_tr21w")
+theme_override_icons/icon = SubResource("SVGTexture_grh4j")
 text = "Copy Text"
 script = ExtResource("2_v6nks")
 icon_name = "Dictionary"
 button_type = "InspectorActionButton"
 
-[node name="PropertyEditorButton" type="Button" parent="VSplitContainer/VBoxContainer/HBoxContainer"]
+[node name="PropertyEditorButton" type="Button" parent="TabContainer/Explorer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_ygmkk")
+theme_override_icons/icon = SubResource("SVGTexture_k2jkx")
 text = "Copy Editor Property Code"
 script = ExtResource("2_v6nks")
 icon_name = "CodeHighlighter"
 button_type = "InspectorActionButton"
 
-[node name="Copied" type="TextureRect" parent="VSplitContainer/VBoxContainer/HBoxContainer"]
+[node name="Copied" type="TextureRect" parent="TabContainer/Explorer/VBoxContainer/HBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -204,7 +681,7 @@ size_flags_vertical = 4
 stretch_mode = 5
 script = ExtResource("3_afeo8")
 
-[node name="CodeEdit" type="CodeEdit" parent="VSplitContainer/VBoxContainer"]
+[node name="CodeEdit" type="CodeEdit" parent="TabContainer/Explorer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -220,11 +697,316 @@ gutters_draw_line_numbers = true
 gutters_zero_pad_line_numbers = true
 script = ExtResource("4_bgk1f")
 
-[connection signal="text_changed" from="VSplitContainer/MarginContainer/VBoxContainer2/FuzzySearchLineEdit" to="VSplitContainer/MarginContainer/VBoxContainer2/Tree" method="filter"]
-[connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Button" to="VSplitContainer/MarginContainer/VBoxContainer2/Tree" method="_find_property"]
-[connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Button" to="VSplitContainer/VBoxContainer/CodeEdit" method="_print_selected"]
-[connection signal="property_selected" from="VSplitContainer/MarginContainer/VBoxContainer2/Tree" to="VSplitContainer/VBoxContainer/CodeEdit" method="_print_selected"]
-[connection signal="pressed" from="VSplitContainer/VBoxContainer/HBoxContainer/PropertyInfoButton" to="VSplitContainer/VBoxContainer/HBoxContainer/Copied" method="show_and_fade"]
-[connection signal="pressed" from="VSplitContainer/VBoxContainer/HBoxContainer/PropertyInfoButton" to="VSplitContainer/VBoxContainer/CodeEdit" method="_property_info_button_pressed"]
-[connection signal="pressed" from="VSplitContainer/VBoxContainer/HBoxContainer/PropertyEditorButton" to="VSplitContainer/VBoxContainer/HBoxContainer/Copied" method="show_and_fade"]
-[connection signal="pressed" from="VSplitContainer/VBoxContainer/HBoxContainer/PropertyEditorButton" to="VSplitContainer/VBoxContainer/CodeEdit" method="_property_editor_code_button_pressed"]
+[node name="Builder" type="HSplitContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/icon = ExtResource("9_omp2c")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Builder"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Builder/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="GridContainer" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+columns = 2
+
+[node name="TypeLabel" type="Label" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Type"
+
+[node name="VariantTypeOptionButton" type="OptionButton" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+fit_to_longest_item = false
+item_count = 39
+popup/item_0/text = "Nil"
+popup/item_0/icon = SubResource("SVGTexture_skqjv")
+popup/item_0/id = 0
+popup/item_1/text = "bool"
+popup/item_1/icon = SubResource("SVGTexture_0q4af")
+popup/item_1/id = 1
+popup/item_2/text = "int"
+popup/item_2/icon = SubResource("SVGTexture_lqo84")
+popup/item_2/id = 2
+popup/item_3/text = "float"
+popup/item_3/icon = SubResource("SVGTexture_xdh8l")
+popup/item_3/id = 3
+popup/item_4/text = "String"
+popup/item_4/icon = SubResource("SVGTexture_p2q5o")
+popup/item_4/id = 4
+popup/item_5/text = "Vector2"
+popup/item_5/icon = SubResource("SVGTexture_tnu4l")
+popup/item_5/id = 5
+popup/item_6/text = "Vector2i"
+popup/item_6/icon = SubResource("SVGTexture_hqf37")
+popup/item_6/id = 6
+popup/item_7/text = "Rect2"
+popup/item_7/icon = SubResource("SVGTexture_uorlr")
+popup/item_7/id = 7
+popup/item_8/text = "Rect2i"
+popup/item_8/icon = SubResource("SVGTexture_1u8j8")
+popup/item_8/id = 8
+popup/item_9/text = "Vector3"
+popup/item_9/icon = SubResource("SVGTexture_458hd")
+popup/item_9/id = 9
+popup/item_10/text = "Vector3i"
+popup/item_10/icon = SubResource("SVGTexture_vnwy6")
+popup/item_10/id = 10
+popup/item_11/text = "Transform2D"
+popup/item_11/icon = SubResource("SVGTexture_nwnl4")
+popup/item_11/id = 11
+popup/item_12/text = "Vector4"
+popup/item_12/icon = SubResource("SVGTexture_mi7i4")
+popup/item_12/id = 12
+popup/item_13/text = "Vector4i"
+popup/item_13/icon = SubResource("SVGTexture_72f2y")
+popup/item_13/id = 13
+popup/item_14/text = "Plane"
+popup/item_14/icon = SubResource("SVGTexture_i667t")
+popup/item_14/id = 14
+popup/item_15/text = "Quaternion"
+popup/item_15/icon = SubResource("SVGTexture_adaqe")
+popup/item_15/id = 15
+popup/item_16/text = "AABB"
+popup/item_16/icon = SubResource("SVGTexture_1db0g")
+popup/item_16/id = 16
+popup/item_17/text = "Basis"
+popup/item_17/icon = SubResource("SVGTexture_tlfj0")
+popup/item_17/id = 17
+popup/item_18/text = "Transform3D"
+popup/item_18/icon = SubResource("SVGTexture_odepe")
+popup/item_18/id = 18
+popup/item_19/text = "Projection"
+popup/item_19/icon = SubResource("SVGTexture_gq1ya")
+popup/item_19/id = 19
+popup/item_20/text = "Color"
+popup/item_20/icon = SubResource("SVGTexture_nxgff")
+popup/item_20/id = 20
+popup/item_21/text = "StringName"
+popup/item_21/icon = SubResource("SVGTexture_34fqx")
+popup/item_21/id = 21
+popup/item_22/text = "NodePath"
+popup/item_22/icon = SubResource("SVGTexture_8n106")
+popup/item_22/id = 22
+popup/item_23/text = "RID"
+popup/item_23/icon = SubResource("SVGTexture_c8smr")
+popup/item_23/id = 23
+popup/item_24/text = "Object"
+popup/item_24/icon = SubResource("SVGTexture_pkj03")
+popup/item_24/id = 24
+popup/item_25/text = "Callable"
+popup/item_25/icon = SubResource("SVGTexture_nueok")
+popup/item_25/id = 25
+popup/item_26/text = "Signal"
+popup/item_26/icon = SubResource("SVGTexture_1wmy3")
+popup/item_26/id = 26
+popup/item_27/text = "Dictionary"
+popup/item_27/icon = SubResource("SVGTexture_grh4j")
+popup/item_27/id = 27
+popup/item_28/text = "Array"
+popup/item_28/icon = SubResource("SVGTexture_poac6")
+popup/item_28/id = 28
+popup/item_29/text = "PackedByteArray"
+popup/item_29/icon = SubResource("SVGTexture_1dji8")
+popup/item_29/id = 29
+popup/item_30/text = "PackedInt32Array"
+popup/item_30/icon = SubResource("SVGTexture_j5am5")
+popup/item_30/id = 30
+popup/item_31/text = "PackedInt64Array"
+popup/item_31/icon = SubResource("SVGTexture_yrmjo")
+popup/item_31/id = 31
+popup/item_32/text = "PackedFloat32Array"
+popup/item_32/icon = SubResource("SVGTexture_07bap")
+popup/item_32/id = 32
+popup/item_33/text = "PackedFloat64Array"
+popup/item_33/icon = SubResource("SVGTexture_pbrqy")
+popup/item_33/id = 33
+popup/item_34/text = "PackedStringArray"
+popup/item_34/icon = SubResource("SVGTexture_82s1f")
+popup/item_34/id = 34
+popup/item_35/text = "PackedVector2Array"
+popup/item_35/icon = SubResource("SVGTexture_r12pj")
+popup/item_35/id = 35
+popup/item_36/text = "PackedVector3Array"
+popup/item_36/icon = SubResource("SVGTexture_iqc1k")
+popup/item_36/id = 36
+popup/item_37/text = "PackedColorArray"
+popup/item_37/icon = SubResource("SVGTexture_wwbdi")
+popup/item_37/id = 37
+popup/item_38/text = "PackedVector4Array"
+popup/item_38/icon = SubResource("SVGTexture_coa3p")
+popup/item_38/id = 38
+script = ExtResource("11_bgdqn")
+
+[node name="HintLabel" type="Label" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Hint"
+
+[node name="PropertyHintOptionButton" type="OptionButton" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "PROPERTY_HINT_NONE (0)"
+popup/item_0/id = 0
+script = ExtResource("11_s868t")
+
+[node name="HintStringLabel" type="Label" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Hint String"
+script = SubResource("GDScript_s868t")
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w531k")
+script = ExtResource("12_3pd7g")
+panel_style = "Background"
+
+[node name="HintStringEditor" type="VBoxContainer" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PanelContainer"]
+layout_mode = 2
+script = ExtResource("12_s868t")
+
+[node name="UsageLabel" type="Label" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Usage"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="PanelContainer" parent="TabContainer/Builder/ScrollContainer/VBoxContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"EditorInspector"
+script = ExtResource("12_5nohi")
+
+[node name="PreviewPanel" type="PanelContainer" parent="TabContainer/Builder"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_w531k")
+script = ExtResource("12_3pd7g")
+panel_style = "Background"
+
+[node name="VBoxContainer" type="VSplitContainer" parent="TabContainer/Builder/PreviewPanel"]
+layout_mode = 2
+
+[node name="InspectorPreview" type="VBoxContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InspectorPreviewHeading" type="HBoxContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/InspectorPreviewHeading"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("SVGTexture_o4t5j")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/InspectorPreviewHeading"]
+layout_mode = 2
+text = "Inspector Preview"
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_3x0ji")
+script = ExtResource("12_3pd7g")
+panel_style = "PanelForeground"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer"]
+layout_mode = 2
+
+[node name="EditorPropertyParent" type="MarginContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("12_0xa5m")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="UsageInfo" type="Label" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/ScrollContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_o4t5j")
+text = "No property usage"
+script = ExtResource("15_omp2c")
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_3x0ji")
+script = ExtResource("12_3pd7g")
+panel_style = "PanelForeground"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CopyProperty" type="Button" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"InspectorActionbutton"
+theme_override_icons/icon = SubResource("SVGTexture_grh4j")
+text = "Copy Property"
+script = ExtResource("2_v6nks")
+icon_name = "Dictionary"
+
+[node name="CopyProperty2" type="Button" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"InspectorActionbutton"
+theme_override_icons/icon = SubResource("SVGTexture_k2jkx")
+text = "Copy Code"
+script = ExtResource("2_v6nks")
+icon_name = "CodeHighlighter"
+
+[node name="CodeEdit" type="CodeEdit" parent="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+wrap_mode = 1
+syntax_highlighter = SubResource("GDScriptSyntaxHighlighter_ofgxn")
+gutters_draw_line_numbers = true
+script = ExtResource("4_bgk1f")
+mode = 1
+
+[connection signal="text_changed" from="TabContainer/Explorer/MarginContainer/VBoxContainer2/FuzzySearchLineEdit" to="TabContainer/Explorer/MarginContainer/VBoxContainer2/Tree" method="filter"]
+[connection signal="property_selected" from="TabContainer/Explorer/MarginContainer/VBoxContainer2/Button" to="TabContainer/Explorer/MarginContainer/VBoxContainer2/Tree" method="_find_property"]
+[connection signal="property_selected" from="TabContainer/Explorer/MarginContainer/VBoxContainer2/Button" to="TabContainer/Explorer/VBoxContainer/CodeEdit" method="_print_selected"]
+[connection signal="property_selected" from="TabContainer/Explorer/MarginContainer/VBoxContainer2/Tree" to="TabContainer/Explorer/VBoxContainer/CodeEdit" method="_print_selected"]
+[connection signal="pressed" from="TabContainer/Explorer/VBoxContainer/HBoxContainer/PropertyInfoButton" to="TabContainer/Explorer/VBoxContainer/HBoxContainer/Copied" method="show_and_fade"]
+[connection signal="pressed" from="TabContainer/Explorer/VBoxContainer/HBoxContainer/PropertyInfoButton" to="TabContainer/Explorer/VBoxContainer/CodeEdit" method="_property_info_button_pressed"]
+[connection signal="pressed" from="TabContainer/Explorer/VBoxContainer/HBoxContainer/PropertyEditorButton" to="TabContainer/Explorer/VBoxContainer/HBoxContainer/Copied" method="show_and_fade"]
+[connection signal="pressed" from="TabContainer/Explorer/VBoxContainer/HBoxContainer/PropertyEditorButton" to="TabContainer/Explorer/VBoxContainer/CodeEdit" method="_property_editor_code_button_pressed"]
+[connection signal="item_selected" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/VariantTypeOptionButton" to="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PropertyHintOptionButton" method="set_type"]
+[connection signal="item_selected" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/VariantTypeOptionButton" to="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PanelContainer/HintStringEditor" method="set_type"]
+[connection signal="item_selected" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/VariantTypeOptionButton" to="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/EditorPropertyParent" method="set_type"]
+[connection signal="hint_selected" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PropertyHintOptionButton" to="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PanelContainer/HintStringEditor" method="set_hint"]
+[connection signal="hint_selected" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PropertyHintOptionButton" to="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/EditorPropertyParent" method="set_hint"]
+[connection signal="hint_string_constructed" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/VBoxContainer/PanelContainer/HintStringEditor" to="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/EditorPropertyParent" method="set_hint_string"]
+[connection signal="usage_changed" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/ScrollContainer/MarginContainer" to="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/EditorPropertyParent" method="set_usage"]
+[connection signal="usage_changed" from="TabContainer/Builder/ScrollContainer/VBoxContainer2/ScrollContainer/MarginContainer" to="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/ScrollContainer/PanelContainer/UsageInfo" method="display_usage_info"]
+[connection signal="property_updated" from="TabContainer/Builder/PreviewPanel/VBoxContainer/InspectorPreview/PanelContainer/VBoxContainer/EditorPropertyParent" to="TabContainer/Builder/PreviewPanel/VBoxContainer/PanelContainer/VBoxContainer/CodeEdit" method="print_property_info"]

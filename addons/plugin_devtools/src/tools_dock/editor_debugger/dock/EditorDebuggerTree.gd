@@ -5,12 +5,16 @@ signal updated_entries(entries: int, time: int)
 
 @export var updates_per_frame := 500
 @export var wait_between_updates := 2.0
-const METADATA_NODE_NAME = 0
+const METADATA_NODE = 0
 
 enum {
-	VISIBILITY_BUTTON,
-	INTERNAL_INDICATOR,
+	VISIBILITY_BUTTON = 100,
+	IS_EDITOR_ONLY_CLASS = 99,
+	IS_CONTROL = 98,
+	IS_INTERNAL_CHILD = 97
 }
+
+var base_node_icon : Texture2D
 
 var all_nodes := PackedStringArray()
 var search_match_highlight : Color
@@ -26,20 +30,20 @@ var filtering := false
 var parent_list : Array[Node] = []
 
 func _enter_tree() -> void:
+	# make a list of parents, we can't hide those!
 	parent_list.clear()
 	var parent := get_parent()
 	while parent:
 		parent_list.push_back(parent)
 		parent = parent.get_parent()
 
-# func _exit_tree() -> void:
-# 	parent_list.clear()
-
 func _ready() -> void:
 	search_match_highlight = EditorInterface.get_editor_theme().get_color("accent_color", "Editor")
 	search_match_highlight.a = 0.4
 	add_theme_stylebox_override(&"panel", EditorInterface.get_editor_theme().get_stylebox("Background", "EditorStyles"))
 	visibility_changed.connect(update)
+	base_node_icon = H.Editor.IconGrabber.get_class_icon("Node")
+	button_clicked.connect(_button_clicked)
 
 func update() -> void:
 	if updating: return
@@ -70,20 +74,19 @@ func update() -> void:
 	await get_tree().create_timer(wait_between_updates).timeout
 	update.call_deferred()
 
-func _update_branch(root_node: Node, root_item: TreeItem) -> void:
-	# if root_view.collapsed and root_view.get_first_child() != null:
-	# 	# Don't care about collapsed nodes.
-	# 	# The editor is a big tree, don't waste cycles on things you can't see
-	# 	#print(root, " is collapsed and first child is ", root_view.get_first_child())
-		# return
+func _button_clicked(item: TreeItem, _column: int, id: int, mouse_button_index: int) -> void:
+	var node : Node = item.get_metadata(METADATA_NODE)
+	if mouse_button_index == MOUSE_BUTTON_LEFT:
+		if id == VISIBILITY_BUTTON:
+			node.visible = !node.visible
 
+func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 	updates_this_frame += 1
 	updated_this_update += 1
 	if updates_this_frame > updates_per_frame:
 		update_progress.value = inverse_lerp(0, updated_last_update, updated_this_update)
 		await get_tree().process_frame
 		updates_this_frame = 0
-	
 
 	if !root_node or !is_instance_valid(root_node):
 		root_item.get_parent().remove_child(root_item)
@@ -95,6 +98,8 @@ func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 	var non_internal_children := root_node.get_children()	
 	for i in root_node.get_child_count(true):
 		var child := root_node.get_child(i, true)
+		if !child or !is_instance_valid(child):
+			continue
 		var internal := child not in non_internal_children
 		var child_item: TreeItem
 		if i >= len(child_items):
@@ -102,8 +107,9 @@ func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 			child_items.append(child_item)
 		else:
 			child_item = child_items[i]
-			var child_view_name: String = child_item.get_metadata(METADATA_NODE_NAME)
-			if child.name != child_view_name:
+			if child_item.get_metadata(METADATA_NODE) == child:
+				_update_item_lazy(child, child_item)
+			else:
 				_update_tree_item(child, child_item, internal)
 		await _update_branch(child, child_item)
 	
@@ -124,34 +130,77 @@ func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 	assert(node is Node)
 	assert(item is TreeItem)
 	
-	var icon_texture := H.Editor.IconGrabber.get_class_icon(H.Scripts.get_class_name_or_script_name(node), "Node")
-	
-	item.set_icon(0, icon_texture)
-	var c_name := H.Scripts.get_class_name_or_script_name(node)
+	var c_name := H.Scripts.get_class_name_or_class(node)
+
+	var editor_node := false
+	if _is_internal_editor_class(c_name, node):
+		editor_node = true
+	item.set_icon(0, _get_icon(c_name))
+
 	var node_name := &"" if "@" in node.name else node.name
 	var display_text := '"%s" (%s)' % [node_name, c_name] if node_name else c_name
 
 	item.clear_buttons()
 	item.set_text(0, display_text)
 
+	# var is_control := ClassDB.is_parent_class(c_name, "Control")
+
+	if editor_node:
+		item.add_button(0, _theme_icon("GodotMonochrome"), IS_EDITOR_ONLY_CLASS, true, "Editor Class (Cannot be Instantiated)")
 	if internal:
 		item.set_custom_color(0, Color(Color.WHITE, 0.4))
-		item.add_button(0, _theme_icon("GuiSliderGrabber"), -1, true, "Internal Child")
-
+		item.add_button(0, _theme_icon("GuiSliderGrabber"), IS_INTERNAL_CHILD, true, "Internal Child")
+	# if is_control:
+	# 	item.add_button(0, _theme_icon("Control"), IS_CONTROL, true, "Inherits Control")
 
 	# last
 	_update_visibility_button(node, item)
 
-	item.set_metadata(METADATA_NODE_NAME, node.name)
+	item.set_metadata(METADATA_NODE, node)
+
+func _update_item_lazy(node: Node, item: TreeItem) -> void:
+	_update_visibility_button(node, item)
+
+func _get_icon(c_name: String) -> Texture2D:
+	var icon_c_name := c_name
+
+	var icon_texture : Texture2D = null
+	icon_texture = H.Editor.IconGrabber.get_class_icon(icon_c_name, "Node")
+	if icon_texture == base_node_icon and !c_name.is_empty():	
+		var parent_class := ClassDB.get_parent_class(c_name)
+		var iter := 0
+		while !parent_class.is_empty() and parent_class != "Object":
+			icon_c_name = parent_class
+			icon_texture = H.Editor.IconGrabber.get_class_icon(icon_c_name, "Node")
+			if icon_texture != base_node_icon:
+				break
+			parent_class = ClassDB.get_parent_class(parent_class)
+			iter += 1
+			if iter > 10:
+				break
+	return icon_texture
+
+func _is_internal_editor_class(c_name: String, node: Node) -> bool:
+	if !ClassDB.can_instantiate(c_name) and !node.get_script():
+		return true
+	return false
 
 func _theme_icon(icon_name: String) -> Texture2D:
 	return EditorInterface.get_inspector().get_theme_icon(icon_name, "EditorIcons")
 
 func _update_visibility_button(node: Node, item: TreeItem) -> void:
+
 	if "visible" in node:
-		var is_parent := node in parent_list
 		var icon_name := "GuiVisibilityVisible" if node.visible else "GuiVisibilityHidden"
 		var icon := _theme_icon(icon_name)
+
+		# does button exist? then set it
+		var btn_index := item.get_button_by_id(0, VISIBILITY_BUTTON)
+		if btn_index >= 0:
+			item.set_button(0, btn_index, icon)
+			return
+
+		var is_parent := node in parent_list
 		var tooltip := "Toggle Visibility" if !is_parent else "Cannot Toggle Visibility of Parents"
 		item.add_button(0, icon, VISIBILITY_BUTTON, is_parent, tooltip)
 
@@ -164,7 +213,6 @@ func focus_node(node: Node) -> void:
 	
 	for i in range(1, path.get_name_count()):
 		var part := path.get_name(i)
-		print(part)
 		
 		var child_view := parent_view.get_first_child()
 		if child_view == null:
@@ -172,7 +220,7 @@ func focus_node(node: Node) -> void:
 		
 		child_view = parent_view.get_first_child()
 		
-		while child_view != null and child_view.get_metadata(METADATA_NODE_NAME) != part:
+		while child_view != null and child_view.get_metadata(METADATA_NODE).name != part:
 			child_view = child_view.get_next()
 		
 		if child_view == null:
@@ -189,21 +237,7 @@ func focus_node(node: Node) -> void:
 		ensure_cursor_is_visible()
 
 func get_item_node(item: TreeItem) -> Node:
-	if item.get_parent() == null:
-		return get_tree().root
-	
-	# Reconstruct path
-	var path: String = item.get_metadata(METADATA_NODE_NAME)
-	var parent_view := item
-	while parent_view.get_parent() != null:
-		parent_view = parent_view.get_parent()
-		# Exclude root
-		if parent_view.get_parent() == null:
-			break
-		path = str(parent_view.get_metadata(METADATA_NODE_NAME), "/", path)
-	
-	var node := get_tree().root.get_node(path)
-	return node
+	return item.get_metadata(METADATA_NODE)
 
 static func _uncollapse_to_root(node_view: TreeItem) -> void:
 	var parent_view := node_view.get_parent()
@@ -213,25 +247,23 @@ static func _uncollapse_to_root(node_view: TreeItem) -> void:
 
 func collapse_except_selected() -> void:
 	var selected := get_selected()
-	print(selected)
 	get_root().set_collapsed_recursive(true)
-	print(selected)
 	if selected:
 		selected.uncollapse_tree()
 		set_selected(selected, 0)
 
-func _reset_tree(root: TreeItem = null) -> void:
+func _reset_tree_visibility(root: TreeItem = null) -> void:
 	if !root:
 		root = get_root()
-	root.set_collapsed_recursive(true)
 	for item in root.get_children():
 		item.visible = true
 		item.set_custom_bg_color(0, Color.TRANSPARENT)
-		_reset_tree(item)
+		_reset_tree_visibility(item)
 
 func filter(text: String, root : TreeItem = null, data := PackedStringArray([""])) -> void:
 	if !text:
-		_reset_tree()
+		_reset_tree_visibility()
+		collapse_except_selected()
 		return
 	if !root:
 		root = get_root()

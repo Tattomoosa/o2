@@ -10,7 +10,8 @@ func _ready() -> void:
 func _build_item(item_name: String) -> Button:
 	var icon_button := Button.new()
 	icon_button.expand_icon = true
-	icon_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# icon_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	icon_button.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_SHRINK_BEGIN
 	icon_button.icon = _load_icon(item_name)
 	icon_button.custom_minimum_size = Vector2.ONE * item_size * H.Editor.Settings.scale
 	icon_button.tooltip_text = item_name

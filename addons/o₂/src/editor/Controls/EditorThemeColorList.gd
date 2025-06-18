@@ -36,6 +36,7 @@ func _build_item(color_name: String) -> Button:
 	b.tooltip_text = color_name
 	b.name = color_name
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# b.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_SHRINK_BEGIN
 	return b
 
 func _load_icon(icon_name: String) -> Texture2D:

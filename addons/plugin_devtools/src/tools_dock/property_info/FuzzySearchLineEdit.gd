@@ -10,5 +10,4 @@ func _ready() -> void:
 
 func _search(new_text: String) -> void:
 	var matches := H.Search.FuzzySearch.search(new_text, data)
-	print(matches)
 	search_results.emit(matches)

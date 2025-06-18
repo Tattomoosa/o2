@@ -22,6 +22,7 @@ func _disable_plugin() -> void:
 	pass
 
 func _enter_tree() -> void:
+	name = "Namespacer"
 	l = O2.instance.logger.add_substream(O2.Logging.LogStream.LogLevel.DEBUG, "Namespacer")
 	EditorInterface.get_command_palette().add_command("Namespacer/Update", UPDATE_COMMAND, func(): _files_updated())
 	EditorInterface.get_command_palette().add_command("Namespacer/Set Idle", SET_IDLE, func(): working = false)

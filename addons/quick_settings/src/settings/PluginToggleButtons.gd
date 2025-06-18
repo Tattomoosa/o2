@@ -41,7 +41,6 @@ func _create() -> void:
 			continue
 		var plugin_path := Plugins.get_plugin_path_from_config_path(plugin_config_path)
 		if !Plugins.get_plugin_exists(plugin_path):
-			print(plugin_path)
 			continue
 		var enable_string := Plugins.get_plugin_enable_string_from_path(plugin_path)
 		var button := Button.new()

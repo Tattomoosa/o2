@@ -40,6 +40,7 @@ func _populate() -> void:
 		if loaded >= load_count:
 			await get_tree().process_frame
 			loaded = 0
+	# await get_tree().process_frame
 	var max_size_x = 0
 	var max_size_y = 0
 	for child in get_children():
@@ -48,6 +49,12 @@ func _populate() -> void:
 	for child in get_children():
 		child.custom_minimum_size.x = max_size_x
 		child.custom_minimum_size.y = max_size_y
+		# child.size_flags_horizontal = Control.SIZE_EXPAND
+	# queue_redraw()
+	# var end_spacer := Control.new()
+	# end_spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# end_spacer.size_flags_stretch_ratio = 10000.0
+	# add_child(end_spacer)
 
 # override
 func _build_item(_item_name: String) -> Button:

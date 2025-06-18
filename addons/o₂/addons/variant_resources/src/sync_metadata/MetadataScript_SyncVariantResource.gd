@@ -114,7 +114,7 @@ func _patch_property_name_into_valid_property_enum() -> void:
 func _can_sync_to_property(property: Dictionary) -> bool:
 	if !property:
 		return false
-	if !H.BitMasks.get_bit_value(property.usage, PROPERTY_USAGE_NO_EDITOR):
+	if !H.BitMasks.has_flag(property.usage, PROPERTY_USAGE_NO_EDITOR):
 		return false
 	if resource is FlagsResource:
 		return H.PropertyInfo.property_is_bitflags(property)

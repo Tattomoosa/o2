@@ -1,16 +1,21 @@
 @tool
 extends CodeEdit
 
+enum Mode {
+	WATCH_INSPECTOR,
+	SIGNAL,
+}
+@export var mode := Mode.WATCH_INSPECTOR
+
 var property_info : String
 var property_editor_code : String
 var inspector : EditorInspector
 
 func _ready() -> void:
-	inspector = EditorInterface.get_inspector()
-	inspector.property_selected.connect(_print_selected)
-	inspector.edited_object_changed.connect(_edited_object_changed)
-	# symbol_lookup.connect(_on_symbol_lookup)
-	# symbol_validate.connect(_on_symbol_validate)
+	if mode == Mode.WATCH_INSPECTOR:
+		inspector = EditorInterface.get_inspector()
+		inspector.property_selected.connect(_print_selected)
+		inspector.edited_object_changed.connect(_edited_object_changed)
 
 func _edited_object_changed() -> void:
 	if !inspector.get_edited_object():
@@ -27,6 +32,10 @@ func _print_selected(property: String) -> void:
 		"var property_editor := " + property_editor_code +\
 		"\n" +\
 		'add_property_editor("%s", property_editor)' % property
+
+func print_property_info(p_info: Dictionary) -> void:
+	var pi_string := H.PropertyInfo.prettify(p_info)
+	text = pi_string
 
 func _property_info_button_pressed() -> void:
 	DisplayServer.clipboard_set(property_info)

@@ -11,7 +11,7 @@ var hider_classes : Array[Script] = [
 var hiders : Array[HideSomething] = []
 
 func _ready() -> void:
-	name = "HideStuff"
+	name = "Hide Stuff"
 	interface_elements = InterfaceElements.new()
 	add_child(interface_elements, true)
 	await get_tree().process_frame

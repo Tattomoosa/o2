@@ -10,10 +10,13 @@ var button_type : String = "InspectorActionbutton":
 	set(value):
 		button_type = value
 		_update_panel()
-
-func _ready(p_icon_name := "") -> void:
-	if p_icon_name:
+@export var icon_override : Texture2D:
+	set(value):
+		icon_override = value
 		_update_icon()
+
+func _ready() -> void:
+	_update_icon()
 	_update_panel()
 
 func _update_panel() -> void:
@@ -21,10 +24,13 @@ func _update_panel() -> void:
 
 func _update_icon() -> void:
 	var c := EditorInterface.get_base_control()
+	if icon_override:
+		add_theme_icon_override("icon", icon_override)
+		return
 	if icon_name:
 		add_theme_icon_override("icon", c.get_theme_icon(icon_name, &"EditorIcons"))
-	else:
-		remove_theme_icon_override("icon")
+		return
+	remove_theme_icon_override("icon")
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "icon":

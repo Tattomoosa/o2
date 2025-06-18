@@ -14,6 +14,7 @@ func _disable_plugin() -> void:
 	pass
 
 func _enter_tree() -> void:
+	name = "Variant Resources"
 	inspector_plugin = VariantResourceInspector.new()
 	override_inspector_plugin = OverridePropertyInspector.new()
 	add_inspector_plugin(inspector_plugin)

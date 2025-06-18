@@ -21,6 +21,7 @@ var _control_highlighter: ColorRect = null
 
 func _enter_tree() -> void:
 	if is_part_of_edited_scene():
+		set_process(false)
 		return
 	_control_highlighter = ColorRect.new()
 	_control_highlighter.color = Color(EditorInterface.get_editor_theme().get_color("accent_color", &"Editor"), 0.1)
@@ -49,13 +50,12 @@ func inspection_checkbox_toggled(value: bool) -> void:
 	else:
 		_select_node()
 
-
-func _process(delta: float) -> void:
-	if is_part_of_edited_scene():
-		set_process(false)
-		return
-	if !visible:
-		return
+# func _process(_delta: float) -> void:
+# 	if is_part_of_edited_scene():
+# 		set_process(false)
+# 		return
+# 	if !visible:
+# 		return
 
 func _select_node() -> void:
 	var node_view := _tree.get_selected()
@@ -72,7 +72,8 @@ func _on_Tree_item_selected() -> void:
 
 func _on_Tree_item_mouse_selected(_position: Vector2, mouse_button_index: int) -> void:
 	var item := _tree.get_selected()
-	item.collapsed = !item.collapsed
+	if mouse_button_index == MOUSE_BUTTON_LEFT:
+		item.collapsed = !item.collapsed
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		_select_node()
 		_popup_menu.set_position(get_viewport().get_mouse_position())

@@ -41,6 +41,15 @@ static func get_script_class_name(script: Script) -> String:
 	if !script: return ""
 	return script.get_global_name()
 
+static func get_class_name_or_class(object: Object) -> String:
+	if !object: return ""
+	var script : Script = object.get_script()
+	if script:
+		var cname := script.get_global_name()
+		if cname:
+			return cname
+	return object.get_class()
+
 static func is_class_name(class_name_string: String) -> bool:
 	if ClassDB.class_exists(class_name_string):
 		return false

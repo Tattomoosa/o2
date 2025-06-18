@@ -19,22 +19,24 @@ func _disable_plugin() -> void:
 func _enter_tree() -> void:
 	name = "PluginDevTools"
 	tools_dock = tools_dock_scene.instantiate()
-	add_control_to_dock(DOCK_SLOT_RIGHT_BL, tools_dock)
-	set_dock_tab_icon(tools_dock, plugin_icon)
-	_add_bottom_panel_button_to_popup()
+	# add_control_to_dock(DOCK_SLOT_RIGHT_BL, tools_dock)
+	add_control_to_bottom_panel(tools_dock, "Plugin DevTools")
+	# set_dock_tab_icon(tools_dock, plugin_icon)
+	# var tc : TabContainer = tools_dock.get_parent()
+	# var popup := tc.get_popup()
+	# popup.about_to_popup.connect(_add_bottom_panel_button_to_popup)
+	# tools_dock.get_child(0).get_child(0).set_popup(popup)
 
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
-	remove_control_from_docks(tools_dock)
+	# remove_control_from_docks(tools_dock)
+	remove_control_from_bottom_panel(tools_dock)
 	tools_dock.queue_free()
 
 func _add_bottom_panel_button_to_popup() -> void:
 	var tc : TabContainer = tools_dock.get_parent()
-	print(tc)
 	var popup := tc.get_popup()
-	print(popup)
-	popup.print_tree_pretty()
 	var vbox := popup.get_child(1, true)
 	for child in vbox.get_children(true):
 		if child is Button:
-			print(child.text)
+			if child.text == "Move to Bottom":
+				child.show()

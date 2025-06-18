@@ -31,7 +31,7 @@ columns = 2
 [node name="LineEdit" type="LineEdit" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Filter Icons"
+placeholder_text = "Filter Icons..."
 context_menu_enabled = false
 clear_button_enabled = true
 

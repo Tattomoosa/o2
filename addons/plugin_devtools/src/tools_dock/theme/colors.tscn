@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bdiy7eqm1bnty" path="res://addons/o₂/src/editor/Controls/EditorThemeTypeListPicker.gd" id="1_2i022"]
 [ext_resource type="Script" uid="uid://esqxcw7d4l6a" path="res://addons/plugin_devtools/src/controls/CopyNotifier.gd" id="2_savw1"]
-[ext_resource type="Script" uid="uid://bepnqbb46wygl" path="res://addons/plugin_devtools/src/controls/EditorStylesPanelContainer.gd" id="3_q8rwb"]
 [ext_resource type="Script" uid="uid://ba2l7d86y8dr6" path="res://addons/o₂/src/editor/Controls/EditorThemeColorList.gd" id="4_081to"]
 
 [sub_resource type="SVGTexture" id="SVGTexture_sca8y"]
@@ -15,14 +14,26 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxltf"]
-content_margin_left = 3.0
-content_margin_top = 3.0
-content_margin_right = 3.0
-content_margin_bottom = 3.0
-bg_color = Color(0.09068625, 0.09068625, 0.09068625, 1)
-corner_detail = 1
-anti_aliasing = false
+[sub_resource type="SVGTexture" id="SVGTexture_cmf6v"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\"><g fill=\"#fff\"><path fill-opacity=\".2\" d=\"M0 0h64v64H0z\"/><path fill-opacity=\".4\" d=\"M0 0v16h16V0zm16 16v16h16V16zm16 0h16V0H32zm16 0v16h16V16zm0 16H32v16h16zm0 16v16h16V48zm-16 0H16v16h16zm-16 0V32H0v16z\"/></g></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2i022"]
+resource_name = "Transparent Background"
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+texture = SubResource("SVGTexture_cmf6v")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(1, 1, 1, 0.14901961)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ixii8"]
 
@@ -172,18 +183,29 @@ size_flags_vertical = 4
 stretch_mode = 5
 script = ExtResource("2_savw1")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_cxltf")
-script = ExtResource("3_q8rwb")
-panel_style = "Background"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_2i022")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ixii8")
 
-[node name="Colors" type="HFlowContainer" parent="PanelContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Colors" type="HFlowContainer" parent="MarginContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -192,7 +214,7 @@ last_wrap_alignment = 1
 script = ExtResource("4_081to")
 theme_type = "Editor"
 
-[connection signal="text_changed" from="GridContainer/LineEdit" to="PanelContainer/ScrollContainer/Colors" method="filter"]
-[connection signal="type_selected" from="GridContainer/OptionButton" to="PanelContainer/ScrollContainer/Colors" method="set_theme_type"]
-[connection signal="button_pressed" from="PanelContainer/ScrollContainer/Colors" to="GridContainer/Copied" method="show_and_fade"]
-[connection signal="mouse_hovered_button" from="PanelContainer/ScrollContainer/Colors" to="GridContainer/Label" method="set_text"]
+[connection signal="text_changed" from="GridContainer/LineEdit" to="MarginContainer/ScrollContainer/MarginContainer/Colors" method="filter"]
+[connection signal="type_selected" from="GridContainer/OptionButton" to="MarginContainer/ScrollContainer/MarginContainer/Colors" method="set_theme_type"]
+[connection signal="button_pressed" from="MarginContainer/ScrollContainer/MarginContainer/Colors" to="GridContainer/Copied" method="show_and_fade"]
+[connection signal="mouse_hovered_button" from="MarginContainer/ScrollContainer/MarginContainer/Colors" to="GridContainer/Label" method="set_text"]

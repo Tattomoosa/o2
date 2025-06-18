@@ -16,7 +16,6 @@ class ThemePopup extends PopupMenu:
 	var type_list : PackedStringArray
 
 	func _ready() -> void:
-		print("READY!")
 		var t := EditorInterface.get_editor_theme()
 		for type in type_list:
 			if t.get_type_variation_base(type) == base_type:

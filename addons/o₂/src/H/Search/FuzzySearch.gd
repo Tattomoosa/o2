@@ -50,41 +50,6 @@ static func decorate(input: String, positions: Array) -> String:
 
 
 	
-	#var x = score_fuzzy("ske", "skeleton")[0]
-	#print(x < "big_enemy_killed.wav".length())
-
-
-
-# 0 1 2 3
-# 1 0 0 0 
-
-# 0 1
-# 1 0
-# 2 0
-# 3 0
-
-static func print_matrix(mat, str1, str2):
-	
-	var n = str1.length() + 1
-	var m = str2.length() + 1
-	
-	var h = "    "
-	for c in str2:
-		h += c + " "
-	print(h)
-	
-	for nn in n :
-		var s = "  "
-		if nn > 0:
-			s = str1[nn-1] + " "
-		
-		for mm in m:
-			s += str(mat[m * nn + mm]) + " "
-		
-		print(s)
-
-	print()
-
 # This is a Levenshtein distance approach with some agressive cleverish weighting inspired by the VSCode's fuzzy search.
 # Its technique is optimized for searching files.
 static func score_fuzzy(str1: String, str2: String) -> Array:
