@@ -20,8 +20,8 @@ func _disable_plugin() -> void:
 func _enter_tree() -> void:
 	name = "PluginDevTools"
 	tools_dock = tools_dock_scene.instantiate()
-	# add_control_to_dock(DOCK_SLOT_RIGHT_BL, tools_dock)
 	add_control_to_bottom_panel(tools_dock, "Plugin DevTools")
+
 	# set_dock_tab_icon(tools_dock, plugin_icon)
 	# var tc : TabContainer = tools_dock.get_parent()
 	# var popup := tc.get_popup()

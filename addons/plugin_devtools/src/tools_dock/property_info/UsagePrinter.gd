@@ -33,8 +33,10 @@ const USAGE_INFO : Dictionary[int, String] = {
 	PROPERTY_USAGE_SECRET: "Property contains confidential information",
 }
 
+
 func _ready() -> void:
 	display_usage_info(0)
+
 
 func display_usage_info(usage: int) -> void:
 	if usage == 0:

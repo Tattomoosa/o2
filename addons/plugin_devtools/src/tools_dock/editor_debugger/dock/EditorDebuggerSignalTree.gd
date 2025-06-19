@@ -88,7 +88,6 @@ func _get_object_defining_signals(obj: Object) -> Array[Dictionary]:
 			"class": global_name if global_name else script.resource_path.get_file(),
 			"signals": obj.get_signal_list()
 		})
-		# sigs[script.resource_path.get_file()] = script.get_signal_list()
 	var c_name := obj.get_class()
 	var c_names := PackedStringArray([])
 	while c_name:

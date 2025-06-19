@@ -36,6 +36,7 @@ var filtering := false
 
 var visibility_parent_list : Array[Node] = []
 
+
 func _enter_tree() -> void:
 	# make a list of parents, we can't hide those!
 	visibility_parent_list.clear()
@@ -44,6 +45,7 @@ func _enter_tree() -> void:
 		visibility_parent_list.push_back(parent)
 		parent = parent.get_parent()
 
+
 func _ready() -> void:
 	add_theme_stylebox_override(&"panel", EditorInterface.get_editor_theme().get_stylebox("Background", "EditorStyles"))
 	search_match_highlight = EditorInterface.get_editor_theme().get_color("accent_color", "Editor")
@@ -51,6 +53,7 @@ func _ready() -> void:
 	visibility_changed.connect(update)
 	button_clicked.connect(_button_clicked)
 	item_mouse_selected.connect(_mouse_selected)
+
 
 func update(force := false) -> void:
 	if is_part_of_edited_scene(): return
@@ -83,11 +86,13 @@ func update(force := false) -> void:
 	await get_tree().create_timer(wait_between_updates).timeout
 	update.call_deferred()
 
+
 func _mouse_selected(_position: Vector2, mouse_button_index: int) -> void:
 	var item := get_selected()
 	if mouse_button_index == MOUSE_BUTTON_LEFT:
 		if item.collapsed:
 			item.collapsed = false
+
 
 func _button_clicked(item: TreeItem, _column: int, id: int, mouse_button_index: int) -> void:
 	var node : Node = item.get_metadata(METADATA_NODE)
@@ -100,6 +105,7 @@ func _button_clicked(item: TreeItem, _column: int, id: int, mouse_button_index: 
 			HAS_SIGNALS:
 				signal_button_pressed.emit(node)
 				set_selected(item, 0)
+
 
 func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 	updates_this_frame += 1
@@ -139,6 +145,7 @@ func _update_branch(root_node: Node, root_item: TreeItem) -> void:
 		for i in range(root_node.get_child_count(true), len(child_items)):
 			child_items[i].free()
 
+
 func _create_tree_item(node: Node, parent_item: TreeItem, internal: bool) -> TreeItem:
 	assert(node is Node)
 	assert(parent_item == null or parent_item is TreeItem)
@@ -147,6 +154,7 @@ func _create_tree_item(node: Node, parent_item: TreeItem, internal: bool) -> Tre
 	_update_tree_item(node, item, internal)
 	return item
 
+
 func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 	assert(node is Node)
 	assert(item is TreeItem)
@@ -154,7 +162,6 @@ func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 	var c_name := H.Scripts.get_class_name_or_class(node)
 	var display_text := _get_node_name_display_text(node)
 	
-
 	var editor_node := false
 	if _is_internal_editor_class(c_name, node):
 		editor_node = true
@@ -163,8 +170,6 @@ func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 	item.clear_buttons()
 	item.set_text(0, display_text)
 	item.set_tooltip_text(0, node.get_path())
-
-	# var is_control := ClassDB.is_parent_class(c_name, "Control")
 
 	if editor_node:
 		item.set_custom_color(0, Color("478cbf"))
@@ -194,13 +199,16 @@ func _update_tree_item(node: Node, item: TreeItem, internal: bool) -> void:
 
 	item.set_metadata(METADATA_NODE, node)
 
+
 func _update_item_lazy(node: Node, item: TreeItem) -> void:
 	_update_visibility_button(node, item)
+
 
 func _is_internal_editor_class(c_name: String, node: Node) -> bool:
 	if !ClassDB.can_instantiate(c_name) and !node.get_script():
 		return true
 	return false
+
 
 func _update_visibility_button(node: Node, item: TreeItem) -> void:
 	if "visible" not in node:
@@ -217,6 +225,7 @@ func _update_visibility_button(node: Node, item: TreeItem) -> void:
 	var is_parent := node in visibility_parent_list
 	var tooltip := "Toggle Visibility" if !is_parent else "Cannot Toggle Visibility of Parents"
 	item.add_button(0, icon, VISIBILITY_BUTTON, is_parent, tooltip)
+
 
 func focus_node(node: Node) -> void:
 	var parent: Node = get_tree().root
@@ -250,14 +259,17 @@ func focus_node(node: Node) -> void:
 		node_item.select(0)
 		ensure_cursor_is_visible()
 
+
 func get_item_node(item: TreeItem) -> Node:
 	return item.get_metadata(METADATA_NODE)
+
 
 static func _uncollapse_to_root(node_view: TreeItem) -> void:
 	var parent_view := node_view.get_parent()
 	while parent_view != null:
 		parent_view.collapsed = false
 		parent_view = parent_view.get_parent()
+
 
 func collapse_except_selected() -> void:
 	var selected := get_selected()
@@ -266,6 +278,7 @@ func collapse_except_selected() -> void:
 		selected.uncollapse_tree()
 		set_selected(selected, 0)
 
+
 func _reset_tree_visibility(root: TreeItem = null) -> void:
 	if !root:
 		root = get_root()
@@ -273,6 +286,7 @@ func _reset_tree_visibility(root: TreeItem = null) -> void:
 		item.visible = true
 		item.set_custom_bg_color(0, Color.TRANSPARENT)
 		_reset_tree_visibility(item)
+
 
 func filter(text: String, root : TreeItem = null, data := PackedStringArray([""])) -> void:
 	if !text:
