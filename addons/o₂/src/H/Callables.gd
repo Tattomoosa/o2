@@ -1,6 +1,7 @@
 @tool
 static var _NO_ARG = RefCounted.new()
 
+
 static func truncate_args(callable: Callable, max_count: int) -> Callable:
 		assert(max_count >= 0 and max_count <= 10)
 		return func (a0 = _NO_ARG, a1 = _NO_ARG, a2 = _NO_ARG, a3 = _NO_ARG, a4 = _NO_ARG,
@@ -12,8 +13,10 @@ static func truncate_args(callable: Callable, max_count: int) -> Callable:
 								break
 				callable.callv(args)
 
+
 static func unbind_all(callable: Callable) -> Callable:
 	return truncate_args(callable, 0)
+
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

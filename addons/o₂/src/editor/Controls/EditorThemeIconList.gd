@@ -2,15 +2,16 @@
 extends EditorThemeExplorerList
 
 const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
-const COPY_TEXT := 'EditorInterface.get_inspector().get_theme_icon("%s", "%s")'
+const COPY_TEXT := 'EditorInterface.get_editor_theme().get_icon("%s", "%s")'
+
 
 func _ready() -> void:
 	_populate()
 
+
 func _build_item(item_name: String) -> Button:
 	var icon_button := Button.new()
 	icon_button.expand_icon = true
-	# icon_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	icon_button.size_flags_horizontal = Control.SIZE_FILL | Control.SIZE_SHRINK_BEGIN
 	icon_button.icon = _load_icon(item_name)
 	icon_button.custom_minimum_size = Vector2.ONE * item_size * H.Editor.Settings.scale
@@ -18,16 +19,18 @@ func _build_item(item_name: String) -> Button:
 	icon_button.name = item_name
 	return icon_button
 
+
 func _get_item_names() -> PackedStringArray:
-	var t := EditorInterface.get_editor_theme()
-	return t.get_icon_list(theme_type)
+	return EditorInterface.get_editor_theme().get_icon_list(theme_type)
+
 
 func _load_icon(icon_name: String) -> Texture2D:
-	var t := EditorInterface.get_editor_theme()
-	return t.get_icon(icon_name, theme_type)
+	return EditorInterface.get_editor_theme().get_icon(icon_name, theme_type)
+
 
 func _get_copy_format_string() -> String:
 	return COPY_TEXT
+
 
 func _get_item_drag_data(_pos: Vector2, button: Button) -> Variant:
 	var d_offset := Control.new()

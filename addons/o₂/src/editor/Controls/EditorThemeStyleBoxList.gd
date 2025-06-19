@@ -4,6 +4,7 @@ extends EditorThemeExplorerList
 const EditorThemeExplorerList := preload("uid://dg4oc6ix73l6v")
 const COPY_TEXT := 'EditorInterface.get_editor_theme().get_stylebox("%s", "%s")'
 
+
 func _build_item(stylebox_name: String) -> Button:
 	var t := EditorInterface.get_editor_theme()
 	var btn := Button.new()
@@ -26,12 +27,15 @@ func _build_item(stylebox_name: String) -> Button:
 	btn.set_meta("stylebox", style)
 	return btn
 
+
 func _get_item_names() -> PackedStringArray:
 	var t := EditorInterface.get_editor_theme()
 	return t.get_stylebox_list(theme_type)
 
+
 func _get_copy_format_string() -> String:
 	return COPY_TEXT
+
 
 func _get_item_drag_data(_pos: Vector2, button: Button) -> Variant:
 	var d_offset := Control.new()

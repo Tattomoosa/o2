@@ -29,14 +29,18 @@ var context_menu_property_info_items := [
 	},
 ]
 
+
 func _clear_context_menu_items():
 	context_menu_items.clear()
+
 
 func _can_handle(_object: Object) -> bool:
 	return true
 
+
 func _parse_end(_object: Object) -> void:
 	_parse_end_idle_frame.call_deferred()
+
 
 func _parse_end_idle_frame() -> void:
 	var inspector := EditorInterface.get_inspector()
@@ -50,6 +54,7 @@ func _parse_end_idle_frame() -> void:
 			_add_context_menu(property)
 			property.set_meta("is_context_menu_patched", true)
 	context_menu_items.clear()
+
 
 func _add_context_menu(ep: EditorProperty) -> void:
 	var object := ep.get_edited_object()
@@ -87,8 +92,10 @@ func _add_context_menu(ep: EditorProperty) -> void:
 		popup.set_item_metadata(popup.item_count - 1, item.callable)
 	popup.index_pressed.connect(_on_popup_pressed.bindv([popup, ep]))
 
+
 func _on_popup_pressed(index: int, popup: PopupMenu, ep: EditorProperty) -> void:
 	popup.get_item_metadata(index).call(ep)
+
 
 func _print_property_info(ep: EditorProperty) -> void:
 	var property := H.PropertyInfo.get_property(ep.get_edited_object(), ep.get_edited_property())
@@ -99,8 +106,10 @@ func _print_property_info(ep: EditorProperty) -> void:
 		H.Scripts.get_class_name_or_script_name(obj)
 	print("Property Info <", name, ".", prop, ">:\n", H.PropertyInfo.prettify(property))
 
+
 func _print_editor_property_tree(ep: EditorProperty) -> void:
 	ep.print_tree_pretty()
+
 
 static func add_context_menu_item(
 	object: Object,
@@ -110,6 +119,7 @@ static func add_context_menu_item(
 ) -> void:
 	var property_items := _get_property_context_menu_items(object, property_name)
 	property_items.push_back({ "name": item_name, "callable": callable })
+
 
 static func _get_property_context_menu_items(object: Object, property_name: String) -> Array[Dictionary]:
 	var object_data : Dictionary = context_menu_items.get_or_add(object, {})

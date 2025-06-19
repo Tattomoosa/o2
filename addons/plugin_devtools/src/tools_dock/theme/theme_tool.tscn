@@ -67,7 +67,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Control"
 script = ExtResource("2_sca8y")
-options = PackedStringArray()
+options = PackedStringArray("Control", "BaseButton", "Button", "Label", "Range", "ScrollBar", "HScrollBar", "VScrollBar", "ProgressBar", "Slider", "HSlider", "VSlider", "CheckBox", "CheckButton", "LinkButton", "Panel", "TextureRect", "ColorRect", "NinePatchRect", "ReferenceRect", "Container", "AspectRatioContainer", "TabContainer", "TabBar", "Separator", "HSeparator", "VSeparator", "TextureButton", "BoxContainer", "HBoxContainer", "VBoxContainer", "GridContainer", "CenterContainer", "ScrollContainer", "PanelContainer", "FlowContainer", "HFlowContainer", "VFlowContainer", "MarginContainer", "TextureProgressBar", "ItemList", "LineEdit", "VideoStreamPlayer", "Tree", "TextEdit", "CodeEdit", "MenuBar", "MenuButton", "OptionButton", "SpinBox", "ColorPicker", "ColorPickerButton", "RichTextLabel", "SubViewportContainer", "SplitContainer", "HSplitContainer", "VSplitContainer", "GraphElement", "GraphNode", "GraphFrame", "GraphEdit", "FoldableContainer", "GDTerm", "EditorToaster", "ScriptEditor", "ScriptEditorBase", "EditorInspector", "EditorProperty", "EditorSpinSlider", "EditorResourcePicker", "EditorScriptPicker", "FileSystemDock", "OpenXRInteractionProfileEditorBase", "OpenXRInteractionProfileEditor", "OpenXRBindingModifierEditor", "ProgressDialog", "EditorTitleBar", "SplitContainerDragger", "DockSplitContainer", "EditorSceneTabs", "EditorMainScreen", "EditorPropertyPath", "EditorInspectorCategory", "ProjectExportTextureFormatError", "SectionedInspector", "EventListenerLineEdit", "EditorVariantTypeOptionButton", "ActionMapEditor", "LocalizationEditor", "EditorAutoloadSettings", "ShaderGlobalsEditor", "GroupSettingsEditor", "EditorValidationPanel", "EditorPluginSettings", "ImportDefaultsEditor", "SpinBoxLineEdit", "EditorHelpBit", "EditorVersionButton", "EditorRunNative", "EditorRunBar", "BackgroundProgress", "SceneTreeEditor", "SceneTreeDock", "FileSystemList", "EditorObjectSelector", "InspectorDock", "ImportDock", "ConnectionsDock", "GroupsEditor", "NodeDock", "HistoryDock", "EditorBottomPanel", "EditorLog", "EditorDebuggerInspector", "EditorExpressionEvaluator", "EditorProfiler", "EditorVisualProfiler", "EditorPerformanceProfiler", "ScriptEditorDebugger", "EditorDebuggerTree", "EditorDebuggerNode", "AnimationTimelineEdit", "AnimationMarkerEdit", "AnimationBezierTrackEdit", "AnimationTrackEditor", "AnimationPlayerEditor", "EditorZoomWidget", "EditorTranslationPreviewButton", "CanvasItemEditorViewport", "CanvasItemEditor", "Node3DEditorViewportContainer", "ViewportNavigationControl", "ViewportRotationControl", "Node3DEditorViewport", "Node3DEditor", "WindowWrapper", "FindReplaceBar", "ScreenSelect", "FindInFilesPanel", "LayerHost", "EmbeddedProcessBase", "EmbeddedProcessMacOS", "GameView", "EditorAudioBuses", "EditorAssetLibrary", "GraphEditFilter", "GraphEditMinimap", "AnimationTreeNodeEditorPlugin", "AnimationNodeBlendTreeEditor", "AnimationNodeBlendSpace1DEditor", "AnimationNodeBlendSpace2DEditor", "AnimationNodeStateMachineEditor", "AnimationTreeEditor", "ControlEditorPopupButton", "ControlEditorPresetPicker", "AnchorPresetPicker", "SizeFlagPresetPicker", "ControlEditorToolbar", "MeshInstance3DEditor", "MeshLibraryEditor", "MultiMeshEditor", "Polygon3DEditor", "ResourcePreloaderEditor", "ShaderFileEditor", "SpriteFramesEditor", "ThemeTypeEditor", "ThemeItemImportTree", "ThemeEditorPreview", "DefaultThemeEditorPreview", "ThemeEditor", "Camera2DEditor", "AbstractPolygon2DEditor", "CollisionPolygon2DEditor", "CollisionShape2DEditor", "LightOccluder2DEditor", "Line2DEditor", "Path2DEditor", "Polygon2DEditor", "Cast2DEditor", "Skeleton2DEditor", "Sprite2DEditor", "EditorPropertyInteger", "EditorPropertyVectorN", "EditorPropertyVector2i", "TileAtlasView", "TileSetAtlasSourceEditor", "TileSetScenesCollectionSourceEditor", "TileSetEditor", "TileMapLayerEditor", "CSGShapeEditor", "ReplicationEditor", "NavigationLink2DEditor", "NavigationRegion2DEditor", "NavigationObstacle2DEditor", "NavigationRegion3DEditor", "QuickOpenResultContainer", "GridMapEditor", "EditorNetworkProfiler", "EditorAudioMeterNotches", "EditorAudioBus", "EditorPropertyText", "EditorPropertyResource", "EditorPropertyCheck", "EditorPropertyLocalizableString", "EditorPropertyMultilineText", "EditorPropertyFlags", "HighlightedLabel", "QuickOpenResultListItem", "QuickOpenResultGridItem", "QuickOpenResultItem", "EditorPropertyFloat", "EditorPropertyEnum", "EditorInspectorSection", "ControlPositioningWarning", "EditorPropertyVector2", "EditorPropertySizeFlags", "EditorPropertyNodePath", "EditorPropertyTextEnum", "EditorPropertyColor", "EditorPropertyLayersGrid", "EditorPropertyLayers", "EditorPropertyArray", "EditorPropertyLocale", "CodeTextEditor", "ScriptTextEditor", "ColorChannelSelector", "TexturePreview", "EditorPropertyTransform2D", "EditorPropertyVector4", "EditorPropertyVector4i", "EditorPropertyPlane", "EditorPropertyNil", "StyleBoxPreview", "EditorPropertyRect2")
 popup_panel_style = null
 
 [node name="TypeVariationLabel" type="Label" parent="HBoxContainer"]
@@ -85,12 +85,11 @@ popup_panel_style = null
 [node name="ResourceType" type="TabContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 4
+current_tab = 0
 tabs_rearrange_group = 2
 script = ExtResource("1_y220a")
 
 [node name="Icons" parent="ResourceType" instance=ExtResource("2_xviqr")]
-visible = false
 layout_mode = 2
 metadata/icon = SubResource("SVGTexture_wat77")
 
@@ -108,6 +107,7 @@ visible = false
 layout_mode = 2
 
 [node name="Constants" parent="ResourceType" instance=ExtResource("9_cbrw0")]
+visible = false
 layout_mode = 2
 
 [node name="Color Map" parent="ResourceType" instance=ExtResource("10_cbrw0")]

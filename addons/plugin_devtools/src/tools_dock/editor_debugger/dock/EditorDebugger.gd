@@ -6,17 +6,12 @@ extends Control
 
 signal node_selected(node: Node)
 
-# @export var update_interval := 1.0
-
 @onready var _popup_menu : PopupMenu = get_node("PopupMenu")
 @onready var _inspection_checkbox : CheckBox = %ShowInInspectorCheckbox
 @onready var _highlight_checkbox : CheckBox = %HighlightNodeCheckbox
-@onready var _tree : Tree = %EditorDebuggerTree
-# @onready var _save_branch_file_dialog : FileDialog = get_node("SaveBranchFileDialog")
+@onready var _tree : Tree = %EditorDebuggerNodeTree
 
 const METADATA_NODE_NAME = 0
-
-# var _time_before_next_update := 0.0
 var _control_highlighter: ColorRect = null
 
 func _enter_tree() -> void:
@@ -50,13 +45,6 @@ func inspection_checkbox_toggled(value: bool) -> void:
 	else:
 		_select_node()
 
-# func _process(_delta: float) -> void:
-# 	if is_part_of_edited_scene():
-# 		set_process(false)
-# 		return
-# 	if !visible:
-# 		return
-
 func _select_node() -> void:
 	var node_view := _tree.get_selected()
 	if !node_view:
@@ -71,9 +59,6 @@ func _on_Tree_item_selected() -> void:
 	_select_node()
 
 func _on_Tree_item_mouse_selected(_position: Vector2, mouse_button_index: int) -> void:
-	var item := _tree.get_selected()
-	if mouse_button_index == MOUSE_BUTTON_LEFT:
-		item.collapsed = !item.collapsed
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		_select_node()
 		_popup_menu.set_position(get_viewport().get_mouse_position())

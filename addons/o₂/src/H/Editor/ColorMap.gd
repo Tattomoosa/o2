@@ -123,22 +123,22 @@ const NAME_MAPPING : Dictionary[String, Color]= {
 	"Godot Blue": Color("#478cbf"),
 	"Godot Gray": Color("#414042"),
 
-	"Pure white": Color("#ffffff"),
-	"Forced light color": Color("#fefefe"),
-	"Pure black": Color("#000000"),
-	"Forced dark color": Color("#010101"),
+	"Pure White": Color("#ffffff"),
+	"Forced Light Color": Color("#fefefe"),
+	"Pure Black": Color("#000000"),
+	"Forced Dark Color": Color("#010101"),
 
 	# Keep pure RGB colors as is, but list them for explicitness.
-	"Pure red": Color("#ff0000"),
-	"Pure green": Color("#00ff00"),
-	"Pure blue": Color("#0000ff"),
+	"Pure Red": Color("#ff0000"),
+	"Pure Green": Color("#00ff00"),
+	"Pure Blue": Color("#0000ff"),
 
 	# GUI Colors
-	"Common icon color": Color("#e0e0e0"),
-	"GUI disabled color": Color("#808080"),
-	"GUI disabled light color": Color("#b3b3b3"),
-	"GUI highlight color": Color("#699ce8"),
-	"Scrollbar grabber highlight color": Color("#f9f9f9"),
+	"Common Icon Color": Color("#e0e0e0"),
+	"GUI Disabled Color": Color("#808080"),
+	"GUI Disabled Light Color": Color("#b3b3b3"),
+	"GUI Highlight Color": Color("#699ce8"),
+	"Scrollbar Grabber Highlight Color": Color("#f9f9f9"),
 
 	"Animation": Color("#c38ef1"),
 	"2D Node": Color("#8da5f3"),
@@ -152,9 +152,9 @@ const NAME_MAPPING : Dictionary[String, Color]= {
 	"GUI Control": Color("#8eef97"),
 	"GUI Control Abstract": Color("#76ad7b"),
 
-	"Selection (blue)": Color("#5fb2ff"),
-	"Selection (darker blue)": Color("#003e7a"),
-	"Gizmo (yellow)": Color("#f7f5cf"),
+	"Selection - Blue": Color("#5fb2ff"),
+	"Selection - Darker Blue": Color("#003e7a"),
+	"Gizmo - Yellow": Color("#f7f5cf"),
 
 	# Rainbow
 	"Red": Color("#ff4545"),
@@ -172,32 +172,32 @@ const NAME_MAPPING : Dictionary[String, Color]= {
 	"Frozen gradient middle": Color("#75d1e6"),
 	"Frozen gradient bottom": Color("#84ffee"),
 
-	"Color track red": Color("#f70000"),
-	"Color track orange": Color("#eec315"),
-	"Color track yellow": Color("#dbee15"),
-	"Color track green": Color("#288027"),
+	"Color Track Red": Color("#f70000"),
+	"Color Track Orange": Color("#eec315"),
+	"Color Track Yellow": Color("#dbee15"),
+	"Color Track Green": Color("#288027"),
 
 	# Other objects
-	"Mesh resource (orange)": Color("#ffca5f"),
-	"Shape resource (blue)": Color("#2998ff"),
-	"Shape resource (light blue)": Color("#a2d2ff"),
-	"Input event highlight (light blue)": Color("#69c4d4"),
+	"Mesh Resource (Orange)": Color("#ffca5f"),
+	"Shape Resource (Blue)": Color("#2998ff"),
+	"Shape Resource (Light Blue)": Color("#a2d2ff"),
+	"Input Event Highlight (Light Blue)": Color("#69c4d4"),
 
 	# Animation editor tracks
 	# The property track icon color is set by the common icon color.
-	"3D Position track": Color("#ea7940"),
-	"3D Rotation track": Color("#ff2b88"),
-	"3D Scale track": Color("#eac840"),
-	"Call Method track": Color("#3cf34e"),
-	"Bezier Curve track": Color("#2877f6"),
-	"Audio Playback track": Color("#eae440"),
-	"Animation Playback track": Color("#a448f0"),
-	"Blend Shape track": Color("#5ad5c4"),
+	"3D Position Track": Color("#ea7940"),
+	"3D Rotation Track": Color("#ff2b88"),
+	"3D Scale Track": Color("#eac840"),
+	"Call Method Track": Color("#3cf34e"),
+	"Bezier Curve Track": Color("#2877f6"),
+	"Audio Playback Track": Color("#eae440"),
+	"Animation Playback Track": Color("#a448f0"),
+	"Blend Shape Track": Color("#5ad5c4"),
 
 	# Control layouts
-	"Highlighted part": Color("#d6d6d6"),
-	"Background part": Color("#474747"),
-	"Border part": Color("#919191"),
+	"Highlighted Part": Color("#d6d6d6"),
+	"Background Part": Color("#474747"),
+	"Border Part": Color("#919191"),
 
 	# TileSet editor icons
 	"New Single Tile": Color("#fce00e"),
@@ -228,10 +228,10 @@ const NAME_MAPPING : Dictionary[String, Color]= {
 	"Vector4": Color("#f066bd"),
 
 	# Visual shaders
-	"Vector funcs": Color("#77ce57"),
-	"Vector transforms": Color("#ea686c"),
-	"Textures and cubemaps": Color("#eac968"),
-	"Functions and expressions": Color("#cf68ea"),
+	"Vector Functions": Color("#77ce57"),
+	"Vector Transforms": Color("#ea686c"),
+	"Textures and Cubemaps": Color("#eac968"),
+	"Functions and Expressions": Color("#cf68ea"),
 }
 
 static func get_base_colors() -> Array[Color]:

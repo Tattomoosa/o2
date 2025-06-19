@@ -1,24 +1,17 @@
-[gd_scene load_steps=24 format=3 uid="uid://bn8g7x356tl3q"]
+[gd_scene load_steps=29 format=3 uid="uid://bn8g7x356tl3q"]
 
 [ext_resource type="Script" uid="uid://drb8020exidda" path="res://addons/plugin_devtools/src/tools_dock/editor_debugger/dock/EditorDebugger.gd" id="1_oq8x1"]
 [ext_resource type="Script" uid="uid://cdci5v0ynrgjk" path="res://addons/plugin_devtools/src/tools_dock/editor_debugger/dock/EditorDebuggerPopupMenu.gd" id="2_hg6cs"]
-[ext_resource type="Script" uid="uid://bh0onqu0jxa01" path="res://addons/plugin_devtools/src/tools_dock/editor_debugger/dock/EditorDebuggerTree.gd" id="3_4tiqm"]
+[ext_resource type="Script" uid="uid://bh0onqu0jxa01" path="res://addons/plugin_devtools/src/tools_dock/editor_debugger/dock/EditorDebuggerNodeTree.gd" id="3_4tiqm"]
 [ext_resource type="Script" uid="uid://83yq2e5cupld" path="res://addons/plugin_devtools/src/controls/EditorIconButton.gd" id="3_gy50x"]
 [ext_resource type="Texture2D" uid="uid://bcgmrl12jx076" path="res://addons/plugin_devtools/assets/icons/OnlyShowControlNodes.svg" id="4_gy50x"]
+[ext_resource type="Script" uid="uid://rg8w4yxvrlnp" path="res://addons/plugin_devtools/src/controls/ChangeSplitDirectionButton.gd" id="6_8oa8k"]
+[ext_resource type="Script" uid="uid://cxmrrnymqpble" path="res://addons/plugin_devtools/src/tools_dock/editor_debugger/dock/EditorDebuggerSignalTree.gd" id="6_g3pkk"]
+[ext_resource type="Texture2D" uid="uid://d086ucblbg3fb" path="res://addons/plugin_devtools/assets/icons/HSplitIcon.tres" id="7_fi71u"]
+[ext_resource type="Texture2D" uid="uid://bpqd7nsl66f3p" path="res://addons/plugin_devtools/assets/icons/VSplitIcon.tres" id="8_7q7w5"]
 
-[sub_resource type="SVGTexture" id="SVGTexture_gy50x"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m8 9.669-3.536 2.583H7v2.537h2v-2.537h2.536zm0-3.314L4.464 3.772H7V1.235h2v2.537h2.536zm-7.296.73h14.591v1.831H.704z\"/></svg>
-"
-base_scale = 2.0
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
-}
-
-[sub_resource type="SVGTexture" id="SVGTexture_g3pkk"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m2 2v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2z\"/></svg>
+[sub_resource type="SVGTexture" id="SVGTexture_ehoec"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M5 8a4 4 0 1 1 4 4v2a6 6 0 1 0-6-6H1l3 4 3-4z\"/></svg>
 "
 base_scale = 2.0
 saturation = 2.0
@@ -29,6 +22,28 @@ Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
 [sub_resource type="SVGTexture" id="SVGTexture_tvlfb"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m8 9.669-3.536 2.583H7v2.537h2v-2.537h2.536zm0-3.314L4.464 3.772H7V1.235h2v2.537h2.536zm-7.296.73h14.591v1.831H.704z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_hmwju"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m2 2v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2zm-4 5v2h2v-2zm4 0v2h8v-2z\"/></svg>
+"
+base_scale = 2.0
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
+}
+
+[sub_resource type="SVGTexture" id="SVGTexture_2gxap"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"none\" stroke=\"#8da5f3\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M14 14H2V2h12z\"/></svg>
 "
 base_scale = 2.0
@@ -44,7 +59,8 @@ script/source = "@tool
 extends Label
 
 func on_node_selected(node: Node) -> void:
-	text = '%s:<%s#%s>' % [node.name, H.Scripts.get_class_name_or_script_name(node), node.get_instance_id()]
+	print(node)
+	text = '%s:<%s#%s>' % [node.name, node.get_class(), node.get_instance_id()]
 "
 
 [sub_resource type="SVGTexture" id="SVGTexture_fi71u"]
@@ -58,7 +74,7 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k76i8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehoec"]
 content_margin_left = 6.0
 content_margin_top = 6.0
 content_margin_right = 6.0
@@ -68,7 +84,7 @@ corner_detail = 1
 anti_aliasing = false
 
 [sub_resource type="SVGTexture" id="SVGTexture_k2iu7"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m3 1c-1.1046 0-2 .8954-2 2v1h14v-1c0-1.1046-.89543-2-2-2zm9 1h1v1h-1zm-11 3v8c0 1.1046.89543 2 2 2h10c1.1046 0 2-.8954 2-2v-8z\"/></svg>
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M4 2a1 1 0 0 0 0 2 8 8 0 0 1 8 8 1 1 0 0 0 2 0A10 10 0 0 0 4 2zm0 4a1 1 0 0 0 0 2 4 4 0 0 1 4 4 1 1 0 0 0 2 0 6 6 0 0 0-6-6zm0 4a2 2 0 0 0 0 4 2 2 0 0 0 0-4z\"/></svg>
 "
 base_scale = 2.0
 saturation = 2.0
@@ -78,8 +94,8 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_hmwju"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><rect width=\"14\" height=\"14\" x=\"1\" y=\"1\" fill=\"#8eef97\" rx=\"2\"/></svg>
+[sub_resource type="SVGTexture" id="SVGTexture_g3pkk"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 4h12v4H2zm12 6v4H2v-4z\"/></svg>
 "
 base_scale = 2.0
 saturation = 2.0
@@ -89,8 +105,8 @@ Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
 Color(1, 0.8666667, 0.39607844, 1): Color(1, 0.87, 0.4, 1)
 }
 
-[sub_resource type="SVGTexture" id="SVGTexture_2gxap"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#8eef97\" d=\"M3 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm0 2h2v10H3zm4 0h2v10H7zm4 0h2v10h-2z\"/></svg>
+[sub_resource type="SVGTexture" id="SVGTexture_htm30"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"none\" stroke=\"#e0e0e0\" stroke-width=\"2\" d=\"m3 3 10 10M3 13 13 3\"/></svg>
 "
 base_scale = 2.0
 saturation = 2.0
@@ -237,41 +253,51 @@ layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Heading" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="CollapseExceptSelected" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="Reload" type="Button" parent="VBoxContainer/Heading"]
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "Reload"
+theme_type_variation = &"InspectorActionButton"
+theme_override_icons/icon = SubResource("SVGTexture_ehoec")
+script = ExtResource("3_gy50x")
+button_type = "InspectorActionButton"
+icon_override = SubResource("SVGTexture_ehoec")
+
+[node name="CollapseExceptSelected" type="Button" parent="VBoxContainer/Heading"]
 layout_mode = 2
 tooltip_text = "Collapse tree except selected branch"
 theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_gy50x")
+theme_override_icons/icon = SubResource("SVGTexture_tvlfb")
 script = ExtResource("3_gy50x")
 icon_name = "CollapseTree"
 
-[node name="ShowInInspectorCheckbox" type="CheckBox" parent="VBoxContainer/HBoxContainer2"]
+[node name="ShowInInspectorCheckbox" type="CheckBox" parent="VBoxContainer/Heading"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 tooltip_text = "Show in Inspector"
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_g3pkk")
+theme_override_icons/icon = SubResource("SVGTexture_hmwju")
 script = ExtResource("3_gy50x")
 icon_name = "FileList"
 button_type = "InspectorActionButton"
 
-[node name="HighlightNodeCheckbox" type="CheckBox" parent="VBoxContainer/HBoxContainer2"]
+[node name="HighlightNodeCheckbox" type="CheckBox" parent="VBoxContainer/Heading"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 tooltip_text = "Highlight Selected Control Node"
 theme_type_variation = &"InspectorActionButton"
-theme_override_icons/icon = SubResource("SVGTexture_tvlfb")
+theme_override_icons/icon = SubResource("SVGTexture_2gxap")
 button_pressed = true
 script = ExtResource("3_gy50x")
 icon_name = "CollisionShape2D"
 button_type = "InspectorActionButton"
 
-[node name="OnlyControlsCheckbox" type="CheckBox" parent="VBoxContainer/HBoxContainer2"]
+[node name="OnlyControlsCheckbox" type="CheckBox" parent="VBoxContainer/Heading"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -283,7 +309,7 @@ script = ExtResource("3_gy50x")
 button_type = "InspectorActionButton"
 icon_override = ExtResource("4_gy50x")
 
-[node name="NodeNameLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+[node name="NodeNameLabel" type="Label" parent="VBoxContainer/Heading"]
 layout_mode = 2
 size_flags_horizontal = 3
 clip_text = true
@@ -300,6 +326,7 @@ clear_button_enabled = true
 right_icon = SubResource("SVGTexture_fi71u")
 
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 selected = 1
 item_count = 2
@@ -308,145 +335,72 @@ popup/item_0/id = 0
 popup/item_1/text = "Filter Mode: Contains"
 popup/item_1/id = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+[node name="SplitContainer" type="SplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EditorDebuggerTree" type="Tree" parent="VBoxContainer/HSplitContainer"]
+[node name="EditorDebuggerNodeTree" type="Tree" parent="VBoxContainer/SplitContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_k76i8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ehoec")
 allow_rmb_select = true
-select_mode = 1
 script = ExtResource("3_4tiqm")
-updates_per_frame = 5000
+updates_per_frame = 100
+wait_between_updates = 0.10000000000582077
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SplitContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Root" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_k2iu7")
-text = "Root"
-script = ExtResource("3_gy50x")
-icon_name = "Window"
-
-[node name="BaseControl" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_hmwju")
-text = "Base Control"
-script = ExtResource("3_gy50x")
-icon_name = "Panel"
-
-[node name="EditorTitleBar" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"InspectorActionbutton"
-theme_override_icons/icon = SubResource("SVGTexture_2gxap")
-text = "Title Bar"
-script = ExtResource("3_gy50x")
-icon_name = "HBoxContainer"
-
-[node name="Docks" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/SplitContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LeftDocks" type="GridContainer" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("SVGTexture_k2iu7")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Signals"
+
+[node name="Spacer" type="Control" parent="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-columns = 2
 
-[node name="DockSlotLeftUL" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/LeftDocks"]
+[node name="ChangeSplitButton" type="Button" parent="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("split_container")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 8
+tooltip_text = "Change Split Direction"
 theme_type_variation = &"InspectorActionbutton"
-text = "UL"
-script = ExtResource("3_gy50x")
+theme_override_icons/icon = SubResource("SVGTexture_g3pkk")
+script = ExtResource("6_8oa8k")
+split_container = NodePath("../../..")
+hsplit_icon = ExtResource("7_fi71u")
+vsplit_icon = ExtResource("8_7q7w5")
+icon_name = "Panels2"
 
-[node name="DockSlotLeftUR" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/LeftDocks"]
+[node name="CloseButton" type="Button" parent="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 8
 theme_type_variation = &"InspectorActionbutton"
-text = "UR"
+theme_override_icons/icon = SubResource("SVGTexture_htm30")
 script = ExtResource("3_gy50x")
+icon_name = "Close"
 
-[node name="DockSlotLeftBL" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/LeftDocks"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/SplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditorDebuggerSignalTree" type="Tree" parent="VBoxContainer/SplitContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "BL"
-script = ExtResource("3_gy50x")
-
-[node name="DockSlotLeftBR" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/LeftDocks"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "BR"
-script = ExtResource("3_gy50x")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks"]
-layout_mode = 2
-
-[node name="MainScreen" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "Main Screen"
-script = ExtResource("3_gy50x")
-
-[node name="BottomPanel" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "Bottom Panel"
-script = ExtResource("3_gy50x")
-
-[node name="RightDocks" type="GridContainer" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 2
-
-[node name="DockSlotRightUL" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/RightDocks"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "UL"
-script = ExtResource("3_gy50x")
-
-[node name="DockSlotRightUR" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/RightDocks"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "UR"
-script = ExtResource("3_gy50x")
-
-[node name="DockSlotRightBL" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/RightDocks"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "BL"
-script = ExtResource("3_gy50x")
-
-[node name="DockSlotRightBR" type="Button" parent="VBoxContainer/HSplitContainer/VBoxContainer/Docks/RightDocks"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InspectorActionbutton"
-text = "BR"
-script = ExtResource("3_gy50x")
+script = ExtResource("6_g3pkk")
 
 [node name="BottomPanel" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -501,14 +455,18 @@ auto_translate_mode = 2
 auto_translate = false
 filters = PackedStringArray("*.tscn ; TSCN", "*.scn ; SCN", "*.res ; RES")
 
-[connection signal="node_selected" from="." to="VBoxContainer/HBoxContainer2/NodeNameLabel" method="on_node_selected"]
+[connection signal="node_selected" from="." to="VBoxContainer/Heading/NodeNameLabel" method="on_node_selected"]
 [connection signal="save_branch_as_scene" from="PopupMenu" to="SaveBranchFileDialog" method="popup_centered_ratio"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CollapseExceptSelected" to="VBoxContainer/HSplitContainer/EditorDebuggerTree" method="collapse_except_selected"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer2/ShowInInspectorCheckbox" to="." method="inspection_checkbox_toggled"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer2/HighlightNodeCheckbox" to="." method="highlight_checkbox_toggled"]
-[connection signal="text_changed" from="VBoxContainer/GridContainer/LineEdit" to="VBoxContainer/HSplitContainer/EditorDebuggerTree" method="filter"]
-[connection signal="item_mouse_selected" from="VBoxContainer/HSplitContainer/EditorDebuggerTree" to="." method="_on_Tree_item_mouse_selected"]
-[connection signal="item_selected" from="VBoxContainer/HSplitContainer/EditorDebuggerTree" to="." method="_on_Tree_item_selected"]
-[connection signal="nothing_selected" from="VBoxContainer/HSplitContainer/EditorDebuggerTree" to="." method="_on_Tree_nothing_selected"]
-[connection signal="updated_entries" from="VBoxContainer/HSplitContainer/EditorDebuggerTree" to="VBoxContainer/BottomPanel/UpdatedEntriesLabel" method="set_int"]
+[connection signal="pressed" from="VBoxContainer/Heading/CollapseExceptSelected" to="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" method="collapse_except_selected"]
+[connection signal="toggled" from="VBoxContainer/Heading/ShowInInspectorCheckbox" to="." method="inspection_checkbox_toggled"]
+[connection signal="toggled" from="VBoxContainer/Heading/HighlightNodeCheckbox" to="." method="highlight_checkbox_toggled"]
+[connection signal="text_changed" from="VBoxContainer/GridContainer/LineEdit" to="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" method="filter"]
+[connection signal="item_mouse_selected" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="." method="_on_Tree_item_mouse_selected"]
+[connection signal="item_selected" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="." method="_on_Tree_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="VBoxContainer/SplitContainer/VBoxContainer/EditorDebuggerSignalTree" method="update"]
+[connection signal="nothing_selected" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="." method="_on_Tree_nothing_selected"]
+[connection signal="signal_button_pressed" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="VBoxContainer/SplitContainer/VBoxContainer/EditorDebuggerSignalTree" method="_on_signal_button_pressed" unbinds=1]
+[connection signal="updated_entries" from="VBoxContainer/SplitContainer/EditorDebuggerNodeTree" to="VBoxContainer/BottomPanel/UpdatedEntriesLabel" method="set_int"]
+[connection signal="pressed" from="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer/ChangeSplitButton" to="VBoxContainer/SplitContainer" method="change_split_direction"]
+[connection signal="pressed" from="VBoxContainer/SplitContainer/VBoxContainer/HBoxContainer/CloseButton" to="VBoxContainer/SplitContainer/VBoxContainer" method="hide"]
 [connection signal="file_selected" from="SaveBranchFileDialog" to="." method="_on_SaveBranchFileDialog_file_selected"]

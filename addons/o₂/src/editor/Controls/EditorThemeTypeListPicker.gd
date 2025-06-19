@@ -11,8 +11,8 @@ enum Type {
 	CONSTANT,
 }
 @export var type : Type
-
 var type_list : PackedStringArray
+
 
 func _ready() -> void:
 	var initial_selection = selected
@@ -20,6 +20,7 @@ func _ready() -> void:
 	item_selected.connect(_type_selected)
 	selected = initial_selection
 	_type_selected(selected)
+
 
 func _populate() -> void:
 	clear()
@@ -38,8 +39,10 @@ func _populate() -> void:
 	for option in type_list:
 		add_item(option)
 
+
 func _type_selected(which: int) -> void:
 	type_selected.emit(type_list[which])
+
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name.begins_with("popup/item"):

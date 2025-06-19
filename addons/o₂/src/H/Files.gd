@@ -3,6 +3,7 @@
 const Strings := H.Strings
 const Files := H.Files
 
+
 static func get_all_files(
 	path: String,
 	file_extensions := [],
@@ -29,8 +30,10 @@ static func get_all_files(
 		file_name = dir.get_next()
 	return files
 
+
 static func is_resource_path(path: String) -> bool:
 	return path.begins_with("res://")
+
 
 static func get_subdirectories(path: String) -> PackedStringArray:
 	var dir := DirAccess.open(path)
@@ -39,20 +42,25 @@ static func get_subdirectories(path: String) -> PackedStringArray:
 		push_error("Could not open directory at '%s'" % path, error_string(DirAccess.get_open_error()))
 	return dir.get_directories()
 
+
 static func path_join_all(root_path: String, paths: PackedStringArray) -> PackedStringArray:
 	var joined := PackedStringArray()
 	for path in paths:
 		joined.push_back(root_path.path_join(path))
 	return joined
 
+
 static func strip_extension(filename: String) -> String:
 	return filename.replace(filename.get_extension(), "")
+
 
 static func get_file_without_extension(path: String) -> String:
 	return path.get_file().replace("." + path.get_extension(), "")
 
+
 static func get_uid(path: String) -> int:
 	return ResourceLoader.get_resource_uid(path)
+
 
 class DirWatcher extends RefCounted:
 	const Files := H.Files
@@ -75,6 +83,7 @@ class DirWatcher extends RefCounted:
 		_extensions = extensions
 		_include_hidden = include_hidden
 		update()
+
 
 	func update() -> void:
 		for watched_file in _watched.values():
@@ -108,14 +117,17 @@ class DirWatcher extends RefCounted:
 		var modified : int
 		var was_found : bool = true
 
+
 		func _init(p_modified : int) -> void:
 			modified = p_modified
+
 
 		func has_been_modified(p_modified: int) -> bool:
 			if modified == p_modified:
 				return false
 			modified = p_modified
 			return true
+
 
 ## Static class
 func _init() -> void: assert(false, "Class can't be instantiated")

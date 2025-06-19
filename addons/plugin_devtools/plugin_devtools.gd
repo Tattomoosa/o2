@@ -7,6 +7,7 @@ const plugin_icon := preload("uid://d0mcyi8ajfh02")
 var tools_dock : Control
 var dock_popup : Popup
 var add_to_bottom_button : Button
+var _docks : Dictionary[DockSlot, Control] = {}
 
 func _enable_plugin() -> void:
 	# Add autoloads here.
@@ -40,3 +41,11 @@ func _add_bottom_panel_button_to_popup() -> void:
 		if child is Button:
 			if child.text == "Move to Bottom":
 				child.show()
+
+func _get_docks() -> void:
+	var dummy_control := Control.new()
+	for slot in DOCK_SLOT_MAX:
+		add_control_to_dock(slot, dummy_control)
+		_docks[slot] = dummy_control.get_parent()
+		remove_control_from_docks(dummy_control)
+	dummy_control.queue_free()

@@ -5,8 +5,8 @@ signal save_branch_as_scene
 signal copy_path_to_clipboard
 signal copy_node_types_to_clipboard
 
-const EditorDebuggerTree := preload("EditorDebuggerTree.gd")
-@onready var _tree : EditorDebuggerTree = %EditorDebuggerTree
+const EditorDebuggerNodeTree := preload("EditorDebuggerNodeTree.gd")
+@onready var _tree : EditorDebuggerNodeTree = %EditorDebuggerNodeTree
 
 enum POPUP_ACTIONS {
 	SAVE_BRANCH_AS_SCENE,

@@ -14,15 +14,22 @@ static func swap(from: Object, to: Object, signal_name: StringName, callable: Ca
 		var signal_b : Signal = to.get(signal_name)
 		connect_if_not_connected(signal_b, callable, flags)
 
+
 static func connect_if_not_connected(p_signal: Signal, callable: Callable, flags: int = 0) -> void:
 	if !p_signal.is_connected(callable):
 		var result := p_signal.connect(callable, flags)
 		if result != OK:
 			push_warning(error_string(result))
 
+
 static func disconnect_if_connected(p_signal: Signal, callable: Callable) -> void:
 	if p_signal.is_connected(callable):
 		p_signal.disconnect(callable)
+
+
+static func get_objects_defining_signals(obj: Object) -> Dictionary[String, PackedStringArray]:
+	return {}
+
 
 # would be better to implement on the callable side I think actually, because you need to keep
 # a callable reference to disconnect a signal anyway

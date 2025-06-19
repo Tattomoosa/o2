@@ -5,22 +5,27 @@ extends Button
 	set(value):
 		icon_name = value
 		_update_icon()
+
 @export_enum("InspectorActionButton","EditorLogFilterButton")
 var button_type : String = "InspectorActionbutton":
 	set(value):
 		button_type = value
 		_update_panel()
+
 @export var icon_override : Texture2D:
 	set(value):
 		icon_override = value
 		_update_icon()
 
+
 func _ready() -> void:
 	_update_icon()
 	_update_panel()
 
+
 func _update_panel() -> void:
 	theme_type_variation = button_type
+
 
 func _update_icon() -> void:
 	var c := EditorInterface.get_base_control()
@@ -31,6 +36,7 @@ func _update_icon() -> void:
 		add_theme_icon_override("icon", c.get_theme_icon(icon_name, &"EditorIcons"))
 		return
 	remove_theme_icon_override("icon")
+
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "icon":

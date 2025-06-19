@@ -14,17 +14,21 @@ static func margin_container(
 	mc.add_theme_constant_override("margin_left", margin3)
 	return mc
 
+
 static func v_shrink_begin(c: Control) -> Control:
 	c.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	return c
+
 
 static func h_shrink_begin(c: Control) -> Control:
 	c.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	return c
 
+
 static func v_shrink_end(c: Control) -> Control:
 	c.size_flags_vertical = Control.SIZE_SHRINK_END
 	return c
+
 
 static func h_shrink_end(c: Control) -> Control:
 	c.size_flags_horizontal = Control.SIZE_SHRINK_END

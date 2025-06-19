@@ -12,10 +12,9 @@ extends Button
 		mapped_color = v
 		if !is_node_ready(): return
 		_update()
-@export_storage var gradient : GradientTexture1D
+@export var gradient : GradientTexture1D
 
 @onready var og_color_rect := %OriginalColor
-@onready var gradient_rect := %Gradient
 @onready var mapped_color_rect := %MappedColor
 
 func _ready() -> void:

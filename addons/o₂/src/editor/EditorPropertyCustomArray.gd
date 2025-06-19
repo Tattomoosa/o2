@@ -26,9 +26,11 @@ var expand_button := Button.new()
 var heading_hbox := HBoxContainer.new()
 var add_button : Control = Button.new()
 
+
 # Needs extended
 func _get_editor_property(_index: int) -> EditorProperty:
 	return EditorProperty.new()
+
 
 # Needs extended
 func _get_add_button() -> Control:
@@ -36,6 +38,7 @@ func _get_add_button() -> Control:
 	btn.text = "Add Item"
 	btn.add_theme_icon_override("icon", EditorInterface.get_inspector().get_theme_icon("Add", &"EditorIcons"))
 	return btn
+
 
 func _ready() -> void:
 	_load_instance_state()
@@ -100,13 +103,12 @@ func _ready() -> void:
 	else:
 		array_panel.hide()
 
+
 func _load_instance_state():
 	instance_state = state.get_or_add(get_edited_object(), {}).get_or_add(get_edited_property(), {})
 	if "collapsed" not in instance_state:
 		instance_state.collapsed = true
 
-# func _update_button_size(b: Button, y: int) -> void:
-# 	b.custom_minimum_size.y = y
 
 func _toggle_array_panel() -> void:
 	instance_state.collapsed = !instance_state.collapsed
@@ -118,32 +120,39 @@ func _toggle_array_panel() -> void:
 		array_panel.hide()
 		set_bottom_editor(null)
 
+
 func _delete_all() -> void:
 	array.clear()
 	get_edited_object().notify_property_list_changed()
 
+
 func _remove(row: ArrayItem) -> void:
 	array.remove_at(row.get_index())
 	get_edited_object().notify_property_list_changed()
+
 
 func _move_up(i: int) -> void:
 	var object := get_edited_object()
 	H.Arrays.swap(array, i, i - 1)
 	object.notify_property_list_changed()
 
+
 func _move_down(i: int) -> void:
 	var object := get_edited_object()
 	H.Arrays.swap(array, i, i + 1)
 	object.notify_property_list_changed()
 
+
 func _on_deleted(property_name: String) -> void:
 	if property_name == get_edited_property():
 		_delete_all()
+
 
 func _drag_index(_pos: Vector2, draggable: Control) -> Variant:
 	is_dragging = true
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	return draggable
+
 
 func _drop_index(_pos: Vector2, _data: Variant, _draggable: Control) -> void:
 	var index := 0
@@ -153,12 +162,14 @@ func _drop_index(_pos: Vector2, _data: Variant, _draggable: Control) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	is_dragging = false
 
+
 func _notification(notification_type):
 	match notification_type:
 		NOTIFICATION_DRAG_END:
 			if !is_dragging:
 				return
 			_drop_index(Vector2.ZERO, null, null)
+
 
 func _can_drop_index(_pos: Vector2, data: Variant, draggable: Control) -> bool:
 	if data is not ArrayItem:
@@ -172,6 +183,7 @@ func _can_drop_index(_pos: Vector2, data: Variant, draggable: Control) -> bool:
 		var p := d.get_parent()
 		p.move_child(data, drop_index)
 	return true
+
 
 class ArrayItem extends PanelContainer:
 
@@ -188,10 +200,12 @@ class ArrayItem extends PanelContainer:
 	var down_button : Button
 	var drag_button : Button
 
+
 	func _init() -> void:
 		drag_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "TripleBar")
 		drag_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
+
 	func _update_index() -> void:
 		var index := get_index()
 		self_modulate = Color(0.8, 0.8, 0.8) if index % 2 == 1 else Color.WHITE
@@ -202,6 +216,7 @@ class ArrayItem extends PanelContainer:
 		else:
 			up_button.hide()
 			down_button.hide()
+
 
 	func _ready() -> void:
 		get_parent().child_order_changed.connect(_update_index)
@@ -241,19 +256,24 @@ class ArrayItem extends PanelContainer:
 		hbox.add_child(editor_property)
 		hbox.add_child(delete_btn_vbox)
 	
+
 	func _move_up() -> void:
 		move_up.emit(get_index())
 
+
 	func _move_down() -> void:
 		move_down.emit(get_index())
+
 
 class FakeArray extends RefCounted:
 	var object : Object
 	var array : Array
 
+
 	func _get(property: StringName) -> Variant:
 		var i := property.to_int()
 		return array[i]
+
 
 	func _set(property: StringName, value: Variant) -> bool:
 		var i := property.to_int()

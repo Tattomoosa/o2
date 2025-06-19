@@ -6,6 +6,7 @@ const SPECIAL_USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	0: &"PROPERTY_USAGE_NONE",
 	6: &"PROPERTY_USAGE_DEFAULT",
 }
+
 const USAGE_FLAG_STRINGS : Dictionary[int, StringName] = {
 	2: &"PROPERTY_USAGE_STORAGE",
 	4: &"PROPERTY_USAGE_EDITOR",
@@ -174,6 +175,7 @@ const HINT_MAP := {
 	TYPE_PACKED_VECTOR4_ARRAY: [PROPERTY_HINT_NONE],
 }
 
+
 ## Takes a property.usage bitflag int and returns all the flags as strings
 static func get_usage_flag_names(usage: int) -> Array[StringName]:
 	var used_flag_strings : Array[StringName] = []
@@ -185,16 +187,20 @@ static func get_usage_flag_names(usage: int) -> Array[StringName]:
 				used_flag_strings.append(USAGE_FLAG_STRINGS[flag])
 	return used_flag_strings
 
+
 static func has_flag(bits: int, flag: int) -> bool:
 	return bits & flag != 0
+
 
 ## Gets a Variant.Type constant name -- not the "human readable" name from type_string()!
 static func get_type_name(type: int) -> StringName:
 	return TYPE_STRINGS[type]
 
+
 ## Gets a property hint enum name
 static func get_property_hint_name(property_hint: int) -> StringName:
 	return PROPERTY_HINT_STRINGS[property_hint]
+
 
 ## Pretties up an object property (Dictionary definition returned from get_property_list())
 static func prettify(property: Dictionary) -> String:
@@ -232,6 +238,7 @@ static func prettify(property: Dictionary) -> String:
 			prop_str += '\t&"%s": %s,\n' % [key, property[key]] 
 	prop_str += "}"
 	return prop_str
+
 
 ## PROPERTY_HINT_TYPE_STRING is especially hairy, this tells you what it's doing and is... 
 ## probably mostly correct?
@@ -274,6 +281,7 @@ static func parse_hint_type_string(t_string: String) -> String:
 		return parsed_str
 	return "???"
 
+
 ## PROPERTY_HINT_TYPE_STRING is especially hairy, this helps you construct it
 static func construct_array_hint_type_string(
 	types: Array[Variant.Type],
@@ -289,6 +297,7 @@ static func construct_array_hint_type_string(
 	hint_str += hint_string
 	return hint_str
 		
+
 ## Gets a property definition, like those returned from get_property_list(), but just one by name
 static func get_property(object: Object, name: StringName) -> Dictionary:
 	if !object:
@@ -299,6 +308,7 @@ static func get_property(object: Object, name: StringName) -> Dictionary:
 			return p
 	return {}
 
+
 ## Generic way to just get a human-readable name from an object
 static func get_object_name(object: Object) -> String:
 	if "name" in object:
@@ -307,19 +317,23 @@ static func get_object_name(object: Object) -> String:
 		return object.resource_name
 	return "Object"
 
-# TODO this is useless now that PropertyInfo can do it better itself
-# @deprecated
-static func get_instantiate_property_editor_string(object: Object, name: StringName) -> String:
-	var prop := get_property(object, name)
+
+static func get_object_instantiate_property_editor_string(object: Object, name: StringName) -> String:
+	var property := get_property(object, name)
+	return get_instantiate_property_editor_string(property)
+
+
+static func get_instantiate_property_editor_string(property: Dictionary) -> String:
 	return "\n".join([
 		"EditorInspector.instantiate_property_editor(",
 			"\t%s," % "get_edited_object()",
-			"\t%s," % TYPE_STRINGS[prop.type],
-			'\t"%s",' % name,
-			"\t%s," % PROPERTY_HINT_STRINGS[prop.hint],
-			'\t"%s",' % prop.hint_string,
-			"\t%s," % " | ".join(get_usage_flag_names(prop.usage)),
+			"\t%s," % TYPE_STRINGS[property.type],
+			'\t"%s",' % property.name,
+			"\t%s," % PROPERTY_HINT_STRINGS[property.hint],
+			'\t"%s",' % property.hint_string,
+			"\t%s," % " | ".join(get_usage_flag_names(property.usage)),
 		")"])
+
 
 static func instantiate_property_editor(object: Object, name: String) -> EditorProperty:
 	if !Engine.is_editor_hint():
@@ -328,6 +342,7 @@ static func instantiate_property_editor(object: Object, name: String) -> EditorP
 	if property.is_empty():
 		return null
 	return instantiate_custom_property_editor(object, property)
+
 
 static func instantiate_custom_property_editor(object: Object, property: Dictionary) -> EditorProperty:
 	if !Engine.is_editor_hint():
@@ -340,6 +355,7 @@ static func instantiate_custom_property_editor(object: Object, property: Diction
 		property.hint_string,
 		property.usage
 	)
+
 
 ## Whether or not a given int property is bitflags
 static func property_is_bitflags(property: Dictionary) -> bool:
@@ -357,5 +373,6 @@ static func property_is_bitflags(property: Dictionary) -> bool:
 				PROPERTY_HINT_LAYERS_AVOIDANCE,
 			]
 		)
+
 
 func _init() -> void: assert(false, "Class can't be instantiated")

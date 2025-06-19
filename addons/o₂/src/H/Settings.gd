@@ -8,12 +8,15 @@ static func get_or_add(setting : String, default_value : Variant) -> Variant:
 			ProjectSettings.set_initial_value(setting, default_value)
 	return ProjectSettings.get_setting(setting)
 
+
 static func get_setting(setting: String) -> Variant:
 	return ProjectSettings.get_setting(setting)
+
 
 static func globalize_path(path: String) -> void:
 	if path.begins_with("res://") and !OS.has_feature("editor"):
 		return OS.get_executable_path().get_base_dir().path_join(path.replace("res://", ""))
 	return ProjectSettings.globalize_path(path)
+
 
 func _init() -> void: assert(false, "Class can't be instantiated")

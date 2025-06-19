@@ -4,11 +4,13 @@ static func reversed(array: Array) -> Array:
 	a.reverse()
 	return a
 
+
 ## Array.shuffle, but returns a new array
 static func shuffled(array: Array) -> Array:
 	var a := array.duplicate()
 	a.shuffle()
 	return a
+
 
 static func swap(array: Array, from: int, to: int) -> void:
 	var a = array[from]
@@ -16,10 +18,12 @@ static func swap(array: Array, from: int, to: int) -> void:
 	array[to] = a
 	array[from] = b
 
+
 ## Array.find_custom, but also grabs the value
 static func find_and_get(array: Array, callable: Callable) -> Variant:
 	var index := array.find_custom(callable)
 	return array[index] if index >= 0 else null
+
 
 static func get_first_dictionary_matching_property(array: Array, key: String, value: Variant) -> Dictionary:
 	var dict : Variant = find_and_get(
@@ -43,6 +47,7 @@ static func intersection(a: Variant, b: Variant) -> Array:
 			both.push_back(item)
 	return both
 
+
 static func is_array(array: Variant) -> bool:
 	if array is Array\
 	or array is PackedByteArray\
@@ -58,11 +63,13 @@ static func is_array(array: Variant) -> bool:
 		return true
 	return false
 
+
 static func is_in_typelist(value: Variant, type_list: Array) -> bool:
 	for type in type_list:
 		if value.is_instance_of(type):
 			return true
 	return false
+
 
 ## 'Static' class
 func _init() -> void: assert(false, "Class can't be instantiated")

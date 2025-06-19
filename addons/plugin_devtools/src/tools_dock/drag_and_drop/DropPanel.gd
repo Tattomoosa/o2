@@ -2,6 +2,7 @@
 extends PanelContainer
 
 @export var restrict_to_types : Array[String] = []
+@export var restrict_to_file_extensions : Array[String] = []
 
 signal dropped_data(data: Variant)
 signal something_dragging(value: bool)
@@ -21,11 +22,13 @@ func _notification(what: int) -> void:
 			visible = false
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if restrict_to_types.is_empty() or data not in restrict_to_types:
-		visible = true
+	if restrict_to_types.is_empty():
 		return true
 	else:
 		if data is Dictionary and "type" in data and data.type in restrict_to_types:
+			if data.type == "files" and !restrict_to_file_extensions.is_empty():
+				var extension : String = data.files[0].get_extension()
+				return extension in restrict_to_file_extensions
 			return true
 		return false
 	
