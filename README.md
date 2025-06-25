@@ -147,20 +147,28 @@ build on what I've done before and do some really cool things.
 
 Also, plugins don't have to pollute the autoload list. If they need tree access, they do it through only the `o2` autoload.
 
-## Other Godot plugins by me
+# My Godot Plugins
 
-### [VisionCone3D](https://github.com/Tattomoosa/VisionCone3D)
+## <img src="https://raw.githubusercontent.com/Tattomoosa/o2/refs/heads/main/addons/o%E2%82%82/assets/icons/o2.svg" width="18"/>&nbsp;&nbsp; [O₂](https://github.com/Tattomoosa/o2)
 
-Simple but configurable 3D vision cone node for Godot
+The Plugin Suite that does the impossible
 
-### [Spinner](https://github.com/Tattomoosa/Spinner)
+## <img src="https://raw.githubusercontent.com/Tattomoosa/godot-plugin-devtools/refs/heads/main/addons/plugin_devtools/assets/icons/PluginDevTools.svg" width="18"/>&nbsp;&nbsp; [Plugin DevTools](https://github.com/Tattomoosa/godot-plugin-devtools)
 
-Simple but configurable process status indicator node, for Godot
+Plugin development made easy
 
-### [NetworkTextureRect](https://github.com/Tattomoosa/NetworkTextureRect)
+## <img src="https://github.com/Tattomoosa/VisionCone3D/raw/main/addons/tattomoosa.vision_cone_3d/icons/VisionCone3D.svg" width="18"/>&nbsp;&nbsp; [VisionCone3D](https://github.com/Tattomoosa/VisionCone3D)
 
-Dead simple network images, for Godot
+Simple but configurable 3D vision cone node
 
-### [gd-submodules](https://github.com/Tattomoosa/gd-submodules) (unreleased, experimental)
+## <img src="https://github.com/Tattomoosa/Spinner/raw/main/addons/tattomoosa.spinner/icons/Spinner.svg" width="18"/>&nbsp;&nbsp; [Spinner](https://github.com/Tattomoosa/Spinner)
 
-Dead simple plugin management via git submodule, for Godot
+Simple but configurable process status indicator node
+
+## <img src="https://github.com/Tattomoosa/NetworkTextureRect/raw/main/addons/tattomoosa.network_texture_rect/icons/NetworkTextureRect.svg" width="18"/>&nbsp;&nbsp; [NetworkTextureRect](https://github.com/Tattomoosa/NetworkTextureRect)
+
+Dead simple network images
+
+## <img src="https://raw.githubusercontent.com/Tattomoosa/gd-submodules/refs/heads/main/addons/gd-submodules/icons/GitPlugin.svg" width="18"/>&nbsp;&nbsp; [gd-submodules](https://github.com/Tattomoosa/gd-submodules) (unreleased, experimental)
+
+Plugin management via git submodule
