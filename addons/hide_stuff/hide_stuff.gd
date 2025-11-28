@@ -132,8 +132,10 @@ class HideDockTabs extends HideSomething:
 
 	func hide_it() -> void:
 		for dock in _interface_elements.get_docks():
-			dock.tabs_visible = false
+			if is_instance_valid(dock):
+				dock.tabs_visible = false
 
 	func show_it() -> void:
 		for dock in _interface_elements.get_docks():
-			dock.tabs_visible = true
+			if is_instance_valid(dock):
+				dock.tabs_visible = true

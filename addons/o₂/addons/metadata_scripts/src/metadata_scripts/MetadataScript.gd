@@ -1,6 +1,7 @@
-@tool
 @icon("uid://cm3wwdg8y3x7m")
-abstract class_name MetadataScript
+@tool
+@abstract
+class_name MetadataScript
 extends Resource
 
 var node : Node:

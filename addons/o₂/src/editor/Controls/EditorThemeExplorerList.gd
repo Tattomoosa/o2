@@ -1,5 +1,5 @@
 @tool
-abstract extends Container
+@abstract extends Container
 
 signal mouse_hovered_button(item_name: String)
 signal button_pressed

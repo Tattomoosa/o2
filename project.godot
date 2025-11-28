@@ -16,6 +16,10 @@ tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
 
 config/features=PackedStringArray("4.5")
 
+[autoload]
+
+o2="*res://addons/o₂/src/O2.gd"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false
@@ -26,7 +30,7 @@ window/size/mode=4
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/plugin_devtools/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/hide_stuff/plugin.cfg", "res://addons/o₂/addons/metadata_scripts/plugin.cfg", "res://addons/o₂/addons/namespacer/plugin.cfg", "res://addons/o₂/addons/variant_resources/plugin.cfg", "res://addons/o₂/plugin.cfg", "res://addons/quick_settings/plugin.cfg")
 
 [gui]
 
