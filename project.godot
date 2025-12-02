@@ -14,7 +14,7 @@ tree_watcher/tree_watcher_plugins=["uid://segrgfetays3"]
 
 [application]
 
-config/features=PackedStringArray("4.5")
+config/features=PackedStringArray("4.6")
 
 [autoload]
 
@@ -58,7 +58,7 @@ settings/window_mode_menu/hide_fullscreen=true
 toolbar/window_mode_menu_enabled=true
 toolbar/external_editor_toggle_enabled=true
 settings/plugin_toggle_buttons/toggle_plugin_list={
-"res://addons/dock_splitter/plugin.cfg": true,
+"res://addons/dock_splitter/plugin.cfg": false,
 "res://addons/gdterm/plugin.cfg": false,
 "res://addons/hide_stuff/plugin.cfg": false,
 "res://addons/inspector_tabs/plugin.cfg": false,
@@ -70,4 +70,4 @@ settings/plugin_toggle_buttons/toggle_plugin_list={
 "res://addons/plugin_devtools/src/load_control_into_dock/plugin.cfg": false,
 "res://addons/quick_settings/plugin.cfg": false
 }
-settings/plugins_menu/hide_nested_plugins=false
+settings/plugins_menu/hide_nested_plugins=true

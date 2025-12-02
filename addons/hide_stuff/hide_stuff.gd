@@ -2,11 +2,26 @@
 extends EditorPlugin
 
 var interface_elements : InterfaceElements
+const INTERFACE_CONTAINERS := [
+	CONTAINER_TOOLBAR,
+	CONTAINER_SPATIAL_EDITOR_MENU,
+	CONTAINER_SPATIAL_EDITOR_SIDE_LEFT,
+	CONTAINER_SPATIAL_EDITOR_SIDE_RIGHT,
+	CONTAINER_SPATIAL_EDITOR_BOTTOM,
+	CONTAINER_CANVAS_EDITOR_MENU,
+	CONTAINER_CANVAS_EDITOR_SIDE_LEFT,
+	CONTAINER_CANVAS_EDITOR_SIDE_RIGHT,
+	CONTAINER_CANVAS_EDITOR_BOTTOM,
+	CONTAINER_INSPECTOR_BOTTOM,
+	CONTAINER_PROJECT_SETTING_TAB_LEFT,
+	CONTAINER_PROJECT_SETTING_TAB_RIGHT
+]
 
 var hider_classes : Array[Script] = [
 	HideMainScreenButtonNames,
 	HideRendererMenuButton,
-	HideDockTabs,
+	# Doesn't seem to work anymore
+	# HideDockTabs,
 ]
 var hiders : Array[HideSomething] = []
 
@@ -43,23 +58,28 @@ class InterfaceElements extends EditorPlugin:
 
 	func _enter_tree() -> void:
 		_get_custom_containers()
-		_get_docks()
+		# _get_docks()
 	
 	func _get_custom_containers() -> void:
 		var c := Control.new()
-		for key in [CONTAINER_TOOLBAR, CONTAINER_SPATIAL_EDITOR_MENU, CONTAINER_SPATIAL_EDITOR_SIDE_LEFT, CONTAINER_SPATIAL_EDITOR_SIDE_RIGHT, CONTAINER_SPATIAL_EDITOR_BOTTOM, CONTAINER_CANVAS_EDITOR_MENU, CONTAINER_CANVAS_EDITOR_SIDE_LEFT, CONTAINER_CANVAS_EDITOR_SIDE_RIGHT, CONTAINER_CANVAS_EDITOR_BOTTOM, CONTAINER_INSPECTOR_BOTTOM, CONTAINER_PROJECT_SETTING_TAB_LEFT, CONTAINER_PROJECT_SETTING_TAB_RIGHT]:
+		for key in INTERFACE_CONTAINERS:
 			add_control_to_container(key, c)
 			_custom_containers[key] = c.get_parent()
 			remove_control_from_container(key, c)
 		c.queue_free()
 
-	func _get_docks() -> void:
-		var dummy_control := Control.new()
-		for slot in DOCK_SLOT_MAX:
-			add_control_to_dock(slot, dummy_control)
-			_docks[slot] = dummy_control.get_parent()
-			remove_control_from_docks(dummy_control)
-		dummy_control.queue_free()
+	# func _get_docks() -> void:
+	# 	var dummy_control := Control.new()
+	# 	dummy_control.name = "SlotFinder"
+	# 	for slot in DOCK_SLOT_MAX:
+	# 		add_control_to_dock(slot, dummy_control)
+	# 		var dock := dummy_control.get_parent()
+	# 		_docks[slot as DockSlot] = dock
+	# 		# not sure why it needs to both be removed from docks and unparented manually now but ok
+	# 		remove_control_from_docks(dummy_control)
+	# 		dock.remove_child(dummy_control)
+	# 		dock.tree_exited.connect(func(): print(dock, " exiting"))
+	# 	dummy_control.queue_free()
 	
 	func get_toolbar() -> HBoxContainer:
 		return _custom_containers[CONTAINER_TOOLBAR]
@@ -67,8 +87,8 @@ class InterfaceElements extends EditorPlugin:
 	func get_main_screen_buttons() -> HBoxContainer:
 		return _custom_containers[CONTAINER_TOOLBAR].get_node("EditorMainScreenButtons")
 	
-	func get_docks() -> Array[Control]:
-		return _docks.values()
+	# func get_docks() -> Array[Control]:
+	# 	return _docks.values()
 
 class HideSomething extends Node:
 	var _interface_elements : InterfaceElements
@@ -111,7 +131,6 @@ class HideRendererMenuButton extends HideSomething:
 	func show_it() -> void:
 		_renderer_button.show()
 
-# Seems it's only possible to hide the names, that's ok
 class HideMainScreenButtonNames extends HideSomething:
 
 	func get_command_name() -> String: return "main_screen_button_names"
@@ -127,15 +146,18 @@ class HideMainScreenButtonNames extends HideSomething:
 			c.text = c.name
 			c.expand_icon = false
 
-class HideDockTabs extends HideSomething:
-	func get_command_name() -> String: return "dock_tabs"
+# TODO no longer seems to work, seems docksplitter is broken too
+# class HideDockTabs extends HideSomething:
+# 	func get_command_name() -> String: return "dock_tabs"
 
-	func hide_it() -> void:
-		for dock in _interface_elements.get_docks():
-			if is_instance_valid(dock):
-				dock.tabs_visible = false
+# 	func hide_it() -> void:
+# 		for dock in _interface_elements.get_docks():
+# 			if is_instance_valid(dock):
+# 				dock.print_tree_pretty()
+# 				# dock.tabs_visible = false
 
-	func show_it() -> void:
-		for dock in _interface_elements.get_docks():
-			if is_instance_valid(dock):
-				dock.tabs_visible = true
+# 	func show_it() -> void:
+# 		for dock in _interface_elements.get_docks():
+# 			if is_instance_valid(dock):
+# 				dock.print_tree_pretty()
+# 				# dock.tabs_visible = true

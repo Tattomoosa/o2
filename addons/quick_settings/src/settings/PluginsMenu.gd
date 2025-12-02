@@ -5,6 +5,8 @@ const Plugins := H.Editor.Plugins
 const SETTING_HIDE_QUICK_SETTINGS := "hide_quick_settings"
 const SETTING_HIDE_NESTED_PLUGINS := "hide_nested_plugins"
 
+const NAME := "PluginsMenu"
+const TOOLTIP_TEXT := "Enable/disable EditorPlugins"
 const PLUGIN_SETTINGS_ICON := preload("uid://obguu32af2v")
 const PLUGIN_DEFAULT_ICON := preload("uid://obguu32af2v")
 
@@ -20,8 +22,8 @@ var _popup : PopupMenu
 func _ready() -> void:
 	_popup = get_popup()
 	icon = PLUGIN_SETTINGS_ICON
-	tooltip_text = "Enable/disable EditorPlugins"
-	name = "PluginsMenu"
+	tooltip_text = TOOLTIP_TEXT
+	name = NAME
 	# always refresh
 	_popup.about_to_popup.connect(_create_popup)
 	_popup.index_pressed.connect(_set_plugin_enabled)

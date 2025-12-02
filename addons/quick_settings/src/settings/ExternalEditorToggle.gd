@@ -18,5 +18,4 @@ func _pressed() -> void:
 
 func _update() -> void:
 	var value : bool = es.get("text_editor/external/use_external_editor")
-	# icon = EXTERNAL_EDITOR_ICON if value else INTERNAL_EDITOR_ICON
 	add_theme_icon_override("icon", EXTERNAL_EDITOR_ICON if value else INTERNAL_EDITOR_ICON)
