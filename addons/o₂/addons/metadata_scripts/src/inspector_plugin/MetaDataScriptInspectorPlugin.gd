@@ -1,5 +1,5 @@
 @tool
-extends H.Editor.InspectorPlugin
+extends O2.EditorExtensions.InspectorPlugin
 
 var metadata_script_class_data : Array[Dictionary] = []
 const METADATA_SCRIPTS_PROPERTY := MetadataScript.METADATA_SCRIPTS_PROPERTY
@@ -67,7 +67,6 @@ func create_metadata_script_extend_button() -> Button:
 	var btn := Button.new()
 	btn.icon = METADATA_SCRIPTS_ICON
 	btn.text = "Extend Metadata Script"
-	# H.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
 	btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	btn.flat = false
 	# btn.pressed.connect()
@@ -82,7 +81,7 @@ func create_metadata_script_extend_button() -> Button:
 
 func create_metadata_script_popup_button(object: Object) -> MenuButton:
 	var btn := MenuButton.new()
-	H.Editor.InspectorPlugin.style_inspector_button(btn, "Add")
+	style_inspector_button(btn, "Add")
 	btn.icon = METADATA_SCRIPTS_ICON
 	btn.text = "Add Metadata Script"
 	btn.alignment = HORIZONTAL_ALIGNMENT_CENTER

@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 # TODO need to remove this to release separately
-const Plugins := H.Editor.Plugins
+const Plugins := O2.EditorExtensions.Plugins
 const Strings := H.Strings
 const Settings := H.Settings
 

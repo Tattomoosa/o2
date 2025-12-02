@@ -1,6 +1,6 @@
 extends PanelContainer
 
-const Plugins := H.Editor.Plugins
+const Plugins := O2.EditorExtensions.Plugins
 
 const SETTING_PLUGINS_TO_TOGGLE := "toggle_plugin_list"
 

@@ -1,6 +1,6 @@
 extends MenuButton
 
-const Plugins := H.Editor.Plugins
+const Plugins := O2.EditorExtensions.Plugins
 
 const SETTING_HIDE_QUICK_SETTINGS := "hide_quick_settings"
 const SETTING_HIDE_NESTED_PLUGINS := "hide_nested_plugins"

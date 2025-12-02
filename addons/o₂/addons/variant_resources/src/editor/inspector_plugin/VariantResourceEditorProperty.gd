@@ -12,11 +12,11 @@ var use_bottom_editor := false
 var resource_name_label : Label
 var property_definition : Dictionary
 var resource_class_name : String
-var inspector_plugin : H.Editor.InspectorPlugin
+var inspector_plugin : O2.EditorExtensions.InspectorPlugin
 
 const Controls := H.Controls
 const Scripts := H.Scripts
-const ES := H.Editor.Settings
+const ES := O2.EditorExtensions.Settings
 
 signal using_bottom_editor(node: Node)
 
@@ -169,4 +169,4 @@ func _property_get_revert(_property: StringName) -> Variant:
 	return _get_resource().value
 
 func _should_use_bottom_editor() -> bool:
-	return H.Editor.InspectorPlugin.property_is_in_bottom_editor(property_definition)
+	return O2.EditorExtensions.InspectorPlugin.property_is_in_bottom_editor(property_definition)

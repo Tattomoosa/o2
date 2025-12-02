@@ -1,10 +1,10 @@
 @tool
-extends H.Editor.InspectorPlugin
+extends O2.EditorExtensions.InspectorPlugin
 
 const VariantResourceEditorProperty := preload("VariantResourceEditorProperty.gd")
 const InspectorPlugin := preload("VariantResourceInspector.gd")
 const Controls := H.Controls
-const ES := H.Editor.Settings
+const ES := o2.EditorExtensions.Settings
 
 const TYPE_MAP : Dictionary[Variant.Type, String] = {
 	TYPE_BOOL: "BoolResource",

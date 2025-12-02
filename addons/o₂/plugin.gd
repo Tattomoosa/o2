@@ -4,7 +4,7 @@ extends EditorPlugin
 
 const O2_INSTANCE := "o2"
 const O2_PATH := "src/O2.gd"
-const Plugins := H.Editor.Plugins
+const Plugins := O2.EditorExtensions.Plugins
 const ICON := preload("uid://b5258mnsr6qim")
 const InspectorContextMenu := preload("uid://drhs82tyfy2j2")
 

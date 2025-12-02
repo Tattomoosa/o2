@@ -3,7 +3,7 @@ class_name PropertySyncNode
 extends Node
 
 const PropertyInfo := H.PropertyInfo
-const EditorArrayGroupHelper := H.Editor.ArrayGroupHelper
+const EditorArrayGroupHelper := O2.EditorExtensions.ArrayGroupHelper
 
 const ARRAY_PREFIX := "synced_properties_"
 const PATH_SUFFIX := "node_path"

@@ -4,7 +4,7 @@ extends EditorProperty
 # maybe needs a paginator like the native one?
 # idk
 
-const InspectorPlugin := H.Editor.InspectorPlugin
+const InspectorPlugin := O2.EditorExtensions.InspectorPlugin
 const C := H.Controls
 
 static var state : Dictionary
@@ -202,7 +202,7 @@ class ArrayItem extends PanelContainer:
 
 
 	func _init() -> void:
-		drag_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "TripleBar")
+		drag_button = InspectorPlugin.style_inspector_button(Button.new(), "TripleBar")
 		drag_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 
@@ -233,17 +233,17 @@ class ArrayItem extends PanelContainer:
 		editor_property.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		editor_property.update_property()
 
-		up_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
+		up_button = InspectorPlugin.style_inspector_button(Button.new(), "MoveUp")
 		up_button.pressed.connect(_move_up)
 
-		down_button = H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
+		down_button = InspectorPlugin.style_inspector_button(Button.new(), "MoveDown")
 		down_button.pressed.connect(_move_down)
 
 		if !show_up_down_buttons:
 			up_button.hide()
 			down_button.hide()
 
-		var delete_button := H.Editor.InspectorPlugin.style_inspector_button(Button.new(), "Close")
+		var delete_button := InspectorPlugin.style_inspector_button(Button.new(), "Close")
 		delete_button.pressed.connect(deleted.emit.bind(self))
 		delete_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 

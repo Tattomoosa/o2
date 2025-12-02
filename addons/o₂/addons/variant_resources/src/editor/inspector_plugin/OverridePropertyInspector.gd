@@ -1,7 +1,7 @@
 @tool
-extends H.Editor.InspectorPlugin
+extends O2.EditorExtensions.InspectorPlugin
 
-const VariantResourceInspector := preload("VariantResourceInspector.gd")
+const VariantResourceInspector := preload("uid://b6p1blka8mr6p")
 const TYPE_MAP := VariantResourceInspector.TYPE_MAP
 const RESOURCE_OVERRIDE_ICON := preload("uid://cmhsyh2bllenw")
 const SYNC_RESOURCE_PROCESS_ICON := preload("uid://bfqtnpcim5od6")
